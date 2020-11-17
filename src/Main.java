@@ -1,14 +1,24 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.io.File;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Menu menu;
         Game game;
         menu=new Menu();
         while(true) {
             int menuOption=menu.mainMenu();
             if (menuOption == 1) {
-                game=new Game();
+                File path = new File("C:\\Users\\Xaris\\Desktop\\buzzquizworld-2890-3045\\Buzz Questions Directory");
+                File [] questions = path.listFiles();
+                System.out.println("ENTER USERNAME: \n");
+                Scanner console = new Scanner(System.in);
+                String username=console.nextLine();
+
+
+                game=new Game(questions, username);
+
                 break;
             } else if (menuOption == 2) {
                 System.out.println("2-PLAYER GAME NOT SUPPORTED, RETURNING TO MAIN MENU\n");
