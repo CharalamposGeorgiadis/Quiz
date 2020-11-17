@@ -1,0 +1,8 @@
+Technology
+What is the measuring unit of the CPU freaquency?
+Hertz
+Volt
+Watt
+Joule
+Hertz
+
