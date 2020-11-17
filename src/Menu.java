@@ -1,6 +1,5 @@
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Menu {
 
@@ -26,8 +25,23 @@ public class Menu {
         System.out.println(" ANSWER D:          4             0\n");
         System.out.println("Press 0 to return to Main Menu");
         return console.nextInt();
-
     }
 
 
+
+
+    public String currentMenu(Set categories) {
+        System.out.println("CHOOSE A CATEGORY");
+        int i=1;
+        String[] temp=new String[categories.size()];
+        for (Object category : categories) {
+            System.out.println("Press "+ i+" to choose "+category);
+            temp[i-1]=category.toString();
+            i++;
+        }
+        Scanner console = new Scanner(System.in);
+        int choice=console.nextInt();
+        return temp[choice-1];
+
+    }
 }

@@ -8,5 +8,13 @@ public class Player {
         points=0;
     }
 
+    public String getUsername(){
+        return username;
+    }
+
+    public int getPoints(){
+        return points;
+    }
+
 
 }
