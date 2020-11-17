@@ -5,4 +5,3 @@ Gold 5
 Red 4
 Gold Leader
 Red 5
-

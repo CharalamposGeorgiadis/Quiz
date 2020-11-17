@@ -5,5 +5,3 @@ Electromagnetic Waves
 Infrared Light
 Atmospheric Pressure
 Radiation
-
-
