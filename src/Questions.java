@@ -54,5 +54,5 @@ public class Questions {
     public String getCorrectAnswer(){
         return correctAnswer;
     }
-    }
+}
 

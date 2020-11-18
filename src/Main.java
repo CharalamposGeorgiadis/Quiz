@@ -10,7 +10,7 @@ public class Main {
         while(true) {
             int menuOption=menu.mainMenu();
             if (menuOption == 1) {
-                File path = new File("C:\\Users\\Xaris\\Desktop\\buzzquizworld-2890-3045\\Buzz Questions Directory");
+                File path = new File("Buzz Questions Directory");
                 File [] questions = path.listFiles();
                 System.out.println("ENTER USERNAME: \n");
                 Scanner console = new Scanner(System.in);
