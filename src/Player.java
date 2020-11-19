@@ -16,5 +16,9 @@ public class Player {
         return points;
     }
 
+    public void setPoints(int points){
+        this.points=points;
+    }
+
 
 }
