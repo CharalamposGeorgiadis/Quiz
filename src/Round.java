@@ -26,50 +26,45 @@ public class Round {
 
     public int randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory) {
         while (true) {
-            Questions randomQuestion = availableQuestions.get(new Random().nextInt(availableQuestions.size()));
-            ArrayList<String> tempAnswers;
-            if (chosenCategory.equals(randomQuestion.getCategory())){
-                System.out.println(randomQuestion.getQuestion());
-                tempAnswers=randomQuestion.getAnswers();
-                System.out.println("A. "+ tempAnswers.get(0));
-                System.out.println("B. "+ tempAnswers.get(1));
-                System.out.println("C. "+ tempAnswers.get(2));
-                System.out.println("D. "+ tempAnswers.get(3));
-                Scanner console = new Scanner(System.in);
-                while (true){
-                    int chosenAnswer=console.nextInt();
-                    if(chosenAnswer>0 && chosenAnswer<5){
-                        if (tempAnswers.get(chosenAnswer-1).equals(randomQuestion.correctAnswer)){
-                            System.out.println("The correct answer was: "+randomQuestion.getCorrectAnswer());
-                            availableQuestions.remove(randomQuestion);
-                            return 1000;
-                        }
-                        else {
-                            System.out.println("The correct answer was: "+randomQuestion.getCorrectAnswer());
-                            availableQuestions.remove(randomQuestion);
-                            return 0;
-                        }
+            for (int i = 0; i < availableQuestions.size(); i++) {
+                if (chosenCategory.equals(availableQuestions.get(i).getCategory())) {
+                    System.out.println(availableQuestions.get(i).getQuestion());
+                    System.out.println("A. " + availableQuestions.get(i).getAnswers().get(0));
+                    System.out.println("B. " + availableQuestions.get(i).getAnswers().get(1));
+                    System.out.println("C. " + availableQuestions.get(i).getAnswers().get(2));
+                    System.out.println("D. " + availableQuestions.get(i).getAnswers().get(3));
+                    Scanner console = new Scanner(System.in);
+                    while (true) {
+                        int chosenAnswer = console.nextInt();
+                        if (chosenAnswer > 0 && chosenAnswer < 5) {
+                            if (availableQuestions.get(i).getAnswers().get(chosenAnswer - 1).equals(availableQuestions.get(i).correctAnswer)) {
+                                System.out.println("The correct answer was: " + availableQuestions.get(i).getCorrectAnswer());
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return 1000;
+                            } else {
+                                System.out.println("The correct answer was: " + availableQuestions.get(i).getCorrectAnswer());
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return 0;
+                            }
+                        } else
+                            System.out.println("Please choose a suitable answer!");
                     }
-                    else
-                        System.out.println("Please choose a suitable answer!");
+                }
                 }
             }
         }
-    }
 
 
+        public void startRound ( int numberOfRound, ArrayList<Questions > availableQuestions, String
+        chosenCategory, ArrayList < Player > playerCount ){
+            if (numberOfRound == 1) {
+                RightAnswer r = new RightAnswer();
+                r.rightAnswerPoints(availableQuestions, chosenCategory, playerCount);
 
+            }
+            if (numberOfRound == 2) {
 
-    public void startRound(int numberOfRound,ArrayList<Questions> availableQuestions,String chosenCategory,ArrayList<Player> playerCount ) {
-        if (numberOfRound==1){
-            RightAnswer r=new RightAnswer();
-            r.rightAnswerPoints(availableQuestions,chosenCategory,playerCount);
-            //this.randomQuestion(availableQuestions,chosenCategory);
+            }
 
         }
-        if (numberOfRound==2){
-
-        }
-
     }
-}

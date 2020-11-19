@@ -40,10 +40,9 @@ public class Game {
                     categories.add(tempQuestion.getCategory());
                     Collections.shuffle(tempQuestion.getAnswers());
                     availableQuestions.add(tempQuestion);
-
-
                     //In version 2 add image
                 }
+                Collections.shuffle(availableQuestions);
             }
         }
     }
