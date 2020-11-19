@@ -30,7 +30,7 @@ public class Menu {
 
 
 
-    public String currentMenu(Set categories) {
+    public String chooseCategory(Set categories) {
         System.out.println("CHOOSE A CATEGORY");
         int i=1;
         String[] temp=new String[categories.size()];

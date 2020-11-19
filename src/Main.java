@@ -15,11 +15,10 @@ public class Main {
                 System.out.println("ENTER USERNAME: \n");
                 Scanner console = new Scanner(System.in);
                 String username=console.nextLine();
-
-
                 game=new Game(questions, username);
+                game.startGame();
 
-                break;
+                //break;
             } else if (menuOption == 2) {
                 System.out.println("2-PLAYER GAME NOT SUPPORTED, RETURNING TO MAIN MENU\n");
             } else if (menuOption == 3) {
