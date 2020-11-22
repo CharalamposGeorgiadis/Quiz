@@ -12,13 +12,9 @@ public class Main {
             if (menuOption == 1) {
                 File path = new File("Buzz Questions Directory");
                 File [] questions = path.listFiles();
-                System.out.println("ENTER USERNAME: \n");
-                Scanner console = new Scanner(System.in);
-                String username=console.nextLine();
+                String username=menu.chooseUsername();
                 game=new Game(questions, username);
                 game.startGame();
-
-                //break;
             } else if (menuOption == 2) {
                 System.out.println("2-PLAYER GAME NOT SUPPORTED, RETURNING TO MAIN MENU\n");
             } else if (menuOption == 3) {
@@ -29,9 +25,7 @@ public class Main {
                 return;
             }
         }
-
-
-        }
+    }
 
 }
 

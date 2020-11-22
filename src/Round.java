@@ -24,7 +24,7 @@ public class Round {
     }
 
 
-    public int randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory) {
+    public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory) {
         while (true) {
             for (int i = 0; i < availableQuestions.size(); i++) {
                 if (chosenCategory.equals(availableQuestions.get(i).getCategory())) {
@@ -40,11 +40,11 @@ public class Round {
                             if (availableQuestions.get(i).getAnswers().get(chosenAnswer - 1).equals(availableQuestions.get(i).correctAnswer)) {
                                 System.out.println("The correct answer was: " + availableQuestions.get(i).getCorrectAnswer());
                                 availableQuestions.remove(availableQuestions.get(i));
-                                return 1000;
+                                return true;
                             } else {
                                 System.out.println("The correct answer was: " + availableQuestions.get(i).getCorrectAnswer());
                                 availableQuestions.remove(availableQuestions.get(i));
-                                return 0;
+                                return false;
                             }
                         } else
                             System.out.println("Please choose a suitable answer!");
@@ -56,13 +56,15 @@ public class Round {
 
 
         public void startRound ( int numberOfRound, ArrayList<Questions > availableQuestions, String
-        chosenCategory, ArrayList < Player > playerCount ){
+        chosenCategory, ArrayList < Player > playerCount, Menu menu ){
             if (numberOfRound == 1) {
                 RightAnswer r = new RightAnswer();
                 r.rightAnswerPoints(availableQuestions, chosenCategory, playerCount);
 
             }
             if (numberOfRound == 2) {
+                Betting b =new Betting();
+                b.bettingPoints(availableQuestions, chosenCategory, playerCount, menu);
 
             }
 

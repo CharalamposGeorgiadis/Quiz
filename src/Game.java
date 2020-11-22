@@ -49,15 +49,15 @@ public class Game {
 
     public void startGame() {
         for (int i = 0; i < currentRound.getRounds().size(); i++) {
-            System.out.println(currentRound.getRounds().get(i) + "\n");
+            System.out.println("\n" +currentRound.getRounds().get(i) + "\n");
             String chosenCategory = currentMenu.chooseCategory(categories);
-            currentRound.startRound(i + 1, availableQuestions, chosenCategory, playerCount);
+            currentRound.startRound(i + 1, availableQuestions, chosenCategory, playerCount,currentMenu);
             if (i < currentRound.getRounds().size()-1) {
-                System.out.println("MOVING TO THE NEXT ROUND\n");
+                System.out.println("MOVING TO THE NEXT ROUND");
             }
         }
             System.out.println("GAME FINISHED\n" + "TOTAL POINTS: " + playerCount.get(0).getPoints()+"\n");
-            System.out.println("Press any key to return to Main Menu\n") ; //In GUI, Press Enter
+            System.out.println("Press any key to return to Main Menu") ; //In GUI, Press Enter
         // How to change anyKey to not require Enter confirmation
             Scanner console = new Scanner(System.in);
             String anyKey=console.nextLine();
