@@ -24,7 +24,7 @@ public class Round {
     }
 
 
-    public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory) {
+    public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> playerCount) {
         while (true) {
             for (int i = 0; i < availableQuestions.size(); i++) {
                 if (chosenCategory.equals(availableQuestions.get(i).getCategory())) {
@@ -35,8 +35,44 @@ public class Round {
                     System.out.println("D. " + availableQuestions.get(i).getAnswers().get(3));
                     Scanner console = new Scanner(System.in);
                     while (true) {
-                        int chosenAnswer = console.nextInt();
-                        if (chosenAnswer > 0 && chosenAnswer < 5) {
+                        char chosenAnswer = console.next().charAt(0);
+                        if (chosenAnswer == playerCount.get(0).getControl(0)) {
+                            if (availableQuestions.get(i).getAnswers().get(0).equals(availableQuestions.get(i).correctAnswer)){
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return true;
+                          }
+                            else{
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return false;
+                            }
+                        } else if (chosenAnswer == playerCount.get(0).getControl(1)) {
+                            if (availableQuestions.get(i).getAnswers().get(1).equals(availableQuestions.get(i).correctAnswer)) {
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return true;
+                            }
+                            else{
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return false;
+                            }
+                        } else if (chosenAnswer == playerCount.get(0).getControl(2)) {
+                            if (availableQuestions.get(i).getAnswers().get(2).equals(availableQuestions.get(i).correctAnswer)) {
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return true;
+                            }
+                            else{
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return false;
+                            }
+                        } else if (chosenAnswer == playerCount.get(0).getControl(3)) {
+                            if (availableQuestions.get(i).getAnswers().get(3).equals(availableQuestions.get(i).correctAnswer)) {
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return true;
+                            }
+                            else {
+                                availableQuestions.remove(availableQuestions.get(i));
+                                return false;
+                            }
+                        /*if (chosenAnswer > 0 && chosenAnswer < 5) {
                             if (availableQuestions.get(i).getAnswers().get(chosenAnswer - 1).equals(availableQuestions.get(i).correctAnswer)) {
                                 System.out.println("The correct answer was: " + availableQuestions.get(i).getCorrectAnswer());
                                 availableQuestions.remove(availableQuestions.get(i));
@@ -45,14 +81,16 @@ public class Round {
                                 System.out.println("The correct answer was: " + availableQuestions.get(i).getCorrectAnswer());
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return false;
-                            }
-                        } else
+                            }*/
+                        }
+                        else
                             System.out.println("Please choose a suitable answer!");
                     }
                 }
-                }
+
             }
         }
+    }
 
 
         public void startRound ( int numberOfRound, ArrayList<Questions > availableQuestions, String

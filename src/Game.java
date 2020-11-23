@@ -7,28 +7,31 @@ import java.util.*;
 
 
 public class Game {
-    ArrayList<Player> playerCount;
-    ArrayList<Questions> availableQuestions;
-    Menu currentMenu;
-    Set<String> categories;
-    Round currentRound;
+    private ArrayList<Player> playerCount;
+    private ArrayList<Questions> availableQuestions;
+    private Menu currentMenu;
+    private Set<String> categories;
+    private Round currentRound;
 
 
-    public Game(File[] questions, String username) throws FileNotFoundException {
+    public Game(File[] questions) throws FileNotFoundException {
         availableQuestions = new ArrayList();
         categories = new HashSet<>();
         currentMenu = new Menu();
         currentRound = new Round();
         playerCount = new ArrayList();
-        Player tempPlayer = new Player(username);
-        playerCount.add(tempPlayer);
+        int numberOfPlayers=currentMenu.chooseNumberOfPlayers();
+        for (int i=0; i<numberOfPlayers; i++) {
+            Player tempPlayer = new Player(currentMenu.chooseUsername(i));
+           currentMenu.setControls(i,tempPlayer, playerCount);
+            playerCount.add(tempPlayer);
+        }
         Random rand = new Random();
         for (int i = 0; i < questions.length; i++) {
             if (questions[i].isFile()) {
                 Scanner scan = new Scanner(questions[i]);
                 Questions tempQuestion;
                 tempQuestion = new Questions();
-
                 while (scan.hasNextLine()) {
                     tempQuestion.setCategory(scan.nextLine());
                     tempQuestion.setQuestion(scan.nextLine());
@@ -50,7 +53,8 @@ public class Game {
     public void startGame() {
         for (int i = 0; i < currentRound.getRounds().size(); i++) {
             System.out.println("\n" +currentRound.getRounds().get(i) + "\n");
-            String chosenCategory = currentMenu.chooseCategory(categories);
+            String chosenCategory = currentMenu.chooseCategory(categories, playerCount);
+            System.out.println(chosenCategory.toUpperCase()+"\n");
             currentRound.startRound(i + 1, availableQuestions, chosenCategory, playerCount,currentMenu);
             if (i < currentRound.getRounds().size()-1) {
                 System.out.println("MOVING TO THE NEXT ROUND");
