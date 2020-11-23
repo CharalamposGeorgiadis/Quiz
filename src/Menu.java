@@ -75,7 +75,7 @@ public class Menu {
             }
             catch (NumberFormatException e)
             {
-                if (choice.equals("v")) {
+                if (choice.toLowerCase().equals("v")) {
                     this.viewControls(playerCount);
                     return chooseCategory(categories,playerCount);
                 }
