@@ -12,7 +12,5 @@ public class Betting extends Round{
                 this.addPoints(playerCount, -bet);
             System.out.println("Player's current points: "+playerCount.get(0).getPoints()+"\n");
         }
-
     }
-
 }

@@ -1,10 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
-import java.io.BufferedReader;
-import java.util.*;
-
 
 public class Game {
     private ArrayList<Player> playerCount;
@@ -13,23 +9,21 @@ public class Game {
     private Set<String> categories;
     private Round currentRound;
 
-
     public Game(File[] questions) throws FileNotFoundException {
-        availableQuestions = new ArrayList();
+        availableQuestions = new ArrayList<>();
         categories = new HashSet<>();
         currentMenu = new Menu();
         currentRound = new Round();
-        playerCount = new ArrayList();
+        playerCount = new ArrayList<>();
         int numberOfPlayers=currentMenu.chooseNumberOfPlayers();
         for (int i=0; i<numberOfPlayers; i++) {
             Player tempPlayer = new Player(currentMenu.chooseUsername(i));
-           currentMenu.setControls(i,tempPlayer, playerCount);
             playerCount.add(tempPlayer);
+            currentMenu.setControls(i,tempPlayer, playerCount);
         }
-        Random rand = new Random();
-        for (int i = 0; i < questions.length; i++) {
-            if (questions[i].isFile()) {
-                Scanner scan = new Scanner(questions[i]);
+        for (File question : questions) {
+            if (question.isFile()) {
+                Scanner scan = new Scanner(question);
                 Questions tempQuestion;
                 tempQuestion = new Questions();
                 while (scan.hasNextLine()) {
@@ -65,7 +59,6 @@ public class Game {
         // How to change anyKey to not require Enter confirmation
             Scanner console = new Scanner(System.in);
             String anyKey=console.nextLine();
-
     }
 }
 

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Round {
@@ -35,8 +34,8 @@ public class Round {
                     System.out.println("D. " + availableQuestions.get(i).getAnswers().get(3));
                     Scanner console = new Scanner(System.in);
                     while (true) {
-                        char chosenAnswer = console.next().charAt(0);
-                        if (chosenAnswer == playerCount.get(0).getControl(0)) {
+                        String chosenAnswer = console.nextLine();
+                        if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(0)))) {
                             if (availableQuestions.get(i).getAnswers().get(0).equals(availableQuestions.get(i).correctAnswer)){
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return true;
@@ -45,7 +44,7 @@ public class Round {
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return false;
                             }
-                        } else if (chosenAnswer == playerCount.get(0).getControl(1)) {
+                        } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(1)))) {
                             if (availableQuestions.get(i).getAnswers().get(1).equals(availableQuestions.get(i).correctAnswer)) {
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return true;
@@ -54,7 +53,7 @@ public class Round {
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return false;
                             }
-                        } else if (chosenAnswer == playerCount.get(0).getControl(2)) {
+                        } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(2)))) {
                             if (availableQuestions.get(i).getAnswers().get(2).equals(availableQuestions.get(i).correctAnswer)) {
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return true;
@@ -63,7 +62,7 @@ public class Round {
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return false;
                             }
-                        } else if (chosenAnswer == playerCount.get(0).getControl(3)) {
+                        } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(3)))) {
                             if (availableQuestions.get(i).getAnswers().get(3).equals(availableQuestions.get(i).correctAnswer)) {
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return true;
@@ -72,26 +71,14 @@ public class Round {
                                 availableQuestions.remove(availableQuestions.get(i));
                                 return false;
                             }
-                        /*if (chosenAnswer > 0 && chosenAnswer < 5) {
-                            if (availableQuestions.get(i).getAnswers().get(chosenAnswer - 1).equals(availableQuestions.get(i).correctAnswer)) {
-                                System.out.println("The correct answer was: " + availableQuestions.get(i).getCorrectAnswer());
-                                availableQuestions.remove(availableQuestions.get(i));
-                                return true;
-                            } else {
-                                System.out.println("The correct answer was: " + availableQuestions.get(i).getCorrectAnswer());
-                                availableQuestions.remove(availableQuestions.get(i));
-                                return false;
-                            }*/
                         }
                         else
                             System.out.println("Please choose a suitable answer!");
                     }
                 }
-
             }
         }
     }
-
 
         public void startRound ( int numberOfRound, ArrayList<Questions > availableQuestions, String
         chosenCategory, ArrayList < Player > playerCount, Menu menu ){
@@ -103,8 +90,6 @@ public class Round {
             if (numberOfRound == 2) {
                 Betting b =new Betting();
                 b.bettingPoints(availableQuestions, chosenCategory, playerCount, menu);
-
             }
-
-        }
+         }
     }

@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Player {
     private String username;
     private int points;
@@ -9,7 +7,7 @@ public class Player {
     Player(String username){
         this.username=username;
         points=0;
-        controls = new char[4];
+        controls= new char[4];
     }
 
 
@@ -32,6 +30,4 @@ public class Player {
     public void setPoints(int points){
         this.points=points;
     }
-
-
 }

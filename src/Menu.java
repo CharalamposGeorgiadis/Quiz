@@ -1,24 +1,8 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
 public class Menu {
-    private ArrayList<char[]>controls;
-
-
-
-    public Menu(){
-        controls=new ArrayList();
-        char[] inputControl=new char[4];
-        inputControl[0]='1';
-        inputControl[1]='2';
-        inputControl[2]='3';
-        inputControl[3]='4';
-        controls.add(inputControl);
-    }
-
-
 
     public String mainMenu() {
         Scanner console = new Scanner(System.in);
@@ -46,35 +30,28 @@ public class Menu {
 
     public void viewControls(ArrayList<Player> playerCount) {
         Scanner console = new Scanner(System.in);
-        /*System.out.println("                  PLAYER 1      PLAYER 2\n");
-        System.out.println(" ANSWER A:          "+controls.get(0)[0]+"             7\n");
-        System.out.println(" ANSWER B:          2             8\n");
-        System.out.println(" ANSWER C:          3             9\n");
-        System.out.println(" ANSWER D:          4             0\n");*/
         for (int i=0; i<playerCount.size(); i++) {
                 System.out.print("           PLAYER " + (i + 1));
         }
         System.out.print("\nANSWER A:     ");
-        for (int i=0; i<playerCount.size(); i++) {
-            System.out.print(playerCount.get(i).getControl(0)+"                  ");
+        for (Player p : playerCount) {
+            System.out.print(p.getControl(0) + "                  ");
         }
         System.out.print("\nANSWER B:     ");
-        for (int i=0; i<playerCount.size(); i++) {
-            System.out.print(playerCount.get(i).getControl(1)+"                  ");
+        for (Player p : playerCount) {
+            System.out.print(p.getControl(1) + "                  ");
         }
         System.out.print("\nANSWER C:     ");
-        for (int i=0; i<playerCount.size(); i++) {
-            System.out.print(playerCount.get(i).getControl(2)+"                  ");
+        for (Player p : playerCount) {
+            System.out.print(p.getControl(2) + "                  ");
         }
         System.out.print("\nANSWER D:     ");
-        for (int i=0; i<playerCount.size(); i++) {
-            System.out.print(playerCount.get(i).getControl(3)+"                  ");
+        for (Player p : playerCount) {
+            System.out.print(p.getControl(3) + "                  ");
         }
         System.out.println("\nPress any key to return to Main Menu");
         String anyKey= console.nextLine();
-        return;
     }
-
 
     public String chooseCategory(Set categories, ArrayList<Player> playerCount) {
         System.out.println("CHOOSE A CATEGORY");
@@ -116,14 +93,14 @@ public class Menu {
         System.out.println("3: 750");
         System.out.println("4: 1000");
         while (true) {
-            int chosenBet = console.nextInt();
-            if (chosenBet == 1)
+            String chosenBet = console.nextLine();
+            if (chosenBet.equals("1"))
                 return 250;
-            else if (chosenBet == 2)
+            else if (chosenBet.equals("2"))
                 return 500;
-            if (chosenBet == 3)
+            if (chosenBet.equals("3"))
                 return 750;
-            else if (chosenBet == 4)
+            else if (chosenBet.equals("4"))
                 return 1000;
             System.out.println("Please press an acceptable control!");
         }
@@ -132,14 +109,13 @@ public class Menu {
     public String chooseUsername(int currentPlayer){
         System.out.println("ENTER A USERNAME FOR PLAYER "+(currentPlayer+1));
         Scanner console = new Scanner(System.in);
-        String username=console.nextLine();
-        return username;
+        return console.nextLine();
     }
 
     public void setControls(int currentPlayerNumber, Player currentPlayer, ArrayList<Player>playerCount){
         Scanner console = new Scanner(System.in);
-        System.out.println("Set the controls for Player "+(currentPlayerNumber+1));
-        char tempControl;
+        System.out.println("Set the controls for Player "+ (currentPlayerNumber+1));
+        String tempControl;
         for (int i=0; i<4; i++) {
             switch (i) {
                 case 0:
@@ -155,19 +131,26 @@ public class Menu {
                     System.out.println("Set control for answer D");
                     break;
             }
-            tempControl = console.next().charAt(0);
-            for (Player p : playerCount) {
+            tempControl = console.nextLine();
+            for (int k=0; k<playerCount.size(); k++) {
                 for (int j=0; j<4; j++) {
-                    if (tempControl == p.getControl(j)) {
-                        System.out.println("Control already bound, please set a different control");
-                        break;
+                    if (tempControl.equals(String.valueOf(playerCount.get(k).getControl(j)))) {
+                            System.out.println("Control already bound, please set a different control");
+                            tempControl = console.nextLine();
+                            k=-1;
+                            j=4;
+                    }
+                    else if (tempControl.length() != 1){
+                        System.out.println("Please choose a suitable control");
+                        tempControl = console.nextLine();
+                        k=-1;
+                        j=4;
                     }
                 }
             }
-            currentPlayer.setPlayerControls(i,tempControl);
+            currentPlayer.setPlayerControls(i,tempControl.charAt(0));
         }
     }
-
 }
 
 

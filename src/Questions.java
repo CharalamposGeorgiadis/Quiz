@@ -1,7 +1,6 @@
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-
 public class Questions {
     String question;
     String category;
@@ -13,11 +12,10 @@ public class Questions {
     public Questions() {
         question = "";
         category="";
-        answers=new ArrayList();
+        answers=new ArrayList<>();
         String correctAnswer="";
         BufferedImage questionImage;
     }
-
 
     public void setQuestion(String question){
         this.question=question;
