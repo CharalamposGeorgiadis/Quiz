@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * This class represents the different menu options that appear during the course of the game.
@@ -86,14 +85,13 @@ public class Menu {
      * @return A String containing the chosen menu option.
      */
 
-
     public String chooseCategory(HashSet<String> categories, ArrayList<Player> playerCount) {
         System.out.println("CHOOSE A CATEGORY");
         int i = 1;
         String[] temp = new String[categories.size()];
-        for (Object category : categories) {
+        for (String category : categories) {
             System.out.println("Press " + i + " to choose " + category);
-            temp[i - 1] = category.toString();
+            temp[i - 1] = category;
             i++;
         }
         System.out.println("Press 'v' to view current controls");
@@ -124,22 +122,22 @@ public class Menu {
      * @return An Integer containing the chosen bet.
      */
 
-    public int betPoints() {
+    public int betPoints(Player player) {
         Scanner console = new Scanner(System.in);
         System.out.println("Choose your betting points");
-        System.out.println("1: 250");
-        System.out.println("2: 500");
-        System.out.println("3: 750");
-        System.out.println("4: 1000");
+        System.out.println("A: 250");
+        System.out.println("B: 500");
+        System.out.println("C: 750");
+        System.out.println("D: 1000");
         while (true) {
             String chosenBet = console.nextLine();
-            if (chosenBet.equals("1"))
+            if (chosenBet.equals(String.valueOf(player.getControl(0))))
                 return 250;
-            else if (chosenBet.equals("2"))
+            else if (chosenBet.equals(String.valueOf(player.getControl(1))))
                 return 500;
-            if (chosenBet.equals("3"))
+            if (chosenBet.equals(String.valueOf(player.getControl(2))))
                 return 750;
-            else if (chosenBet.equals("4"))
+            else if (chosenBet.equals(String.valueOf(player.getControl(3))))
                 return 1000;
             System.out.println("Please press an acceptable control!");
         }

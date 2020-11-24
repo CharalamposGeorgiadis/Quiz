@@ -21,50 +21,50 @@ public class Round {
 
     public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> playerCount) {
         while (true) {
-            for (int i = 0; i < availableQuestions.size(); i++) {
-                if (chosenCategory.equals(availableQuestions.get(i).getCategory())) {
-                    System.out.println(availableQuestions.get(i).getQuestion());
-                    System.out.println("A. " + availableQuestions.get(i).getAnswers().get(0));
-                    System.out.println("B. " + availableQuestions.get(i).getAnswers().get(1));
-                    System.out.println("C. " + availableQuestions.get(i).getAnswers().get(2));
-                    System.out.println("D. " + availableQuestions.get(i).getAnswers().get(3));
+            for (Questions q: availableQuestions){
+                if (chosenCategory.equals(q.getCategory())) {
+                    System.out.println(q.getQuestion());
+                    System.out.println("A. " + q.getAnswers().get(0));
+                    System.out.println("B. " + q.getAnswers().get(1));
+                    System.out.println("C. " + q.getAnswers().get(2));
+                    System.out.println("D. " + q.getAnswers().get(3));
                     Scanner console = new Scanner(System.in);
                     while (true) {
                         String chosenAnswer = console.nextLine();
                         if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(0)))) {
-                            if (availableQuestions.get(i).getAnswers().get(0).equals(availableQuestions.get(i).correctAnswer)){
-                                availableQuestions.remove(availableQuestions.get(i));
+                            if (q.getAnswers().get(0).equals(q.correctAnswer)){
+                                availableQuestions.remove(q);
                                 return true;
                           }
                             else{
-                                availableQuestions.remove(availableQuestions.get(i));
+                                availableQuestions.remove(q);
                                 return false;
                             }
                         } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(1)))) {
-                            if (availableQuestions.get(i).getAnswers().get(1).equals(availableQuestions.get(i).correctAnswer)) {
-                                availableQuestions.remove(availableQuestions.get(i));
+                            if (q.getAnswers().get(1).equals(q.correctAnswer)) {
+                                availableQuestions.remove(q);
                                 return true;
                             }
                             else{
-                                availableQuestions.remove(availableQuestions.get(i));
+                                availableQuestions.remove(q);
                                 return false;
                             }
                         } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(2)))) {
-                            if (availableQuestions.get(i).getAnswers().get(2).equals(availableQuestions.get(i).correctAnswer)) {
-                                availableQuestions.remove(availableQuestions.get(i));
+                            if (q.getAnswers().get(2).equals(q.correctAnswer)) {
+                                availableQuestions.remove(q);
                                 return true;
                             }
                             else{
-                                availableQuestions.remove(availableQuestions.get(i));
+                                availableQuestions.remove(q);
                                 return false;
                             }
                         } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(3)))) {
-                            if (availableQuestions.get(i).getAnswers().get(3).equals(availableQuestions.get(i).correctAnswer)) {
-                                availableQuestions.remove(availableQuestions.get(i));
+                            if (q.getAnswers().get(3).equals(q.correctAnswer)) {
+                                availableQuestions.remove(q);
                                 return true;
                             }
                             else {
-                                availableQuestions.remove(availableQuestions.get(i));
+                                availableQuestions.remove(q);
                                 return false;
                             }
                         }
