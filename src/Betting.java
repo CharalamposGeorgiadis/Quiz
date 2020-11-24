@@ -18,9 +18,9 @@ public class Betting extends Round{
         for (int i=0; i<5; i++) {
             int bet=menu.betPoints();
             if (this.randomQuestion(availableQuestions, chosenCategory, playerCount))
-                    this.addPoints(playerCount, bet);
+                playerCount.get(0).addPoints(bet);
             else
-                this.addPoints(playerCount, -bet);
+                playerCount.get(0).addPoints(-bet);
             System.out.println("Player's current points: "+playerCount.get(0).getPoints()+"\n");
         }
     }

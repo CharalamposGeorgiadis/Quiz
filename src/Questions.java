@@ -13,7 +13,7 @@ public class Questions {
     private String question;
     private String category;
     private ArrayList<String> answers; // String[4]?
-    private String correctAnswer;
+    protected String correctAnswer;
     private BufferedImage questionImage;
 
     /**

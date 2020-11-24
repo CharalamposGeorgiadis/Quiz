@@ -5,7 +5,7 @@
       <option name="TOP_LEVEL_CLASS_OPTIONS">
         <value>
           <option name="ACCESS_JAVADOC_REQUIRED_FOR" value="public" />
-          <option name="REQUIRED_TAGS" value="@author@param" />
+          <option name="REQUIRED_TAGS" value="@param@author" />
         </value>
       </option>
       <option name="INNER_CLASS_OPTIONS">

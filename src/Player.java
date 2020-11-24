@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 
 /**
  * This class represents a player playing the game.
@@ -67,4 +67,10 @@ public class Player {
     public void setPoints(int points){
         this.points=points;
     }
+
+    public void addPoints(int points) {
+        this.points+=points;
+    }
+
+
 }

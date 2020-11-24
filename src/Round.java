@@ -17,10 +17,6 @@ public class Round {
     }
 
 
-    public void addPoints(ArrayList<Player> player, int points) {
-        int tempPoints = player.get(0).getPoints() + points;
-        player.get(0).setPoints(tempPoints);
-    }
 
 
     public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> playerCount) {
