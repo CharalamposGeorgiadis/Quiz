@@ -50,7 +50,7 @@ public class Menu {
             System.out.print(p.getControl(3) + "                  ");
         }
         System.out.println("\nPress any key to return to Main Menu");
-        String anyKey= console.nextLine();
+        console.nextLine();
     }
 
     public String chooseCategory(Set categories, ArrayList<Player> playerCount) {

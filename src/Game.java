@@ -58,7 +58,7 @@ public class Game {
             System.out.println("Press any key to return to Main Menu") ; //In GUI, Press Enter
         // How to change anyKey to not require Enter confirmation
             Scanner console = new Scanner(System.in);
-            String anyKey=console.nextLine();
+            console.nextLine();
     }
 }
 
