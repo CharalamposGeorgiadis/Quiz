@@ -10,6 +10,12 @@ import java.util.ArrayList;
 
 public class RightAnswer extends Round {
 
+    /**
+     * Represents the Right Answer portion of the game.
+     * @param availableQuestions List containing all the available questions.
+     * @param chosenCategory The category chosen by one of the players.
+     * @param players List containing every player.
+     */
 
     public void rightAnswerPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players){
         for (int i=0; i<5; i++) {
