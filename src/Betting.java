@@ -17,7 +17,7 @@ public class Betting extends Round{
     public void bettingPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> playerCount, Menu menu){
         for (int i=0; i<5; i++) {
             int bet=menu.betPoints();
-            if (this.randomQuestion(availableQuestions, chosenCategory, playerCount))
+            if (randomQuestion(availableQuestions, chosenCategory, playerCount))
                 playerCount.get(0).addPoints(bet);
             else
                 playerCount.get(0).addPoints(-bet);
