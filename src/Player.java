@@ -67,6 +67,11 @@ public class Player {
         this.points=points;
     }
 
+    /**
+     * Adds points to the player.
+     * @param points An Integer containing the points that will be added.
+     */
+
     public void addPoints(int points) {
         this.points+=points;
     }

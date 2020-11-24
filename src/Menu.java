@@ -1,8 +1,22 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * This class represents the different menu options that appear during the course of the game.
+ * @author Anastasios Kachrimanis
+ * @author Charalampos Georgiadis
+ * @version 24/11/2020
+ */
+
+
 public class Menu {
+
+    /**
+     * Represents the main menu that appears at the start of the game.
+     * @return  A String containing the chosen menu option.
+     */
 
     public String mainMenu() {
         Scanner console = new Scanner(System.in);
@@ -12,13 +26,19 @@ public class Menu {
         return console.nextLine();
     }
 
+    /**
+     * Asks the user to choose the number of players.
+     * @return  An Integer containing the chosen number of players.
+     * @exception NumberFormatException on String input.
+     */
+
     public int chooseNumberOfPlayers() {
         System.out.println("Choose Number of Players");
         Scanner console = new Scanner(System.in);
         while (true) {
             String choice = console.nextLine();
             try {
-                if (Integer.parseInt(choice)>0&& Integer.parseInt(choice)<9)
+                if (Integer.parseInt(choice)>0 && Integer.parseInt(choice)<9)
                     return Integer.parseInt(choice);
                 else
                     System.out.println("Please choose an appropriate amount of players");
@@ -27,6 +47,12 @@ public class Menu {
             }
         }
     }
+
+    /**
+     * Shows each player's controls.
+     * @param playerCount A list that contains the information of each player.
+     */
+
 
     public void viewControls(ArrayList<Player> playerCount) {
         Scanner console = new Scanner(System.in);
@@ -53,7 +79,15 @@ public class Menu {
         console.nextLine();
     }
 
-    public String chooseCategory(Set categories, ArrayList<Player> playerCount) {
+    /**
+     * Asks a player to choose a category or view the current controls.
+     * @param categories HashSet of Strings containing all the available categories.
+     * @param playerCount A list that contains the information of each player.
+     * @return A String containing the chosen menu option.
+     */
+
+
+    public String chooseCategory(HashSet<String> categories, ArrayList<Player> playerCount) {
         System.out.println("CHOOSE A CATEGORY");
         int i = 1;
         String[] temp = new String[categories.size()];
@@ -85,6 +119,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Asks each player to bet points for the betting portion of the game.
+     * @return An Integer containing the chosen bet.
+     */
+
     public int betPoints() {
         Scanner console = new Scanner(System.in);
         System.out.println("Choose your betting points");
@@ -106,11 +145,24 @@ public class Menu {
         }
     }
 
-    public String chooseUsername(int currentPlayer){
-        System.out.println("ENTER A USERNAME FOR PLAYER "+(currentPlayer+1));
+    /**
+     * Asks a player to choose their username.
+     * @param currentPlayerNumber The nth player who is currently choosing their username.
+     * @return A String containing the chosen username.
+     */
+
+    public String chooseUsername(int currentPlayerNumber){
+        System.out.println("ENTER A USERNAME FOR PLAYER "+(currentPlayerNumber+1));
         Scanner console = new Scanner(System.in);
         return console.nextLine();
     }
+
+    /**
+     * Asks the current player to set their controls.
+     * @param currentPlayerNumber The nth player who is currently choosing their username.
+     * @param currentPlayer The player who is currently setting their controls.
+     * @param playerCount A list that contains the information of each player.
+     */
 
     public void setControls(int currentPlayerNumber, Player currentPlayer, ArrayList<Player>playerCount){
         Scanner console = new Scanner(System.in);
@@ -132,6 +184,8 @@ public class Menu {
                     break;
             }
             tempControl = console.nextLine();
+
+            // Loop that checks if the chosen control is already bound, whereupon it asks for a new control and restarts.
             for (int k=0; k<playerCount.size(); k++) {
                 for (int j=0; j<4; j++) {
                     if (tempControl.equals(String.valueOf(playerCount.get(k).getControl(j)))) {

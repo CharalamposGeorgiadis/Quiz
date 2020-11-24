@@ -6,7 +6,7 @@ public class Game {
     private ArrayList<Player> playerCount;
     private ArrayList<Questions> availableQuestions;
     private Menu currentMenu;
-    private Set<String> categories;
+    private HashSet<String> categories;
     private Round currentRound;
 
     public Game(File[] questions) throws FileNotFoundException {
