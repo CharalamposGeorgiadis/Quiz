@@ -52,7 +52,6 @@ public class Menu {
      * @param playerCount A list that contains the information of each player.
      */
 
-
     public void viewControls(ArrayList<Player> playerCount) {
         Scanner console = new Scanner(System.in);
         for (int i=0; i<playerCount.size(); i++) {
@@ -83,6 +82,7 @@ public class Menu {
      * @param categories HashSet of Strings containing all the available categories.
      * @param playerCount A list that contains the information of each player.
      * @return A String containing the chosen menu option.
+     * @exception NumberFormatException on String input.
      */
 
     public String chooseCategory(HashSet<String> categories, ArrayList<Player> playerCount) {
@@ -204,12 +204,3 @@ public class Menu {
         }
     }
 }
-
-
-
-
-
-
-
-
-
