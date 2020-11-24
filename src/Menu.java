@@ -49,28 +49,28 @@ public class Menu {
 
     /**
      * Shows each player's controls.
-     * @param playerCount A list that contains the information of each player.
+     * @param players A list that contains the information of each player.
      */
 
-    public void viewControls(ArrayList<Player> playerCount) {
+    public void viewControls(ArrayList<Player> players) {
         Scanner console = new Scanner(System.in);
-        for (int i=0; i<playerCount.size(); i++) {
+        for (int i=0; i<players.size(); i++) {
                 System.out.print("           PLAYER " + (i + 1));
         }
         System.out.print("\nANSWER A:     ");
-        for (Player p : playerCount) {
+        for (Player p : players) {
             System.out.print(p.getControl(0) + "                  ");
         }
         System.out.print("\nANSWER B:     ");
-        for (Player p : playerCount) {
+        for (Player p : players) {
             System.out.print(p.getControl(1) + "                  ");
         }
         System.out.print("\nANSWER C:     ");
-        for (Player p : playerCount) {
+        for (Player p : players) {
             System.out.print(p.getControl(2) + "                  ");
         }
         System.out.print("\nANSWER D:     ");
-        for (Player p : playerCount) {
+        for (Player p : players) {
             System.out.print(p.getControl(3) + "                  ");
         }
         System.out.println("\nPress any key to return to Main Menu");
@@ -80,12 +80,12 @@ public class Menu {
     /**
      * Asks a player to choose a category or view the current controls.
      * @param categories HashSet of Strings containing all the available categories.
-     * @param playerCount A list that contains the information of each player.
+     * @param players A list that contains the information of each player.
      * @return A String containing the chosen menu option.
      * @exception NumberFormatException on String input.
      */
 
-    public String chooseCategory(HashSet<String> categories, ArrayList<Player> playerCount) {
+    public String chooseCategory(HashSet<String> categories, ArrayList<Player> players) {
         System.out.println("CHOOSE A CATEGORY");
         int i = 1;
         String[] temp = new String[categories.size()];
@@ -108,8 +108,8 @@ public class Menu {
             catch (NumberFormatException e)
             {
                 if (choice.toLowerCase().equals("v")) {
-                    this.viewControls(playerCount);
-                    return chooseCategory(categories,playerCount);
+                    this.viewControls(players);
+                    return chooseCategory(categories,players);
                 }
                 else
                     System.out.println("Please choose a suitable control");
@@ -119,6 +119,7 @@ public class Menu {
 
     /**
      * Asks each player to bet points for the betting portion of the game.
+     * @param player One of the players
      * @return An Integer containing the chosen bet.
      */
 
@@ -159,10 +160,10 @@ public class Menu {
      * Asks the current player to set their controls.
      * @param currentPlayerNumber The nth player who is currently choosing their username.
      * @param currentPlayer The player who is currently setting their controls.
-     * @param playerCount A list that contains the information of each player.
+     * @param players A list that contains the information of each player.
      */
 
-    public void setControls(int currentPlayerNumber, Player currentPlayer, ArrayList<Player>playerCount){
+    public void setControls(int currentPlayerNumber, Player currentPlayer, ArrayList<Player> players){
         Scanner console = new Scanner(System.in);
         System.out.println("Set the controls for Player "+ (currentPlayerNumber+1));
         String tempControl;
@@ -184,9 +185,9 @@ public class Menu {
             tempControl = console.nextLine();
 
             // Loop that checks if the chosen control is already bound, whereupon it asks for a new control and restarts.
-            for (int k=0; k<playerCount.size(); k++) {
+            for (int k=0; k<players.size(); k++) {
                 for (int j=0; j<4; j++) {
-                    if (tempControl.equals(String.valueOf(playerCount.get(k).getControl(j)))) {
+                    if (tempControl.equals(String.valueOf(players.get(k).getControl(j)))) {
                             System.out.println("Control already bound, please set a different control");
                             tempControl = console.nextLine();
                             k=-1;

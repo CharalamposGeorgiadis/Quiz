@@ -16,14 +16,14 @@ public class Betting extends Round{
 
     public void bettingPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players, Menu menu) {
         for (int i = 0; i < 5; i++) {
-            for (Player p : players) {
-                int bet = menu.betPoints(p);
+            //for (Player p : players) {  //Will be added in version 2
+                int bet = menu.betPoints(players.get(0));
                 if (randomQuestion(availableQuestions, chosenCategory, players))
-                    p.addPoints(bet);
+                    players.get(0).addPoints(bet);
                 else
-                    p.addPoints(-bet);
-                System.out.println("Player's current points: " + p.getPoints() + "\n");
-            }
+                    players.get(0).addPoints(-bet);
+                System.out.println("Player's current points: " + players.get(0).getPoints() + "\n");
+
         }
     }
 }

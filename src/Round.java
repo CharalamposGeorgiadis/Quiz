@@ -19,7 +19,7 @@ public class Round {
 
 
 
-    public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> playerCount) {
+    public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> players) {
         while (true) {
             for (Questions q: availableQuestions){
                 if (chosenCategory.equals(q.getCategory())) {
@@ -31,7 +31,7 @@ public class Round {
                     Scanner console = new Scanner(System.in);
                     while (true) {
                         String chosenAnswer = console.nextLine();
-                        if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(0)))) {
+                        if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(0)))) {
                             if (q.getAnswers().get(0).equals(q.correctAnswer)){
                                 availableQuestions.remove(q);
                                 return true;
@@ -40,7 +40,7 @@ public class Round {
                                 availableQuestions.remove(q);
                                 return false;
                             }
-                        } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(1)))) {
+                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(1)))) {
                             if (q.getAnswers().get(1).equals(q.correctAnswer)) {
                                 availableQuestions.remove(q);
                                 return true;
@@ -49,7 +49,7 @@ public class Round {
                                 availableQuestions.remove(q);
                                 return false;
                             }
-                        } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(2)))) {
+                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(2)))) {
                             if (q.getAnswers().get(2).equals(q.correctAnswer)) {
                                 availableQuestions.remove(q);
                                 return true;
@@ -58,7 +58,7 @@ public class Round {
                                 availableQuestions.remove(q);
                                 return false;
                             }
-                        } else if (chosenAnswer.equals(String.valueOf(playerCount.get(0).getControl(3)))) {
+                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(3)))) {
                             if (q.getAnswers().get(3).equals(q.correctAnswer)) {
                                 availableQuestions.remove(q);
                                 return true;
@@ -77,15 +77,15 @@ public class Round {
     }
 
         public void startRound ( int numberOfRound, ArrayList<Questions > availableQuestions, String
-        chosenCategory, ArrayList < Player > playerCount, Menu menu ){
+        chosenCategory, ArrayList <Player> players, Menu menu ){
             if (numberOfRound == 1) {
                 RightAnswer r = new RightAnswer();
-                r.rightAnswerPoints(availableQuestions, chosenCategory, playerCount);
+                r.rightAnswerPoints(availableQuestions, chosenCategory, players);
 
             }
             if (numberOfRound == 2) {
                 Betting b =new Betting();
-                b.bettingPoints(availableQuestions, chosenCategory, playerCount, menu);
+                b.bettingPoints(availableQuestions, chosenCategory, players, menu);
             }
          }
     }

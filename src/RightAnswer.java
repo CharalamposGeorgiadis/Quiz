@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class RightAnswer extends Round {
 
 
-    public void rightAnswerPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> playerCount){
+    public void rightAnswerPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players){
         for (int i=0; i<5; i++) {
-            if (randomQuestion(availableQuestions, chosenCategory, playerCount))
-                 playerCount.get(0).addPoints(1000);
+            if (randomQuestion(availableQuestions, chosenCategory, players))
+                 players.get(0).addPoints(1000);
             else
-                playerCount.get(0).addPoints(0);
-            System.out.println("Player's current points: "+playerCount.get(0).getPoints()+"\n");
+                players.get(0).addPoints(0);
+            System.out.println("Player's current points: "+players.get(0).getPoints()+"\n");
         }
     }
 }
