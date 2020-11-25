@@ -1,7 +1,20 @@
 import java.io.FileNotFoundException;
 import java.io.File;
 
+/**
+ * Main class of the application.
+ * @author Anastasios Kachrimanis
+ * @author Charalampos Georgiadis
+ * @version 24/11/2020
+ */
+
 public class Main {
+
+    /**
+     * Main function of the application.
+     * @param args An array of command-line arguments for the application
+     * @throws FileNotFoundException if a file is not found.
+     */
     public static void main(String[] args) throws FileNotFoundException {
         Menu menu;
         Game game;
@@ -24,15 +37,3 @@ public class Main {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

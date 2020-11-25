@@ -15,6 +15,7 @@ public class Player {
      * Constructor
      * @param username The player's username.
      */
+
     Player(String username){
         this.username=username;
         points=0;
@@ -26,6 +27,7 @@ public class Player {
      * @param currentAnswer The answer of which we want to set the control (A, B, C or D)
      * @param chosenControl A String containing the control chosen by the player.
      */
+
     public void setPlayerControls(int currentAnswer, char chosenControl){
         controls[currentAnswer]=chosenControl;
     }
@@ -75,6 +77,4 @@ public class Player {
     public void addPoints(int points) {
         this.points+=points;
     }
-
-
 }

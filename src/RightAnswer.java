@@ -19,6 +19,7 @@ public class RightAnswer extends Round {
 
     public void rightAnswerPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players){
         for (int i=0; i<5; i++) {
+            //for (Player p : players) {  //Will be added in version 2
             if (randomQuestion(availableQuestions, chosenCategory, players))
                  players.get(0).addPoints(1000);
             else

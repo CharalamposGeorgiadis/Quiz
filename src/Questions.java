@@ -8,23 +8,23 @@ import java.util.ArrayList;
  * @version 24/11/2020
  */
 
-
 public class Questions {
     private String question;
     private String category;
-    private ArrayList<String> answers; // String[4]?
+    private ArrayList<String> answers;
     protected String correctAnswer;
-    private BufferedImage questionImage;
+    private BufferedImage questionImage; // Will be used when we add questions with images.
 
     /**
      * Constructor
      */
+
     public Questions() {
         question = "";
         category="";
         answers=new ArrayList<>();
         String correctAnswer="";
-        BufferedImage questionImage;
+        BufferedImage questionImage=null;
     }
 
     /**
@@ -35,6 +35,7 @@ public class Questions {
     public void setQuestion(String question){
         this.question=question;
     }
+
     /**
      * Sets the question's category.
      * @param category A String containing the question's category.
@@ -43,6 +44,7 @@ public class Questions {
     public void setCategory(String category){
         this.category=category;
     }
+
     /**
      * Sets one of the question's possible answers.
      * @param answer A String containing one of the possible answers.
@@ -51,6 +53,7 @@ public class Questions {
     public void setAnswer(String answer){
         answers.add(answer);
     }
+
     /**
      * Sets the question's correct answer.
      * @param correctAnswer A String containing the question's correct answer.
@@ -59,6 +62,7 @@ public class Questions {
     public void setCorrectAnswer(String correctAnswer){
         this.correctAnswer=correctAnswer;
     }
+
     /**
      * Sets the question's Image.
      * Currently not supported.
@@ -76,6 +80,7 @@ public class Questions {
     public String getCategory(){
         return category;
     }
+
     /**
      * Gets a question.
      * @return A string representing a question.
@@ -84,6 +89,7 @@ public class Questions {
     public String getQuestion(){
         return question;
     }
+
     /**
      * Gets the question's possible answers.
      * @return An ArrayList of Strings representing the question's possible answers.
@@ -92,6 +98,7 @@ public class Questions {
     public ArrayList<String> getAnswers(){
         return answers;
     }
+
     /**
      * Gets the question's correct answer.
      * @return An ArrayList of Strings representing the question's possible answers.
@@ -101,5 +108,3 @@ public class Questions {
         return correctAnswer;
     }
 }
-
-

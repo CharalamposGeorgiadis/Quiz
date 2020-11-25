@@ -9,7 +9,6 @@ import java.util.Scanner;
  * @version 24/11/2020
  */
 
-
 public class Menu {
 
     /**
