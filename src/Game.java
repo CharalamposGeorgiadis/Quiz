@@ -2,6 +2,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * This class represents the whole game.
+ * @author Anastasios Kachrimanis
+ * @author Charalampos Georgiadis
+ * @version 24/11/2020
+ */
+
 public class Game {
     private ArrayList<Player> players;
     private ArrayList<Questions> availableQuestions;
@@ -9,9 +16,15 @@ public class Game {
     private HashSet<String> categories;
     private Round currentRound;
 
+    /**
+     * Constructor.
+     * @param questions Holds the directory of the questions folder.
+     * @throws FileNotFoundException if a file is not found.
+     */
+
     public Game(File[] questions) throws FileNotFoundException {
         availableQuestions = new ArrayList<>();
-        categories = new HashSet<>();
+        categories = new HashSet<>(); //Holds the name of each category once.
         currentMenu = new Menu();
         currentRound = new Round();
         players = new ArrayList<>();
@@ -35,14 +48,18 @@ public class Game {
                     tempQuestion.setAnswer(scan.nextLine());
                     tempQuestion.setCorrectAnswer(scan.nextLine());
                     categories.add(tempQuestion.getCategory());
-                    Collections.shuffle(tempQuestion.getAnswers());
+                    Collections.shuffle(tempQuestion.getAnswers()); //Shuffles the list that holds the answers of each question, so that they appear at a different order in every game.
                     availableQuestions.add(tempQuestion);
                     //In version 2 add image
                 }
-                Collections.shuffle(availableQuestions);
+                Collections.shuffle(availableQuestions); //Shuffles the list that holds all the questions, so that they appear at a different order in every game.
             }
         }
     }
+
+    /**
+     * Starts the game.
+     */
 
     public void startGame() {
         for (int i = 0; i < currentRound.getRounds().size(); i++) {
@@ -56,7 +73,6 @@ public class Game {
         }
             System.out.println("GAME FINISHED\n" + "TOTAL POINTS: " + players.get(0).getPoints()+"\n");
             System.out.println("Press any key to return to Main Menu") ; //In GUI, Press Enter
-        // How to change anyKey to not require Enter confirmation
             Scanner console = new Scanner(System.in);
             console.nextLine();
     }

@@ -56,37 +56,45 @@ public class Round {
                         String chosenAnswer = console.nextLine();
                         if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(0)))) {
                             if (q.getAnswers().get(0).equals(q.correctAnswer)){
+                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
                                 availableQuestions.remove(q);
                                 return true;
                           }
                             else{
+                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
                                 availableQuestions.remove(q);
                                 return false;
                             }
                         } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(1)))) {
                             if (q.getAnswers().get(1).equals(q.correctAnswer)) {
+                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
                                 availableQuestions.remove(q);
                                 return true;
                             }
                             else{
+                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
                                 availableQuestions.remove(q);
                                 return false;
                             }
                         } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(2)))) {
                             if (q.getAnswers().get(2).equals(q.correctAnswer)) {
+                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
                                 availableQuestions.remove(q);
                                 return true;
                             }
                             else{
+                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
                                 availableQuestions.remove(q);
                                 return false;
                             }
                         } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(3)))) {
                             if (q.getAnswers().get(3).equals(q.correctAnswer)) {
+                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
                                 availableQuestions.remove(q);
                                 return true;
                             }
                             else {
+                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
                                 availableQuestions.remove(q);
                                 return false;
                             }
