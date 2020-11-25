@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 /**
  * This class extends the Round Class and implements the Right Answer round of the Game.
- * If the player answers correctly he gains 1000 points. Otherwise, he gains 0 points.
  * @author Anastasios Kachrimanis
  * @author Charalampos Georgiadis
  * @version 24/11/2020
@@ -12,6 +11,7 @@ public class RightAnswer extends Round {
 
     /**
      * Represents the Right Answer portion of the game.
+     * If the player answers correctly he gains 1000 points. Otherwise, he gains 0 points.
      * @param availableQuestions List containing all the available questions.
      * @param chosenCategory The category chosen by one of the players.
      * @param players List containing every player.

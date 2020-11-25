@@ -1,10 +1,21 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class represents a round in the game.
+ * @author Anastasios Kachrimanis
+ * @author Charalampos Georgiadis
+ * @version 24/11/2020
+ */
+
 public class Round {
 
     private ArrayList<String> rounds;
 
+    /**
+     * Constructor
+     * Creates a list that holds the names of each round type.
+     */
 
     public Round() {
         rounds = new ArrayList<>();
@@ -12,15 +23,27 @@ public class Round {
         rounds.add("BETTING");
     }
 
+    /**
+     * Gets the name of the current round type.
+     * @return The name of the current round type.
+     */
+
     public ArrayList<String> getRounds() {
         return rounds;
     }
 
-
+    /**
+     * Asks the player(s) a random question based on the chosen category. After each player has answered it removes that question from the list of available questions.
+     * @param availableQuestions A list holding all the available questions.
+     * @param chosenCategory A String that holds the chosen category for this round.
+     * @param players A list holding the information of each player.
+     * @return If the player has answered correctly it returns true, otherwise it returns false.
+     */
 
 
     public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> players) {
-        while (true) {
+      //  while (true) {
+
             for (Questions q: availableQuestions){
                 if (chosenCategory.equals(q.getCategory())) {
                     System.out.println(q.getQuestion());
@@ -73,9 +96,18 @@ public class Round {
                     }
                 }
             }
-        }
+        //}
+        return true;
     }
 
+    /**
+     * Initiates the start of each round type.
+     * @param numberOfRound The number of the current round type.
+     * @param availableQuestions A list holding all the available questions.
+     * @param chosenCategory A String that holds the chosen category for this round.
+     * @param players A list holding the information of each player.
+     * @param menu Gives access to menu options.
+     */
         public void startRound ( int numberOfRound, ArrayList<Questions > availableQuestions, String
         chosenCategory, ArrayList <Player> players, Menu menu ){
             if (numberOfRound == 1) {
