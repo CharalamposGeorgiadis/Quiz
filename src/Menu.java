@@ -19,7 +19,7 @@ public class Menu {
 
     public String mainMenu() {
         Scanner console = new Scanner(System.in);
-        System.out.println("PRESS 1 TO START GAME (MORE THAN 1 PLAYERS NOT SUPPORTED AT THE MOMENT)\n"); //max players=8
+        System.out.println("PRESS 1 TO START GAME (MORE THAN 1 PLAYERS NOT SUPPORTED AT THE MOMENT)\n"); //max players=4
         System.out.println("PRESS 2 TO VIEW PLAYER STATS (NOT SUPPORTED AT THE MOMENT)\n");
         System.out.println("PRESS ANY KEY TO EXIT GAME");
         return console.nextLine();
@@ -37,7 +37,7 @@ public class Menu {
         while (true) {
             String choice = console.nextLine();
             try {
-                if (Integer.parseInt(choice)>0 && Integer.parseInt(choice)<9)
+                if (Integer.parseInt(choice)>0 && Integer.parseInt(choice)<5)
                     return Integer.parseInt(choice);
                 else
                     System.out.println("Please choose an appropriate amount of players");
