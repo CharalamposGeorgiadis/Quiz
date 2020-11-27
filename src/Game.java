@@ -28,11 +28,11 @@ public class Game {
         currentMenu = new Menu();
         currentRound = new Round();
         players = new ArrayList<>();
-        int numberOfPlayers=currentMenu.chooseNumberOfPlayers();
-        for (int i=0; i<numberOfPlayers; i++) {
+        int numberOfPlayers = currentMenu.chooseNumberOfPlayers();
+        for (int i = 0; i < numberOfPlayers; i++) {
             Player tempPlayer = new Player(currentMenu.chooseUsername(i));
             players.add(tempPlayer);
-            currentMenu.setControls(i,tempPlayer, players);
+            currentMenu.setControls(i, tempPlayer, players);
         }
         for (File question : questions) {
             if (question.isFile()) {
