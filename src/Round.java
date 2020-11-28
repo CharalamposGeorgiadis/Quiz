@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class Round {
 
-    private ArrayList<String> rounds;
+    private ArrayList<String> roundTypes;
 
     /**
      * Constructor
@@ -18,9 +19,10 @@ public class Round {
      */
 
     public Round() {
-        rounds = new ArrayList<>();
-        rounds.add("RIGHT ANSWER");
-        rounds.add("BETTING");
+        roundTypes = new ArrayList<>(); //If a new round type is to be added, add its name in this list in Capital letters.
+        roundTypes.add("RIGHT ANSWER");
+        roundTypes.add("BETTING");
+        Collections.shuffle(roundTypes);//Shuffles the list that holds the names of each round type, so that they appear at a different order in every game.
     }
 
     /**
@@ -29,7 +31,7 @@ public class Round {
      */
 
     public ArrayList<String> getRounds() {
-        return rounds;
+        return roundTypes;
     }
 
     /**
@@ -43,7 +45,6 @@ public class Round {
 
     public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> players) {
       //  while (true) {
-
             for (Questions q: availableQuestions){
                 if (chosenCategory.equals(q.getCategory())) {
                     System.out.println(q.getQuestion());
@@ -104,28 +105,28 @@ public class Round {
                     }
                 }
             }
-        //}
         return true;
     }
 
     /**
      * Initiates the start of each round type.
-     * @param numberOfRound The number of the current round type.
+     * @param currentRound The name of the current round type.
      * @param availableQuestions A list holding all the available questions.
      * @param chosenCategory A String that holds the chosen category for this round.
      * @param players A list holding the information of each player.
      * @param menu Gives access to menu options.
      */
-        public void startRound ( int numberOfRound, ArrayList<Questions > availableQuestions, String
+        public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String
         chosenCategory, ArrayList <Player> players, Menu menu ){
-            if (numberOfRound == 1) {
-                RightAnswer r = new RightAnswer();
-                r.rightAnswerPoints(availableQuestions, chosenCategory, players);
-
-            }
-            if (numberOfRound == 2) {
-                Betting b =new Betting();
-                b.bettingPoints(availableQuestions, chosenCategory, players, menu);
+            switch(currentRound){ // If a new round type is added, create a new case for it.
+                case "RIGHT ANSWER":
+                    RightAnswer r = new RightAnswer();
+                    r.rightAnswerPoints(availableQuestions, chosenCategory, players);
+                    break;
+                case "BETTING":
+                    Betting b =new Betting();
+                    b.bettingPoints(availableQuestions, chosenCategory, players, menu);
+                    break;
             }
          }
     }
