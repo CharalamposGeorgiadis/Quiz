@@ -25,9 +25,13 @@ public class Main {
                 case "1":
                     File path = new File("Buzz Questions Directory");
                     File[] questions = path.listFiles();
-                    game = new Game(questions);
-                    game.startGame();
-                    break;
+                    if (questions != null){
+                        game = new Game(questions);
+                        game.startGame();
+                    }
+                    else
+                        System.out.println("PLEASE LOCATE THE BUZZ QUESTIONS DIRECTORY FOLDER.");
+                        return;
                 case "2":
                     System.out.println("PLAYER STATS NOT SUPPORTED, RETURNING TO MAIN MENU\n");
                     break;
