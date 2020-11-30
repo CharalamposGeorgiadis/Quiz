@@ -75,10 +75,11 @@ public class Game {
                 System.out.println("MOVING TO THE NEXT ROUND");
             }
         }
-            System.out.println("GAME FINISHED\n" + "TOTAL POINTS: " + players.get(0).getPoints()+"\n");
-            System.out.println("Press any key to return to Main Menu") ; //In GUI, Press Enter
-            Scanner console = new Scanner(System.in);
-            console.nextLine();
+        System.out.println("GAME FINISHED");
+        System.out.println(players.get(0).getUsername() + ": " + players.get(0).getPoints()); //In version 2, sort players by points and print them all with a loop.
+        System.out.println("\nPress any key to return to Main Menu"); //In GUI, Press Enter
+        Scanner console = new Scanner(System.in);
+        console.nextLine();
     }
 }
 
