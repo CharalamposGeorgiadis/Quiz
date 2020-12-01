@@ -45,7 +45,7 @@ public class Round {
 
     public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> players) {
       //  while (true) {
-            for (Questions q: availableQuestions){
+            for (Questions q: availableQuestions) {
                 if (chosenCategory.equals(q.getCategory())) {
                     System.out.println(q.getQuestion());
                     System.out.println("A. " + q.getAnswers().get(0));
@@ -117,7 +117,7 @@ public class Round {
      * @param menu Gives access to menu options.
      */
         public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String
-        chosenCategory, ArrayList <Player> players, Menu menu ){
+        chosenCategory, ArrayList <Player> players, Menu menu ) {
             switch(currentRound){ // If a new round type is added, create a new case for it.
                 case "RIGHT ANSWER":
                     RightAnswer r = new RightAnswer();
