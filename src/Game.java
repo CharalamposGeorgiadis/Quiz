@@ -28,12 +28,17 @@ public class Game {
         currentMenu = new Menu();
         currentRound = new Round();
         players = new ArrayList<>();
+        /*
+        Will be added in version 2
         int numberOfPlayers = currentMenu.chooseNumberOfPlayers();
         for (int i = 0; i < numberOfPlayers; i++) {
             Player tempPlayer = new Player(currentMenu.chooseUsername(i));
             players.add(tempPlayer);
             currentMenu.setControls(i, tempPlayer, players);
-        }
+        }*/
+        Player tempPlayer = new Player(currentMenu.chooseUsername(0));
+        players.add(tempPlayer);
+        currentMenu.setControls(0, tempPlayer, players);
         for (File question : questions) {
             if (question.isFile()) {
                 Scanner scan = new Scanner(question);

@@ -20,7 +20,7 @@ public class Menu {
         Scanner console = new Scanner(System.in);
         System.out.println("PRESS 1 TO START GAME (MORE THAN 1 PLAYERS NOT SUPPORTED AT THE MOMENT)\n"); //max players=4
         System.out.println("PRESS 2 TO VIEW PLAYER STATS (NOT SUPPORTED AT THE MOMENT)\n");
-        System.out.println("PRESS ANY KEY TO EXIT GAME");
+        System.out.println("PRESS ANY OTHER KEY TO EXIT GAME");
         return console.nextLine();
     }
 
@@ -31,7 +31,7 @@ public class Menu {
      */
 
     public int chooseNumberOfPlayers() {
-        System.out.println("Choose Number of Players");
+        System.out.println("Choose Number of Players (Max players:4)");
         Scanner console = new Scanner(System.in);
         while (true) {
             String choice = console.nextLine();
@@ -41,7 +41,7 @@ public class Menu {
                 else
                     System.out.println("Please choose an appropriate amount of players");
             } catch (NumberFormatException e) {
-                System.out.println("Please choose a suitable control");
+                System.out.println("Please enter an appropriate number");
             }
         }
     }
@@ -102,7 +102,7 @@ public class Menu {
                 if (Integer.parseInt(choice) > 0 && Integer.parseInt(choice) < temp.length+1)
                     return temp[Integer.parseInt(choice) - 1];
                 else
-                    System.out.println("Please choose a suitable control");
+                    System.out.println("Please enter a valid input");
             }
             catch (NumberFormatException e) {
                 if (choice.toLowerCase().equals("v")) {
@@ -110,7 +110,7 @@ public class Menu {
                     return chooseCategory(categories,players);
                 }
                 else
-                    System.out.println("Please choose a suitable control");
+                    System.out.println("Please enter a valid input");
             }
         }
     }
@@ -123,7 +123,7 @@ public class Menu {
 
     public int betPoints(Player player) {
         Scanner console = new Scanner(System.in);
-        System.out.println("Choose your betting points");
+        System.out.println("Choose your betting points (Use your respective controls)");
         System.out.println("A: 250");
         System.out.println("B: 500");
         System.out.println("C: 750");
@@ -138,7 +138,7 @@ public class Menu {
                 return 750;
             else if (chosenBet.equals(String.valueOf(player.getControl(3))))
                 return 1000;
-            System.out.println("Please press an acceptable control!");
+            System.out.println("Please enter an acceptable control!");
         }
     }
 
@@ -148,7 +148,7 @@ public class Menu {
      * @return A String containing the chosen username.
      */
 
-    public String chooseUsername(int currentPlayerNumber){
+    public String chooseUsername(int currentPlayerNumber){ //Check if username exists!!!
         System.out.println("ENTER A USERNAME FOR PLAYER "+(currentPlayerNumber+1));
         Scanner console = new Scanner(System.in);
         return console.nextLine();
@@ -192,7 +192,7 @@ public class Menu {
                             j=4;
                     }
                     else if (tempControl.length() != 1) {
-                        System.out.println("Please choose a suitable control");
+                        System.out.println("Please enter a valid control");
                         tempControl = console.nextLine();
                         k=-1;
                         j=4;
