@@ -87,5 +87,3 @@ public class Game {
         console.nextLine();
     }
 }
-
-
