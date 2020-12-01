@@ -1,5 +1,5 @@
 Technology
-What is the measuring unit of the CPU freaquency?
+What is the measuring unit of the CPU frequency?
 Hertz
 Volt
 Watt
