@@ -104,8 +104,7 @@ public class Menu {
                 else
                     System.out.println("Please choose a suitable control");
             }
-            catch (NumberFormatException e)
-            {
+            catch (NumberFormatException e) {
                 if (choice.toLowerCase().equals("v")) {
                     this.viewControls(players);
                     return chooseCategory(categories,players);
@@ -192,7 +191,7 @@ public class Menu {
                             k=-1;
                             j=4;
                     }
-                    else if (tempControl.length() != 1){
+                    else if (tempControl.length() != 1) {
                         System.out.println("Please choose a suitable control");
                         tempControl = console.nextLine();
                         k=-1;

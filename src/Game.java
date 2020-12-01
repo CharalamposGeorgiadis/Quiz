@@ -67,7 +67,7 @@ public class Game {
             String chosenCategory = currentMenu.chooseCategory(categories, players);
             System.out.println(chosenCategory.toUpperCase()+"\n");
             currentRound.startRound(currentRound.getRounds().get(i), availableQuestions, chosenCategory, players,currentMenu);
-            if (availableQuestions.size()==0){
+            if (availableQuestions.size()==0) {
                 System.out.println("THERE ARE NO MORE QUESTIONS LEFT");
                 break;
             }
