@@ -17,7 +17,7 @@ public class RightAnswer extends Round {
      * @param players List containing every player.
      */
 
-    public void rightAnswerPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players){
+    public void rightAnswerPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players, int currentRoundNumber){
         for (int i=0; i<5; i++) {
             //for (Player p : players) {  //Will be added in version 2
             if (availableQuestions.size()==0)
@@ -26,7 +26,11 @@ public class RightAnswer extends Round {
                  players.get(0).addPoints(1000);
             else
                 players.get(0).addPoints(0);
-            System.out.println("Player's current points: "+players.get(0).getPoints()+"\n");
+            if ((((currentRoundNumber+1)==roundTypes.size()) && i!=4 ) || (currentRoundNumber+1)!=roundTypes.size()) {
+                System.out.println("\nCURRENT POINTS");
+                for (Player p : players)
+                    System.out.println("    "+p.getUsername() + ": " + p.getPoints() + "\n");
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Round {
 
-    private ArrayList<String> roundTypes;
+    protected ArrayList<String> roundTypes;
 
     /**
      * Constructor
@@ -35,7 +35,8 @@ public class Round {
     }
 
     /**
-     * Asks the player(s) a random question based on the chosen category. After each player has answered it removes that question from the list of available questions.
+     * Asks the player(s) a random question based on the chosen category.
+     * After each player has answered it removes that question from the list of available questions.
      * @param availableQuestions A list holding all the available questions.
      * @param chosenCategory A String that holds the chosen category for this round.
      * @param players A list holding the information of each player.
@@ -116,16 +117,15 @@ public class Round {
      * @param players A list holding the information of each player.
      * @param menu Gives access to menu options.
      */
-        public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String
-        chosenCategory, ArrayList <Player> players, Menu menu ) {
+        public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String chosenCategory, ArrayList <Player> players, Menu menu, int currentRoundNumber) {
             switch(currentRound){ // If a new round type is added, create a new case for it.
                 case "RIGHT ANSWER":
                     RightAnswer r = new RightAnswer();
-                    r.rightAnswerPoints(availableQuestions, chosenCategory, players);
+                    r.rightAnswerPoints(availableQuestions, chosenCategory, players, currentRoundNumber);
                     break;
                 case "BETTING":
                     Betting b =new Betting();
-                    b.bettingPoints(availableQuestions, chosenCategory, players, menu);
+                    b.bettingPoints(availableQuestions, chosenCategory, players, menu, currentRoundNumber);
                     break;
             }
          }

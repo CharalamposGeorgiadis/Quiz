@@ -11,14 +11,15 @@ public class Betting extends Round{
 
     /**
      * Represents the Betting portion of the game.
-     * If the player answers correctly he gains points equal to the ones he bet. Otherwise, they are deducted from his score.
+     * If the player answers correctly he gains points equal to the ones he bet.
+     * Otherwise, they are deducted from his score.
      * @param availableQuestions List containing all the available questions.
      * @param chosenCategory The category chosen by one of the players.
      * @param players List containing every player.
      * @param menu Gives access to menu options.
      */
 
-    public void bettingPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players, Menu menu) {
+    public void bettingPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players, Menu menu, int currentRoundNumber) {
         for (int i = 0; i < 5; i++) {
             //for (Player p : players) {  //Will be added in version 2
             if (availableQuestions.size()==0)
@@ -28,7 +29,11 @@ public class Betting extends Round{
                 players.get(0).addPoints(bet);
             else
                 players.get(0).addPoints(-bet);
-            System.out.println("Player's current points: " + players.get(0).getPoints() + "\n");
+            if ((((currentRoundNumber+1)==roundTypes.size()) && i!=4 ) || (currentRoundNumber+1)!=roundTypes.size()) {
+                System.out.println("\nCURRENT POINTS");
+                for (Player p : players)
+                    System.out.println("    "+p.getUsername() + ": " + p.getPoints() + "\n");
+            }
         }
     }
 }

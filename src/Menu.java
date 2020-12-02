@@ -146,14 +146,23 @@ public class Menu {
 
     /**
      * Asks a player to choose their username.
+     * If no username was entered or if the username only contains spaces, it asks the user for a new username.
      * @param currentPlayerNumber The nth player who is currently choosing their username.
      * @return A String containing the chosen username.
      */
 
-    public String chooseUsername(int currentPlayerNumber){ //Check if username exists!!!
+    public String chooseUsername(int currentPlayerNumber){
         System.out.println("ENTER A USERNAME FOR PLAYER "+(currentPlayerNumber+1));
         Scanner console = new Scanner(System.in);
-        return console.nextLine();
+        String choice=console.nextLine();
+        while(true){
+            if (choice.length()==0 || choice.trim().isEmpty()) { //
+                System.out.println("Please enter a valid Username");
+                choice = console.nextLine();
+            }
+            else
+                return choice;
+        }
     }
 
     /**

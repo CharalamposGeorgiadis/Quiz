@@ -28,8 +28,8 @@ public class Game {
         currentMenu = new Menu();
         currentRound = new Round();
         players = new ArrayList<>();
-        /*
-        Will be added in version 2
+    /*
+        //Will be added in version 2
         int numberOfPlayers = currentMenu.chooseNumberOfPlayers();
         for (int i = 0; i < numberOfPlayers; i++) {
             Player tempPlayer = new Player(currentMenu.chooseUsername(i));
@@ -71,7 +71,7 @@ public class Game {
             System.out.println("\n" +currentRound.getRounds().get(i) + "\n");
             String chosenCategory = currentMenu.chooseCategory(categories, players);
             System.out.println(chosenCategory.toUpperCase()+"\n");
-            currentRound.startRound(currentRound.getRounds().get(i), availableQuestions, chosenCategory, players,currentMenu);
+            currentRound.startRound(currentRound.getRounds().get(i), availableQuestions, chosenCategory, players,currentMenu, i);
             if (availableQuestions.size()==0) {
                 System.out.println("THERE ARE NO MORE QUESTIONS LEFT");
                 break;
@@ -80,8 +80,8 @@ public class Game {
                 System.out.println("MOVING TO THE NEXT ROUND");
             }
         }
-        System.out.println("GAME FINISHED");
-        System.out.println(players.get(0).getUsername() + ": " + players.get(0).getPoints()); //In version 2, sort players by points and print them all with a loop.
+        System.out.println("\nGAME FINISHED");
+        System.out.println("    "+players.get(0).getUsername() + ": " + players.get(0).getPoints()); //In version 2, sort players by points and print them all with a loop.
         System.out.println("\nPress any key to return to Main Menu"); //In GUI, Press Enter
         Scanner console = new Scanner(System.in);
         console.nextLine();
