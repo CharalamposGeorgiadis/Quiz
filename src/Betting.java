@@ -17,6 +17,8 @@ public class Betting extends Round{
      * @param chosenCategory The category chosen by one of the players.
      * @param players List containing every player.
      * @param menu Gives access to menu options.
+     * @param currentRoundNumber Integer that holds the number of the current round type.
+     * (For example: currentRoundNumber=1 if the game is on the first round type and 2 if the game has advanced to the next round type)
      */
 
     public void bettingPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players, Menu menu, int currentRoundNumber) {
@@ -29,7 +31,7 @@ public class Betting extends Round{
                 players.get(0).addPoints(bet);
             else
                 players.get(0).addPoints(-bet);
-            if ((((currentRoundNumber+1)==roundTypes.size()) && i!=4 ) || (currentRoundNumber+1)!=roundTypes.size()) {
+            if ((currentRoundNumber + 1) != roundTypes.size() || i != 4) {
                 System.out.println("\nCURRENT POINTS");
                 for (Player p : players)
                     System.out.println("    "+p.getUsername() + ": " + p.getPoints() + "\n");

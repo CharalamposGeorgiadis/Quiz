@@ -116,7 +116,10 @@ public class Round {
      * @param chosenCategory A String that holds the chosen category for this round.
      * @param players A list holding the information of each player.
      * @param menu Gives access to menu options.
+     * @param currentRoundNumber Integer that holds the number of the current round type.
+     * (For example: currentRoundNumber=1 if the game is on the first round type and 2 if the game has advanced to the next round type)
      */
+
         public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String chosenCategory, ArrayList <Player> players, Menu menu, int currentRoundNumber) {
             switch(currentRound){ // If a new round type is added, create a new case for it.
                 case "RIGHT ANSWER":
