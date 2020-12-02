@@ -15,6 +15,7 @@ public class Main {
      * @param args An array of command-line arguments for the application
      * @throws FileNotFoundException if a file is not found.
      */
+
     public static void main(String[] args) throws FileNotFoundException {
         Menu menu;
         Game game;
@@ -33,6 +34,7 @@ public class Main {
                         System.out.println("PLEASE LOCATE THE BUZZ QUESTIONS DIRECTORY FOLDER.");
                         return;
                     }
+                    break;
                 case "2":
                     System.out.println("PLAYER STATS NOT SUPPORTED, RETURNING TO MAIN MENU\n");
                     break;
