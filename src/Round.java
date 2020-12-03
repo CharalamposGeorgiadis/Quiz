@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Round {
 
-    protected ArrayList<String> roundTypes;
+    protected ArrayList<String> roundTypes; //List of Strings that holds the type of each round type.
 
     /**
      * Constructor
@@ -45,7 +45,6 @@ public class Round {
 
 
     public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> players) {
-      //  while (true) {
             for (Questions q: availableQuestions) {
                 if (chosenCategory.equals(q.getCategory())) {
                     System.out.println(q.getQuestion());

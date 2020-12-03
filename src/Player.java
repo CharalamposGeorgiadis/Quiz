@@ -7,9 +7,9 @@
  */
 
 public class Player {
-    private String username;
-    private int points;
-    private char[] controls;
+    private String username; //Strings that holds the username of a player.
+    private int points; //Integer that holds the points of a player.
+    private char[] controls; //Char Array that holds the controls of a player.
 
     /**
      * Constructor

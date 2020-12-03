@@ -2,17 +2,17 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
- * This class represents a full question (question, category, possible answers, correct answer, image).
+ * This class represents a question and its information.
  * @author Anastasios Kachrimanis
  * @author Charalampos Georgiadis
  * @version 24/11/2020
  */
 
 public class Questions {
-    private String question;
-    private String category;
-    private ArrayList<String> answers;
-    protected String correctAnswer;
+    private String question; //String that holds a question.
+    private String category; //String that holds the category of the question.
+    private ArrayList<String> answers; //List of Strings that holds the possible answers of the question.
+    protected String correctAnswer; //String that holds the correct answer of the question.
     private BufferedImage questionImage; // Will be used when we add questions with images.
 
     /**

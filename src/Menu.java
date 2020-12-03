@@ -87,7 +87,7 @@ public class Menu {
     public String chooseCategory(HashSet<String> categories, ArrayList<Player> players) {
         System.out.println("CHOOSE A CATEGORY");
         int i = 1;
-        String[] temp = new String[categories.size()];
+        String[] temp = new String[categories.size()]; //Temporary string array that will hold the names of each category.
         for (String category : categories) {
             System.out.println("Press " + i + " to choose " + category);
             temp[i - 1] = category;
@@ -195,7 +195,7 @@ public class Menu {
             for (int k=0; k<players.size(); k++) {
                 for (int j=0; j<4; j++) {
                     if (tempControl.equals(String.valueOf(players.get(k).getControl(j)))) {
-                            System.out.println("Control already bound, please set a different control");
+                            System.out.println("Control already bound, please enter a different control");
                             tempControl = console.nextLine();
                             k=-1;
                             j=4;

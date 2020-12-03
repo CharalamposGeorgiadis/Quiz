@@ -10,11 +10,10 @@ import java.util.*;
  */
 
 public class Game {
-    private ArrayList<Player> players;
-    private ArrayList<Questions> availableQuestions;
-    private Menu currentMenu;
-    private HashSet<String> categories;
-    private Round currentRound;
+    private ArrayList<Player> players; //List that holds the information of every player.
+    private ArrayList<Questions> availableQuestions; //List that holds every available question.
+    private HashSet<String> categories; //Set of Strings that holds the name of each category once.
+    private Round currentRound; //Grants access to Round methods.
 
     /**
      * Constructor.
@@ -22,10 +21,9 @@ public class Game {
      * @throws FileNotFoundException if a file is not found.
      */
 
-    public Game(File[] questions) throws FileNotFoundException {
+    public Game(File[] questions,Menu menu) throws FileNotFoundException {
         availableQuestions = new ArrayList<>();
-        categories = new HashSet<>(); //Holds the name of each category once.
-        currentMenu = new Menu();
+        categories = new HashSet<>();
         currentRound = new Round();
         players = new ArrayList<>();
     /*
@@ -36,15 +34,15 @@ public class Game {
             players.add(tempPlayer);
             currentMenu.setControls(i, tempPlayer, players);
         }*/
-        Player tempPlayer = new Player(currentMenu.chooseUsername(0));
+        Player tempPlayer = new Player(menu.chooseUsername(0)); //Creates a new player
         players.add(tempPlayer);
-        currentMenu.setControls(0, tempPlayer, players);
+        menu.setControls(0, tempPlayer, players);
         for (File question : questions) {
             if (question.isFile()) {
                 Scanner scan = new Scanner(question);
                 Questions tempQuestion;
                 tempQuestion = new Questions();
-                while (scan.hasNextLine()) {
+                while (scan.hasNextLine()) { //Scans each line of the txt files in the Directory and stores them in a appropriate variable.
                     tempQuestion.setCategory(scan.nextLine());
                     tempQuestion.setQuestion(scan.nextLine());
                     tempQuestion.setAnswer(scan.nextLine());
@@ -66,12 +64,12 @@ public class Game {
      * Starts the game.
      */
 
-    public void startGame() {
+    public void startGame(Menu menu) {
         for (int i = 0; i < currentRound.getRounds().size(); i++) {
             System.out.println("\n" +currentRound.getRounds().get(i) + "\n");
-            String chosenCategory = currentMenu.chooseCategory(categories, players);
+            String chosenCategory = menu.chooseCategory(categories, players);
             System.out.println(chosenCategory.toUpperCase()+"\n");
-            currentRound.startRound(currentRound.getRounds().get(i), availableQuestions, chosenCategory, players,currentMenu, i);
+            currentRound.startRound(currentRound.getRounds().get(i), availableQuestions, chosenCategory, players,menu, i);
             if (availableQuestions.size()==0) {
                 System.out.println("THERE ARE NO MORE QUESTIONS LEFT");
                 break;
@@ -82,7 +80,7 @@ public class Game {
         }
         System.out.println("\nGAME FINISHED");
         System.out.println("    "+players.get(0).getUsername() + ": " + players.get(0).getPoints()); //In version 2, sort players by points and print them all with a loop.
-        System.out.println("\nPress any key to return to Main Menu"); //In GUI, Press Enter
+        System.out.println("\nPress any key to return to Main Menu");
         Scanner console = new Scanner(System.in);
         console.nextLine();
     }

@@ -21,14 +21,14 @@ public class Main {
         Game game;
         menu=new Menu();
         while(true) {
-            String menuOption=menu.mainMenu();
-            switch(menuOption) {
+            String menuOption=menu.mainMenu(); //Displays the main menu.
+            switch(menuOption) { //Checks which menu the player chose.
                 case "1":
                     File path = new File("Buzz Questions Directory");
                     File[] questions = path.listFiles();
                     if (questions != null) {
-                        game = new Game(questions);
-                        game.startGame();
+                        game = new Game(questions,menu);
+                        game.startGame(menu);
                     }
                     else {
                         System.out.println("PLEASE LOCATE THE BUZZ QUESTIONS DIRECTORY FOLDER.");
