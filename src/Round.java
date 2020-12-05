@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * This class represents a round in the game.
@@ -20,9 +18,18 @@ public class Round {
 
     public Round() {
         roundTypes = new ArrayList<>(); //If a new round type is to be added, add its name in this list in Capital letters.
-        roundTypes.add("RIGHT ANSWER");
-        roundTypes.add("BETTING");
-        Collections.shuffle(roundTypes);//Shuffles the list that holds the names of each round type, so that they appear at a different order in every game.
+        Random rand= new Random();
+        for (int i=0; i<5; i++) {
+            int random=rand.nextInt(2)+1; //Randomizes the order of appearance of each round type.
+            switch (random){
+                case 1:
+                    roundTypes.add("RIGHT ANSWER");
+                    break;
+                case 2:
+                    roundTypes.add("BETTING");
+                    break;
+            }
+        }
     }
 
     /**
@@ -117,17 +124,19 @@ public class Round {
      * @param menu Gives access to menu options.
      * @param currentRoundNumber Integer that holds the number of the current round type.
      * (For example: currentRoundNumber=1 if the game is on the first round type and 2 if the game has advanced to the next round type)
+     * @param categories Set of Strings that contains the name of each category.
      */
 
-        public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String chosenCategory, ArrayList <Player> players, Menu menu, int currentRoundNumber) {
+        public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String chosenCategory, ArrayList <Player> players,
+                                 Menu menu, int currentRoundNumber, HashSet<String> categories) {
             switch(currentRound){ // If a new round type is added, create a new case for it.
                 case "RIGHT ANSWER":
                     RightAnswer r = new RightAnswer();
-                    r.rightAnswerPoints(availableQuestions, chosenCategory, players, currentRoundNumber);
+                    r.rightAnswerPoints(availableQuestions, chosenCategory, players, currentRoundNumber, categories);
                     break;
                 case "BETTING":
                     Betting b =new Betting();
-                    b.bettingPoints(availableQuestions, chosenCategory, players, menu, currentRoundNumber);
+                    b.bettingPoints(availableQuestions, chosenCategory, players, menu, currentRoundNumber, categories);
                     break;
             }
          }

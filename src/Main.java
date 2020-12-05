@@ -22,7 +22,7 @@ public class Main {
         menu=new Menu();
         while(true) {
             String menuOption=menu.mainMenu(); //Displays the main menu.
-            switch(menuOption) { //Checks which menu the player chose.
+            switch(menuOption) { //Checks which menu option the player chose.
                 case "1":
                     File path = new File("Buzz Questions Directory");
                     File[] questions = path.listFiles();

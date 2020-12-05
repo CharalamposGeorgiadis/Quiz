@@ -87,7 +87,7 @@ public class Menu {
     public String chooseCategory(HashSet<String> categories, ArrayList<Player> players) {
         System.out.println("CHOOSE A CATEGORY");
         int i = 1;
-        String[] temp = new String[categories.size()]; //Temporary string array that will hold the names of each category.
+        String[] temp = new String[categories.size()]; //Temporary string array that will hold the name of each category.
         for (String category : categories) {
             System.out.println("Press " + i + " to choose " + category);
             temp[i - 1] = category;
@@ -100,7 +100,7 @@ public class Menu {
             try
             {
                 if (Integer.parseInt(choice) > 0 && Integer.parseInt(choice) < temp.length+1)
-                    return temp[Integer.parseInt(choice) - 1];
+                        return temp[Integer.parseInt(choice) - 1];
                 else
                     System.out.println("Please enter a valid input");
             }

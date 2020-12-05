@@ -10,21 +10,22 @@ import java.util.*;
  */
 
 public class Game {
-    private ArrayList<Player> players; //List that holds the information of every player.
-    private ArrayList<Questions> availableQuestions; //List that holds every available question.
-    private HashSet<String> categories; //Set of Strings that holds the name of each category once.
-    private Round currentRound; //Grants access to Round methods.
+    private ArrayList<Player> players; // List that holds the information of every player.
+    private ArrayList<Questions> availableQuestions; // List that holds every available question.
+    private HashSet<String> categories; // Set of Strings that holds the name of each category once.
+    private Round round; // Grants access to Round methods.
 
     /**
      * Constructor.
      * @param questions Holds the directory of the questions folder.
+     * @param menu Gives access to menu options.
      * @throws FileNotFoundException if a file is not found.
      */
 
     public Game(File[] questions,Menu menu) throws FileNotFoundException {
         availableQuestions = new ArrayList<>();
         categories = new HashSet<>();
-        currentRound = new Round();
+        round = new Round();
         players = new ArrayList<>();
     /*
         //Will be added in version 2
@@ -34,7 +35,7 @@ public class Game {
             players.add(tempPlayer);
             currentMenu.setControls(i, tempPlayer, players);
         }*/
-        Player tempPlayer = new Player(menu.chooseUsername(0)); //Creates a new player
+        Player tempPlayer = new Player(menu.chooseUsername(0)); //Creates a new player.
         players.add(tempPlayer);
         menu.setControls(0, tempPlayer, players);
         for (File question : questions) {
@@ -62,19 +63,20 @@ public class Game {
 
     /**
      * Starts the game.
+     * @param menu Gives access to menu options.
      */
 
     public void startGame(Menu menu) {
-        for (int i = 0; i < currentRound.getRounds().size(); i++) {
-            System.out.println("\n" +currentRound.getRounds().get(i) + "\n");
+        for (int i = 0; i < round.getRounds().size(); i++) {
+            System.out.println("\n" + round.getRounds().get(i) + "\n");
             String chosenCategory = menu.chooseCategory(categories, players);
             System.out.println(chosenCategory.toUpperCase()+"\n");
-            currentRound.startRound(currentRound.getRounds().get(i), availableQuestions, chosenCategory, players,menu, i);
+            round.startRound(round.getRounds().get(i), availableQuestions, chosenCategory, players,menu, i, categories);
             if (availableQuestions.size()==0) {
                 System.out.println("THERE ARE NO MORE QUESTIONS LEFT");
                 break;
             }
-            if (i < currentRound.getRounds().size()-1) {
+            if (i < round.getRounds().size()-1) {
                 System.out.println("MOVING TO THE NEXT ROUND");
             }
         }

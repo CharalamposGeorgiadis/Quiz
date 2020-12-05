@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * This class extends the Round Class and implements the Betting round of the Game.
@@ -19,12 +20,14 @@ public class Betting extends Round{
      * @param menu Gives access to menu options.
      * @param currentRoundNumber Integer that holds the number of the current round type.
      * (For example: currentRoundNumber=1 if the game is on the first round type and 2 if the game has advanced to the next round type)
+     * @param categories Set of Strings that contains the name of each category.
      */
 
-    public void bettingPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players, Menu menu, int currentRoundNumber) {
+    public void bettingPoints(ArrayList<Questions> availableQuestions, String chosenCategory, ArrayList<Player> players, Menu menu, int currentRoundNumber, HashSet<String> categories) {
         for (int i = 0; i < 5; i++) {
+            boolean flag = true;
             //for (Player p : players) {  //Will be added in version 2
-            if (availableQuestions.size()==0)
+            if (availableQuestions.size() == 0)
                 break;
             int bet = menu.betPoints(players.get(0));
             if (randomQuestion(availableQuestions, chosenCategory, players))
@@ -34,7 +37,17 @@ public class Betting extends Round{
             if ((currentRoundNumber + 1) != roundTypes.size() || i != 4) {
                 System.out.println("\nCURRENT POINTS");
                 for (Player p : players)
-                    System.out.println("    "+p.getUsername() + ": " + p.getPoints() + "\n");
+                    System.out.println("    " + p.getUsername() + ": " + p.getPoints() + "\n");
+            }
+            for (Questions q : availableQuestions) {
+                if (q.getCategory().equals(chosenCategory)) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                System.out.println("No more questions left in category: "+chosenCategory);
+                categories.remove(chosenCategory);
             }
         }
     }

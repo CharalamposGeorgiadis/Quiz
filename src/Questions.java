@@ -1,4 +1,3 @@
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -9,11 +8,10 @@ import java.util.ArrayList;
  */
 
 public class Questions {
-    private String question; //String that holds a question.
-    private String category; //String that holds the category of the question.
-    private ArrayList<String> answers; //List of Strings that holds the possible answers of the question.
-    protected String correctAnswer; //String that holds the correct answer of the question.
-    private BufferedImage questionImage; // Will be used when we add questions with images.
+    private String question; // String that holds a question.
+    private String category; // String that holds the category of the question.
+    private ArrayList<String> answers; // List of Strings that holds the possible answers of the question.
+    protected String correctAnswer; // String that holds the correct answer of the question.
 
     /**
      * Constructor
@@ -24,7 +22,6 @@ public class Questions {
         category="";
         answers=new ArrayList<>();
         String correctAnswer="";
-        BufferedImage questionImage=null;
     }
 
     /**
@@ -63,14 +60,6 @@ public class Questions {
         this.correctAnswer=correctAnswer;
     }
 
-    /**
-     * Sets the question's Image.
-     * Currently not supported.
-     */
-
-    public void setQuestionImage(){
-        questionImage=null;
-    }
 
     /**
      * Gets the question's category.
