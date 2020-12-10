@@ -1,5 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Main class of the application.
@@ -16,7 +18,7 @@ public class Main {
      * @throws FileNotFoundException if a file is not found.
      */
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Menu menu;
         Game game;
         menu=new Menu();
@@ -36,7 +38,21 @@ public class Main {
                     }
                     break;
                 case "2":
-                    System.out.println("PLAYER STATS NOT SUPPORTED, RETURNING TO MAIN MENU\n");
+                    File stats=new File("Player Stats.txt");
+                    Scanner console = new Scanner(System.in);
+                    try{
+                        Scanner sc = new Scanner(new File("Player Stats.txt"));
+                        System.out.println("PLAYER STATS");
+                        while (sc.hasNextLine()) {
+                            System.out.println("       " + sc.nextLine());
+                        }
+                        sc.close();
+                    }
+                    catch (IOException e) {
+                        System.out.println("No Player Stats file found");
+                    }
+                    System.out.println("\nPress any key to return to Main Menu");
+                    console.nextLine();
                     break;
                 default:
                     return;

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -22,7 +23,7 @@ public class Game {
      * @throws FileNotFoundException if a file is not found.
      */
 
-    public Game(File[] questions,Menu menu) throws FileNotFoundException {
+    public Game(File[] questions,Menu menu) throws IOException {
         availableQuestions = new ArrayList<>();
         categories = new HashSet<>();
         round = new Round();
@@ -61,12 +62,13 @@ public class Game {
         }
     }
 
+
     /**
      * Starts the game.
      * @param menu Gives access to menu options.
      */
 
-    public void startGame(Menu menu) {
+    public void startGame(Menu menu) throws IOException {
         for (int i = 0; i < round.getRounds().size(); i++) {
             System.out.println("\n" + round.getRounds().get(i) + "\n");
             String chosenCategory = menu.chooseCategory(categories, players);
@@ -82,6 +84,7 @@ public class Game {
         }
         System.out.println("\nGAME FINISHED");
         System.out.println("    "+players.get(0).getUsername() + ": " + players.get(0).getPoints()); //In version 2, sort players by points and print them all with a loop.
+        players.get(0).addStats(players);
         System.out.println("\nPress any key to return to Main Menu");
         Scanner console = new Scanner(System.in);
         console.nextLine();

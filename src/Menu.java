@@ -19,7 +19,7 @@ public class Menu {
     public String mainMenu() {
         Scanner console = new Scanner(System.in);
         System.out.println("PRESS 1 TO START GAME (MORE THAN 1 PLAYERS NOT SUPPORTED AT THE MOMENT)\n"); //max players=4
-        System.out.println("PRESS 2 TO VIEW PLAYER STATS (NOT SUPPORTED AT THE MOMENT)\n");
+        System.out.println("PRESS 2 TO VIEW LEADERBOARDS\n");
         System.out.println("PRESS ANY OTHER KEY TO EXIT GAME");
         return console.nextLine();
     }
