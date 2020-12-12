@@ -21,7 +21,7 @@ public class Player {
      * @param username The player's username.
      */
 
-    Player(String username) throws IOException {
+    Player(String username) {
         this.username=username;
         points=0;
         controls= new char[4];
