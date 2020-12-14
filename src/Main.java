@@ -19,7 +19,9 @@ public class Main {
      */
 
     public static void main(String[] args) throws IOException {
-        Menu menu;
+        GUI gui = new GUI();
+        gui.startGUI();
+       /* Menu menu;
         Game game;
         menu=new Menu();
         while(true) {
@@ -57,6 +59,6 @@ public class Main {
                 default:
                     return;
             }
-        }
+        }*/
     }
-}
+ }
