@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class Main {
      * @throws FileNotFoundException if a file is not found.
      */
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, FontFormatException {
         GUI gui = new GUI();
         gui.startGUI();
        /* Menu menu;
