@@ -208,7 +208,7 @@ public class Menu {
                     }
                 }
             }
-            currentPlayer.setPlayerControls(i,tempControl.charAt(0));
+            currentPlayer.setPlayerControls(i,tempControl);
         }
     }
 }

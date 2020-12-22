@@ -19,26 +19,14 @@ public class Game {
     /**
      * Constructor.
      * @param questions Holds the directory of the questions folder.
-     * @param menu Gives access to menu options.
      * @throws FileNotFoundException if a file is not found.
      */
 
-    public Game(File[] questions,Menu menu) throws IOException {
+    public Game(File[] questions) throws IOException {
         availableQuestions = new ArrayList<>();
         categories = new HashSet<>();
         round = new Round();
         players = new ArrayList<>();
-    /*
-        //Will be added in version 2
-        int numberOfPlayers = currentMenu.chooseNumberOfPlayers();
-        for (int i = 0; i < numberOfPlayers; i++) {
-            Player tempPlayer = new Player(currentMenu.chooseUsername(i));
-            players.add(tempPlayer);
-            currentMenu.setControls(i, tempPlayer, players);
-        }*/
-        Player tempPlayer = new Player(menu.chooseUsername(0)); //Creates a new player.
-        players.add(tempPlayer);
-        menu.setControls(0, tempPlayer, players);
         for (File question : questions) {
             if (question.isFile()) {
                 Scanner scan = new Scanner(question);
@@ -62,10 +50,17 @@ public class Game {
         }
     }
 
+    public void createPlayer(){
+        Player tempPlayer=new Player();
+        players.add(tempPlayer);
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 
     /**
      * Starts the game.
-     * @param menu Gives access to menu options.
      */
 
     public void startGame(Menu menu) throws IOException {
@@ -88,5 +83,50 @@ public class Game {
         System.out.println("\nPress any key to return to Main Menu");
         Scanner console = new Scanner(System.in);
         console.nextLine();
+    }
+
+    public int enterUsernames(String chosenUsername, int currentPlayer){
+        if (chosenUsername.length()!=0 && chosenUsername.length()<15 && !chosenUsername.trim().isEmpty())
+            for (Player p:players){
+                if (chosenUsername.equals(p.getUsername()))
+                    return -1;
+            }
+        else
+            return 0;
+        createPlayer();
+        getPlayers().get(currentPlayer).setUsername(chosenUsername);
+        return 1;
+    }
+
+    public int setControls(String currentControl, int currentPlayer, int currentControlNumber){
+        // Loop that checks if the chosen control is already bound, whereupon it asks for a new control and restarts.
+        for (int i=0; i<players.size(); i++) {
+            for (int j=0; j<4; j++) {
+                if (currentControl.equals(String.valueOf(players.get(i).getControl(j)))) {
+                    return -1;
+                }
+                else if (currentControl.length()!= 1 || currentControl.trim().isEmpty()) {
+                    return 0;
+                }
+            }
+        }
+        getPlayers().get(currentPlayer).setPlayerControls(currentControlNumber,currentControl);
+        return 1;
+    }
+
+    public void clearPlayers(){
+        players.clear();
+    }
+
+    public String[] randomCategories(){
+        ArrayList<String> randomCategories=new ArrayList<>();
+        for (String s:categories){
+            randomCategories.add(s);
+        }
+        Collections.shuffle(randomCategories);
+        String [] random4 = new String[4];
+        for (int i=0; i<4; i++)
+            random4[i]=randomCategories.get(i);
+        return random4;
     }
 }

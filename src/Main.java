@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
 
 /**
  * Main class of the application.
@@ -20,9 +17,13 @@ public class Main {
      */
 
     public static void main(String[] args) throws IOException, FontFormatException {
-        GUI gui = new GUI();
+        File path = new File("Buzz Questions Directory");
+        File[] questions = path.listFiles();
+        GUI gui = new GUI(questions);
         gui.startGUI();
-       /* Menu menu;
+    }
+}
+        /*Menu menu;
         Game game;
         menu=new Menu();
         while(true) {
@@ -61,6 +62,4 @@ public class Main {
                     return;
             }
         }*/
-    }
- }
 
