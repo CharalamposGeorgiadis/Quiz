@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.util.Random;
 
@@ -88,7 +87,6 @@ public class GUI {
             BufferedReader stats = new BufferedReader(new FileReader("PLAYER STATS.txt"));
             leaderboardArea.read(stats, null);
             stats.close();
-            leaderboardArea.requestFocus();
         }
         catch(FileNotFoundException s){
             leaderboardArea.setText("\n                   STATS FILE NOT FOUND\n");
@@ -159,12 +157,12 @@ public class GUI {
                 case "1":
                     chooseNumber.setText("");
                     invalidNumber.setText("");
-                    enterUsername(1, choosePlayersLabel);
+                    enterUsername(1, choosePlayersLabel,chooseNumber);
                     break;
                 case "2":
                     chooseNumber.setText("");
                     invalidNumber.setText("");
-                    enterUsername(2, choosePlayersLabel);
+                    enterUsername(2, choosePlayersLabel,chooseNumber);
                     break;
                 default:
                     chooseNumber.setText("");
@@ -174,11 +172,23 @@ public class GUI {
     }
 
 
-    public void enterUsername(int numberOfPlayers, JLabel currentLabel){
+    public void enterUsername(int numberOfPlayers, JLabel currentLabel,JTextField chooseNumber){
         final int[] currentPlayer = {1};
         //Displays the "Enter Username" screen.
         JLabel usernameLabel= new JLabel(new ImageIcon("EnterUsername.png"));
 
+        //Creates the "Enter Username For.." title text.
+        JTextArea enterUsernameTitle=new JTextArea("ENTER USERNAME" +"\n        FOR:"+"\n      PLAYER "+ currentPlayer[0]+"\n");
+        setAreaParameters(enterUsernameTitle,neonFont.deriveFont(40f),Color.ORANGE,290,150,350,100, usernameLabel);
+
+        changeScene(currentLabel,usernameLabel);
+
+        //Creates the TextField where the player(s) enter their chosen usernames.
+        JTextField enterUsernameText=new JTextField();
+        setFieldParameters(enterUsernameText,neonFont.deriveFont(40f),Color.cyan,290,345,320,85, usernameLabel);
+        enterUsernameText.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
+
+        //Adds a Back button in the "Enter Username" screen.
         JButton backButton = new JButton();
         setButtonParameters(backButton,null,null,698,75,140,140, usernameLabel);
         backButton.addMouseListener(new MouseAdapter() { //exits the app when pressed
@@ -188,6 +198,7 @@ public class GUI {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     game.clearPlayers();
                     changeScene(usernameLabel, currentLabel);
+                    chooseNumber.requestFocusInWindow();
                 }
             }
             public void mouseEntered(MouseEvent e){
@@ -198,17 +209,6 @@ public class GUI {
             }
         });
 
-        //Creates the "Enter Username For.." title text.
-        JTextArea enterUsernameTitle=new JTextArea("ENTER USERNAME" +"\n        FOR:"+"\n      PLAYER "+ currentPlayer[0]+"\n");
-        setAreaParameters(enterUsernameTitle,neonFont.deriveFont(40f),Color.ORANGE,290,150,350,100, usernameLabel);
-
-        changeScene(currentLabel,usernameLabel);
-
-        //Creates the TextField where the player(s) enter their chosen usernames.
-        JTextField enterUsername=new JTextField();
-        setFieldParameters(enterUsername,neonFont.deriveFont(40f),Color.cyan,290,345,320,85, usernameLabel);
-        enterUsername.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
-
         //Creates the Area where "(Max characters: 14)" will be displayed.
         JTextArea maxCharactersArea=new JTextArea("(Max characters: 14)");
         setAreaParameters(maxCharactersArea,neonFont.deriveFont(30f),Color.ORANGE,290,250,350,45, usernameLabel);
@@ -217,31 +217,31 @@ public class GUI {
         JTextArea invalidUsername=new JTextArea("");
         setAreaParameters(invalidUsername,neonFont.deriveFont(30f),Color.orange,250,300,450,45, usernameLabel);
 
-        enterUsername.addActionListener(e -> {
-            switch (game.enterUsernames(enterUsername.getText(), currentPlayer[0]-1)) {
+        enterUsernameText.addActionListener(e -> {
+            switch (game.enterUsernames(enterUsernameText.getText(), currentPlayer[0]-1)) {
                 case -1:
-                    enterUsername.setText("");
+                    enterUsernameText.setText("");
                     invalidUsername.setText(" USERNAME ALREADY CHOSEN");
                     break;
                 case 0:
-                    enterUsername.setText("");
+                    enterUsernameText.setText("");
                     invalidUsername.setText("       INVALID USERNAME");
                     break;
                 case 1:
-                    enterUsername.setText("");
+                    enterUsernameText.setText("");
                     invalidUsername.setText("");
                     currentPlayer[0]++;
                     enterUsernameTitle.setText("ENTER USERNAME" + "\n        FOR:" + "\n      PLAYER " + currentPlayer[0] + "\n");
                     if (currentPlayer[0] > numberOfPlayers) {
                         currentPlayer[0]=1;
                         enterUsernameTitle.setText("ENTER USERNAME" + "\n        FOR:" + "\n      PLAYER " + currentPlayer[0] + "\n");
-                        setControls(usernameLabel);
+                        setControls(usernameLabel,enterUsernameText);
                     }
             }
         });
     }
 
-    public void setControls(JLabel currentLabel){
+    public void setControls(JLabel currentLabel,JTextField enterUsernameText){
         //Displays the "Set Controls" screen.
         JLabel setControlsLabel=new JLabel(new ImageIcon("SetControls.png"));
         changeScene(currentLabel,setControlsLabel);
@@ -272,6 +272,7 @@ public class GUI {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     game.clearPlayers();
                     changeScene(setControlsLabel, currentLabel);
+                    enterUsernameText.requestFocusInWindow();
                 }
             }
             public void mouseEntered(MouseEvent e){
@@ -327,7 +328,7 @@ public class GUI {
                                 currentControlArea.setText("A:");
                                 currentPlayer[0]=0;
                                 usernameField.setText(game.getPlayers().get(currentPlayer[0]).getUsername());
-                                youCanView(setControlsLabel);
+                                youCanView(setControlsLabel,setControlField);
                             }
                             else{
                                 usernameField.setText(game.getPlayers().get(currentPlayer[0]).getUsername());
@@ -339,18 +340,18 @@ public class GUI {
         });
     }
 
-    public void youCanView(JLabel currentLabel){
-        //Display the "You can view each player's controls by clicking:.." screen.
+    public void youCanView(JLabel currentLabel,JTextField setControlField){
+        //Displays the "You can view each player's controls by clicking:.." screen.
         JLabel youCanViewLabel= new JLabel(new ImageIcon("YouCanView.png"));
         changeScene(currentLabel, youCanViewLabel);
 
-        //Display the area where "You can view each player's controls by clicking:.." is displayed.
+        //Displays the area where "You can view each player's controls by clicking:.." is displayed.
         JTextArea youCanViewArea=new JTextArea("         You can view\n each player's controls\n           by clicking:");
         setAreaParameters(youCanViewArea,neonFont.deriveFont(50f),Color.ORANGE,150,100,700,150, youCanViewLabel);
 
         //Adds the "OK" button which progresses the game to the next screen.
         JButton nextButton= new JButton("OK");
-        setButtonParameters(nextButton,neonFont.deriveFont(50f),Color.ORANGE,410,370,140,60, youCanViewLabel);
+        setButtonParameters(nextButton,neonFont.deriveFont(50f),Color.YELLOW,410,370,140,60, youCanViewLabel);
         nextButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -373,6 +374,7 @@ public class GUI {
                         p.clearControls();
                     }
                     changeScene(youCanViewLabel, currentLabel);
+                    setControlField.requestFocusInWindow();
                 }
             }
             public void mouseEntered(MouseEvent e){
@@ -389,14 +391,19 @@ public class GUI {
 
 
 
-    public void chooseCategory(JLabel currentLabel){
+    public void chooseCategory(JLabel currentLabel) {
         //Displays the "Choose Category" screen.
-        JLabel chooseCategoryLabel=new JLabel(new ImageIcon("ChooseCategory.png"));
-        changeScene(currentLabel,chooseCategoryLabel);
+        JLabel chooseCategoryLabel = new JLabel(new ImageIcon("ChooseCategory.png"));
+        changeScene(currentLabel, chooseCategoryLabel);
+        chooseCategoryLabel.requestFocus();
+
+        chooseCategoryLabel.setVisible(false);
+        chooseCategoryLabel.setVisible(true);
+
 
         //Add the button that allows the player(s) to view their controls.
         JButton controlsButton = new JButton();
-        setButtonParameters(controlsButton,null,null,0,0,100,100, chooseCategoryLabel);
+        setButtonParameters(controlsButton, null, null, 0, 0, 100, 100, chooseCategoryLabel);
         controlsButton.addMouseListener(new MouseAdapter() { //exits the app when pressed
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -406,45 +413,234 @@ public class GUI {
                     viewControls(chooseCategoryLabel);
                 }
             }
-            public void mouseEntered(MouseEvent e){
+
+            public void mouseEntered(MouseEvent e) {
                 chooseCategoryLabel.setIcon(new ImageIcon("ChooseCategoryDarkC.png"));
             }
-            public void mouseExited(MouseEvent e){
+
+            public void mouseExited(MouseEvent e) {
                 chooseCategoryLabel.setIcon(new ImageIcon("ChooseCategory.png"));
             }
         });
 
         //Adds an exit button to this screen.
-        exitButton(chooseCategoryLabel,855,0,100,100, "ChooseCategoryDarkX.png","ChooseCategory.png" );
-        String randomCategories[]=game.randomCategories();
+        exitButton(chooseCategoryLabel, 855, 0, 100, 100, "ChooseCategoryDarkX.png", "ChooseCategory.png");
+        String randomCategories[] = game.randomCategories();
 
         //Creates the field where "Player x choose a category" will be displayed.
-        JTextField chooseCategoryField= new JTextField();
-        setFieldParameters(chooseCategoryField, neonFont.deriveFont(35f),Color.ORANGE,80,247,800,50, chooseCategoryLabel);
+        JTextField chooseCategoryField = new JTextField();
+        setFieldParameters(chooseCategoryField, neonFont.deriveFont(35f), Color.ORANGE, 80, 247, 800, 50, chooseCategoryLabel);
         chooseCategoryField.setEditable(false);
-        Random rand= new Random();
-        int randPlayer=rand.nextInt(game.getPlayers().size());
-        chooseCategoryField.setText(game.getPlayers().get(randPlayer).getUsername()+" choose a category");
+        Random rand = new Random();
+        final int[] randPlayer = {rand.nextInt(game.getPlayers().size())};
+        chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
 
-        for (int i=0; i<4;i++){
-            JButton category = new JButton(randomCategories[i]);
-            switch (i){
+        //Adds the names of the 4 randomly chosen categories to their respective boxes.
+        for (int i = 0; i < 4; i++) {
+            JTextField categoryField = new JTextField(randomCategories[i]);
+            categoryField.setEditable(false);
+            switch (i) {
                 case 0:
-                    setButtonParameters(category, neonFont.deriveFont(40f),Color.yellow,15,323,420,60, chooseCategoryLabel);
+                    setFieldParameters(categoryField, neonFont.deriveFont(40f), Color.yellow, 15, 323, 420, 60, chooseCategoryLabel);
                     break;
                 case 1:
-                    setButtonParameters(category, neonFont.deriveFont(40f),Color.cyan,520,323,420,60, chooseCategoryLabel);
+                    setFieldParameters(categoryField, neonFont.deriveFont(40f), Color.cyan, 520, 323, 420, 60, chooseCategoryLabel);
                     break;
                 case 2:
-                    setButtonParameters(category, neonFont.deriveFont(40f),Color.blue,15,433,420,60, chooseCategoryLabel);
+                    setFieldParameters(categoryField, neonFont.deriveFont(40f), Color.blue, 15, 433, 420, 60, chooseCategoryLabel);
                     break;
                 case 3:
-                    setButtonParameters(category, neonFont.deriveFont(40f),Color.magenta,520,433,420,60, chooseCategoryLabel);
+                    setFieldParameters(categoryField, neonFont.deriveFont(40f), Color.magenta, 520, 433, 420, 60, chooseCategoryLabel);
                     break;
             }
         }
 
+        //Request focus to the Key Listener if the mouse is clicked.
+        chooseCategoryLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                chooseCategoryLabel.requestFocus();
+            }
+        });
+        final int[] i = {0};
+
+       chooseCategoryLabel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                if (e.getKeyChar()==game.getPlayers().get(randPlayer[0]).getControl(0).toUpperCase().charAt(0)||e.getKeyChar()==game.getPlayers().get(randPlayer[0]).getControl(0).toLowerCase().charAt(0)){
+                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
+                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                    startGame(chooseCategoryLabel,randomCategories[0],chooseCategoryLabel, i[0]);
+                    i[0]++;
+                }
+                else if (e.getKeyChar()==game.getPlayers().get(randPlayer[0]).getControl(1).toUpperCase().charAt(0)||e.getKeyChar()==game.getPlayers().get(randPlayer[0]).getControl(1).toLowerCase().charAt(0)) {
+                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
+                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                    startGame(chooseCategoryLabel,randomCategories[1],chooseCategoryLabel, i[0]);
+                    i[0]++;
+                }
+                else if (e.getKeyChar()==game.getPlayers().get(randPlayer[0]).getControl(2).toUpperCase().charAt(0)||e.getKeyChar()==game.getPlayers().get(randPlayer[0]).getControl(2).toLowerCase().charAt(0)) {
+                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
+                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                    startGame(chooseCategoryLabel,randomCategories[2],chooseCategoryLabel, i[0]);
+                    i[0]++;
+                }
+                else if (e.getKeyChar()==game.getPlayers().get(randPlayer[0]).getControl(3).toUpperCase().charAt(0)||e.getKeyChar()==game.getPlayers().get(randPlayer[0]).getControl(3).toLowerCase().charAt(0)) {
+                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
+                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                    startGame(chooseCategoryLabel,randomCategories[3],chooseCategoryLabel, i[0]);
+                    i[0]++;
+                }
+            }
+        });
     }
+    public void startGame(JLabel currentLabel, String chosenCategory, JLabel chooseCategory, int currentRound) {
+        //Displays the "Current Round" screen.
+        JLabel currentRoundLabel = new JLabel(new ImageIcon("CurrentRound.png"));
+        changeScene(currentLabel, currentRoundLabel);
+
+        //Displays the "Current Round" title.
+        JTextField currentRoundField = new JTextField("");
+        setFieldParameters(currentRoundField, neonFont.deriveFont(70f), Color.ORANGE, 140, 0, 700, 150, currentRoundLabel);
+        currentRoundField.setEditable(false);
+
+        //Adds an exit button to this screen.
+        exitButton(currentRoundLabel, 855, 0, 100, 100, "CurrentRoundDarkX.png", "CurrentRound.png");
+
+            switch (game.getRoundTypes().get(currentRound)) {
+                case "RIGHT ANSWER":
+                    currentRound++;
+                    currentRoundField.setText("RIGHT ANSWER");
+                    delayRoundType("RIGHT ANSWER", currentRoundLabel, chosenCategory, chooseCategory);
+                    break;
+                case "BETTING":
+                    currentRoundField.setText("BETTING");
+                    delayRoundType("BETTING", currentRoundLabel, chosenCategory, chooseCategory);
+                    break;
+                case "COUNTDOWN":
+                    currentRoundField.setText("COUNTDOWN");
+                    delayRoundType("COUNTDOWN", currentRoundLabel, chosenCategory, chooseCategory);
+                    break;
+                case "FASTEST FINGER":
+                    currentRoundField.setText("FASTEST FINGER");
+                    delayRoundType("FASTEST FINGER", currentRoundLabel, chosenCategory, chooseCategory);
+                    break;
+                case "THERMOMETER":
+                    currentRoundField.setText("THERMOMETER");
+                    delayRoundType("THERMOMETER", currentRoundLabel, chosenCategory, chooseCategory);
+                    break;
+            }
+        }
+
+        public void startRound(String currentRound, JLabel currentLabel, String chosenCategory,JLabel chooseCategory){
+            //Displays the "Questions" screen.
+            JLabel questionsLabel=new JLabel(new ImageIcon("Questions.png"));
+            changeScene(currentLabel,questionsLabel);
+            questionsLabel.setFocusable(true);
+            questionsLabel.requestFocus();
+
+            //Request focus to the Key Listener if the mouse is clicked.
+            questionsLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    questionsLabel.requestFocus();
+                }
+            });
+
+            //Adds an exit button to this screen.
+            exitButton(questionsLabel,855,0,100,100, "QuestionsDark.png","Questions.png" );
+
+            final Questions[] randomQuestion = {game.getRandomQuestion(chosenCategory)};
+
+            Font questionFont=new Font("Arial",Font.PLAIN, 20);
+            //Displays the questions
+            JTextField questionText=new JTextField();
+            setFieldParameters(questionText, questionFont,Color.ORANGE,80,245,800,50, questionsLabel);
+            questionText.setEditable(false);
+
+            JTextField answer1=new JTextField();
+            setFieldParameters(answer1,questionFont, Color.yellow, 15, 323, 420, 60, questionsLabel);
+            answer1.setEditable(false);
+            JTextField answer2=new JTextField();
+            setFieldParameters(answer2,questionFont, Color.yellow, 520, 323, 420, 60, questionsLabel);
+            answer2.setEditable(false);
+            JTextField answer3=new JTextField();
+            setFieldParameters(answer3,questionFont, Color.yellow, 15, 433, 420, 60, questionsLabel);
+            answer3.setEditable(false);
+            JTextField answer4=new JTextField();
+            setFieldParameters(answer4,questionFont, Color.yellow, 520, 433, 420, 60, questionsLabel);
+            answer4.setEditable(false);
+
+            //Displays the chosen category.
+            JTextField chosenCategoryField=new JTextField(chosenCategory);
+            setFieldParameters(chosenCategoryField,neonFont.deriveFont(60f),Color.ORANGE,150,0,700,80, questionsLabel);
+            chosenCategoryField.setEditable(false);
+
+            final int[] currentQuestion = {1};
+            final int[] playersAnswered = {0};
+            switch (currentRound) {
+                case "RIGHT ANSWER":
+                    displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
+                    questionsLabel.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                            super.keyTyped(e);
+                            playersAnswered[0] += game.correctAnswer(e.getKeyChar(), randomQuestion[0], currentRound);
+                            game.haveAnswered(playersAnswered[0]);
+                                currentQuestion[0]++;
+                                if (currentQuestion[0] == 6) {
+                                    changeScene(questionsLabel, chooseCategory);
+                                    resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer());
+                                } else {
+                                    resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer());
+                                    randomQuestion[0] = game.getRandomQuestion(chosenCategory);
+                                    displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
+                                }
+                                playersAnswered[0] = 0;
+                            }
+                    });
+                    break;
+                case "BETTING":
+                    displayBettingOptions(questionText,answer1,answer2,answer3,answer4);
+                    questionsLabel.addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                            super.keyTyped(e);
+                            switch (currentQuestion[0]%2){
+                                case 0:
+                                    playersAnswered[0] += game.correctAnswer(e.getKeyChar(), randomQuestion[0], currentRound);
+                                    game.haveAnswered(playersAnswered[0]);
+                                    if (currentQuestion[0] == 10) {
+                                        changeScene(questionsLabel, chooseCategory);
+                                        resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer());
+                                    } else {
+                                        resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer());
+                                    }
+                                    displayBettingOptions(questionText,answer1,answer2,answer3,answer4);
+                                    break;
+                                case 1:
+                                    playersAnswered[0] += game.hasBet(e.getKeyChar());
+                                    game.haveAnswered(playersAnswered[0]);
+                                    randomQuestion[0] = game.getRandomQuestion(chosenCategory);
+                                    displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4,randomQuestion[0]);
+                                    break;
+                            }
+                            currentQuestion[0]++;
+                            playersAnswered[0] = 0;
+                        }
+                    });
+                            case "COUNTDOWN":
+                                break;
+                            case "FASTEST FINGER":
+                                break;
+                            case "THERMOMETER":
+                                break;
+                        }
+                    }
+
 
     public void viewControls(JLabel currentLabel){
         //Displays the "View Controls" screen.
@@ -514,11 +710,26 @@ public class GUI {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    window.remove(viewControlsLabel);
                     changeScene(viewControlsLabel,currentLabel);
                 }
             }
         });
+    }
+
+    public void displayQuestionAndAnswers(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4, Questions currentQuestion){
+        question.setText(currentQuestion.getQuestion());
+        answer1.setText(currentQuestion.getAnswers().get(0));
+        answer2.setText(currentQuestion.getAnswers().get(1));
+        answer3.setText(currentQuestion.getAnswers().get(2));
+        answer4.setText(currentQuestion.getAnswers().get(3));
+    }
+
+    public void displayBettingOptions(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4){
+        question.setText("BET POINTS FOR THE NEXT QUESTION");
+        answer1.setText("250");
+        answer2.setText("500");
+        answer3.setText("750");
+        answer4.setText("1000");
     }
 
     public void exitButton(JLabel currentLabel,int x, int y, int width, int height, String buttonDark, String buttonNotDark ){
@@ -540,6 +751,71 @@ public class GUI {
             }
         });
         currentLabel.add(exitButton);
+    }
+
+    public void resultScreen(JLabel currentLabel, String correctAnswer){
+        //Displays the current question's result screen.
+        JLabel resultScreenLabel=new JLabel(new ImageIcon("CurrentRound.png"));
+        changeScene(currentLabel,resultScreenLabel);
+
+        //Displays the "The Correct Answer is:" title.
+        JTextArea resultArea = new JTextArea("  The Correct Answer is\n");
+        setAreaParameters(resultArea,neonFont.deriveFont(50f),Color.ORANGE,150,80,700,150,resultScreenLabel);
+
+        //Displays the correct answer.
+        JTextField correctAnswerField=new JTextField(" "+correctAnswer);
+        setFieldParameters(correctAnswerField,neonFont.deriveFont(45f),Color.GREEN,130,120,700,150,resultScreenLabel);
+        correctAnswerField.setEditable(false);
+
+        exitButton(resultScreenLabel,855,0,100,100, "CurrentRoundDarkX.png","CurrentRound.png" );
+
+        //Displays Player Username and Points.
+        switch(game.getPlayers().size()){
+            case 1:
+                JTextField playerUsername=new JTextField(" " +game.getPlayers().get(0).getUsername());
+                setFieldParameters(playerUsername,neonFont.deriveFont(50f),Color.CYAN,155,250,650,60,resultScreenLabel);
+                playerUsername.setEditable(false);
+
+                JTextField playerPoints=new JTextField(" "+game.getPlayers().get(0).getPoints());
+                setFieldParameters(playerPoints,neonFont.deriveFont(50f),Color.CYAN,155,300,650,60,resultScreenLabel);
+                playerPoints.setEditable(false);
+                break;
+            case 2:
+                for (int i=0; i<game.getPlayers().size();i++){
+                    playerUsername=new JTextField(" " +game.getPlayers().get(i).getUsername());
+                    setFieldParameters(playerUsername,neonFont.deriveFont(35f),Color.CYAN,460*i,250,500,60,resultScreenLabel);
+                    playerUsername.setEditable(false);
+
+                    playerPoints=new JTextField(" "+game.getPlayers().get(i).getPoints());
+                    setFieldParameters(playerPoints,neonFont.deriveFont(35f),Color.CYAN,460*i,300,500,60,resultScreenLabel);
+                    playerPoints.setEditable(false);
+                }
+                break;
+        }
+            delayResults(resultScreenLabel, currentLabel,5000);
+    }
+
+    public void delayResults(JLabel currentLabel, JLabel newLabel, int delay){
+        Timer timer = new Timer(delay, new ActionListener(){
+            @Override
+            public void actionPerformed( ActionEvent e ){
+                changeScene(currentLabel,newLabel);
+            }
+        } );
+        timer.setRepeats(false) ;
+        timer.start();
+    }
+
+    public void delayRoundType(String currentRound, JLabel currentLabel, String chosenCategory, JLabel chooseCategoryLabel){
+        int delay = 5000;
+        Timer timer = new Timer( delay, new ActionListener(){
+            @Override
+            public void actionPerformed( ActionEvent e ){
+                startRound(currentRound, currentLabel, chosenCategory, chooseCategoryLabel);
+            }
+        } );
+        timer.setRepeats( false );
+        timer.start();
     }
 
     public void setScrollPaneParameters(JScrollPane scroll,int x, int y, int width,int height){
@@ -586,6 +862,7 @@ public class GUI {
         window.add(newLabel);
         window.revalidate();
         window.repaint();
+        newLabel.requestFocus();
     }
 
     public void startGUI() {

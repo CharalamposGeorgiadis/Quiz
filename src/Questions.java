@@ -12,6 +12,7 @@ public class Questions {
     private String category; // String that holds the category of the question.
     private ArrayList<String> answers; // List of Strings that holds the possible answers of the question.
     protected String correctAnswer; // String that holds the correct answer of the question.
+    private String hasMedia;
 
     /**
      * Constructor
@@ -21,7 +22,8 @@ public class Questions {
         question = "";
         category="";
         answers=new ArrayList<>();
-        String correctAnswer="";
+        correctAnswer="";
+        hasMedia="NULL";
     }
 
     /**
@@ -60,6 +62,9 @@ public class Questions {
         this.correctAnswer=correctAnswer;
     }
 
+    public void setHasMedia(String hasMedia) {
+        this.hasMedia = hasMedia;
+    }
 
     /**
      * Gets the question's category.
@@ -95,5 +100,9 @@ public class Questions {
 
     public String getCorrectAnswer(){
         return correctAnswer;
+    }
+
+    public String getHasMedia(){
+        return hasMedia;
     }
 }

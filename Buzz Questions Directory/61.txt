@@ -5,3 +5,4 @@ Ebay
 Walmart
 Apple
 Amazon
+NULL

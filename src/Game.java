@@ -18,6 +18,7 @@ public class Game {
 
     /**
      * Constructor.
+     *
      * @param questions Holds the directory of the questions folder.
      * @throws FileNotFoundException if a file is not found.
      */
@@ -40,6 +41,7 @@ public class Game {
                     tempQuestion.setAnswer(scan.nextLine());
                     tempQuestion.setAnswer(scan.nextLine());
                     tempQuestion.setCorrectAnswer(scan.nextLine());
+                    tempQuestion.setHasMedia(scan.nextLine());
                     categories.add(tempQuestion.getCategory());
                     Collections.shuffle(tempQuestion.getAnswers()); //Shuffles the list that holds the answers of each question, so that they appear at a different order in every game.
                     availableQuestions.add(tempQuestion);
@@ -50,8 +52,8 @@ public class Game {
         }
     }
 
-    public void createPlayer(){
-        Player tempPlayer=new Player();
+    public void createPlayer() {
+        Player tempPlayer = new Player();
         players.add(tempPlayer);
     }
 
@@ -59,35 +61,27 @@ public class Game {
         return players;
     }
 
+    public ArrayList<String> getRoundTypes() {
+        return round.getRounds();
+    }
+
     /**
      * Starts the game.
      */
 
-    public void startGame(Menu menu) throws IOException {
-        for (int i = 0; i < round.getRounds().size(); i++) {
-            System.out.println("\n" + round.getRounds().get(i) + "\n");
-            String chosenCategory = menu.chooseCategory(categories, players);
-            System.out.println(chosenCategory.toUpperCase()+"\n");
-            round.startRound(round.getRounds().get(i), availableQuestions, chosenCategory, players,menu, i, categories);
-            if (availableQuestions.size()==0) {
-                System.out.println("THERE ARE NO MORE QUESTIONS LEFT");
-                break;
-            }
-            if (i < round.getRounds().size()-1) {
-                System.out.println("MOVING TO THE NEXT ROUND");
+    public Questions getRandomQuestion(String chosenCategory) {
+        for (Questions q : availableQuestions) {
+            if (q.getCategory().equals(chosenCategory)) {
+                availableQuestions.remove(q);
+                return q;
             }
         }
-        System.out.println("\nGAME FINISHED");
-        System.out.println("    "+players.get(0).getUsername() + ": " + players.get(0).getPoints()); //In version 2, sort players by points and print them all with a loop.
-        players.get(0).addStats(players);
-        System.out.println("\nPress any key to return to Main Menu");
-        Scanner console = new Scanner(System.in);
-        console.nextLine();
+        return null;
     }
 
-    public int enterUsernames(String chosenUsername, int currentPlayer){
-        if (chosenUsername.length()!=0 && chosenUsername.length()<15 && !chosenUsername.trim().isEmpty())
-            for (Player p:players){
+    public int enterUsernames(String chosenUsername, int currentPlayer) {
+        if (chosenUsername.length() != 0 && chosenUsername.length() < 15 && !chosenUsername.trim().isEmpty())
+            for (Player p : players) {
                 if (chosenUsername.equals(p.getUsername()))
                     return -1;
             }
@@ -98,35 +92,85 @@ public class Game {
         return 1;
     }
 
-    public int setControls(String currentControl, int currentPlayer, int currentControlNumber){
+    public int setControls(String currentControl, int currentPlayer, int currentControlNumber) {
         // Loop that checks if the chosen control is already bound, whereupon it asks for a new control and restarts.
-        for (int i=0; i<players.size(); i++) {
-            for (int j=0; j<4; j++) {
+        for (int i = 0; i < players.size(); i++) {
+            for (int j = 0; j < 4; j++) {
                 if (currentControl.equals(String.valueOf(players.get(i).getControl(j)))) {
                     return -1;
-                }
-                else if (currentControl.length()!= 1 || currentControl.trim().isEmpty()) {
+                } else if (currentControl.length() != 1 || currentControl.trim().isEmpty()) {
                     return 0;
                 }
             }
         }
-        getPlayers().get(currentPlayer).setPlayerControls(currentControlNumber,currentControl);
+        getPlayers().get(currentPlayer).setPlayerControls(currentControlNumber, currentControl);
         return 1;
     }
 
-    public void clearPlayers(){
+    public void clearPlayers() {
         players.clear();
     }
 
-    public String[] randomCategories(){
-        ArrayList<String> randomCategories=new ArrayList<>();
-        for (String s:categories){
-            randomCategories.add(s);
+    public String[] randomCategories() {
+        ArrayList<String> randomCategories = new ArrayList<>();
+        boolean flag = false;
+        for (String s : categories) {
+            for (Questions q : availableQuestions) {
+                if (q.getCategory().equals(s) && !randomCategories.contains(s)) {
+                    randomCategories.add(s);
+                    flag = true;
+                }
+            }
+            if (!flag)
+                categories.remove(s);
         }
         Collections.shuffle(randomCategories);
-        String [] random4 = new String[4];
-        for (int i=0; i<4; i++)
-            random4[i]=randomCategories.get(i);
+        String[] random4 = new String[4];
+        if (randomCategories.size() > 3) {
+            for (int i = 0; i < 4; i++)
+                random4[i] = randomCategories.get(i);
+        } else {
+            for (int i = 0; i < randomCategories.size(); i++)
+                random4[i] = randomCategories.get(i);
+            for (int i = randomCategories.size() - 1; i < 4; i++)
+                random4[i] = "";
+        }
         return random4;
     }
+
+    public int correctAnswer(char answer, Questions question, String currentRound) {
+        for (Player p : getPlayers()) {
+            for (int i = 0; i < 4; i++)
+                if (Character.toLowerCase(answer) == Character.toLowerCase(p.getControl(i).charAt(0)) && !p.getHasAnswered()) {
+                    p.setHasAnswered(true);
+                    if (question.getAnswers().get(i).equals(question.correctAnswer))
+                        round.calculatePoints(true, currentRound, p);
+                    else
+                        round.calculatePoints(false, currentRound, p);
+                    return 1;
+                }
+        }
+        return 0;
+    }
+
+    public int hasBet(char answer) {
+        for (Player p : getPlayers()) {
+            for (int i = 0; i < 4; i++)
+                if (Character.toLowerCase(answer) == Character.toLowerCase(p.getControl(i).charAt(0)) && !p.getHasAnswered()) {
+                    p.setHasAnswered(true);
+                    p.setBet((i+1) * 250);
+                    return 1;
+                }
+        }
+        return 0;
+    }
+
+    public void haveAnswered(int playersAnswered) {
+        if (playersAnswered == getPlayers().size()) {
+            for (Player p : getPlayers())
+                p.setHasAnswered(false);
+        }
+    }
 }
+
+

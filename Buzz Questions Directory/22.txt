@@ -5,3 +5,4 @@ A table
 A haystack
 A bed of nails
 A barrel
+NULL

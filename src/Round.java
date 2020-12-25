@@ -18,19 +18,14 @@ public class Round {
 
     public Round() {
         roundTypes = new ArrayList<>(); //If a new round type is to be added, add its name in this list in Capital letters.
-        Random rand= new Random();
-        for (int i=0; i<5; i++) {
-            int random=rand.nextInt(2)+1; //Randomizes the order of appearance of each round type.
-            switch (random){
-                case 1:
-                    roundTypes.add("RIGHT ANSWER");
-                    break;
-                case 2:
-                    roundTypes.add("BETTING");
-                    break;
-            }
-        }
+        roundTypes.add("RIGHT ANSWER");
+        roundTypes.add("BETTING");
+        roundTypes.add("COUNTDOWN");
+        roundTypes.add("FASTEST FINGER");
+        roundTypes.add("THERMOMETER");
+        //Collections.shuffle(roundTypes);
     }
+
 
     /**
      * Gets the name of the current round type.
@@ -115,29 +110,26 @@ public class Round {
         return true;
     }
 
-    /**
-     * Initiates the start of each round type.
-     * @param currentRound The name of the current round type.
-     * @param availableQuestions A list holding all the available questions.
-     * @param chosenCategory A String that holds the chosen category for this round.
-     * @param players A list holding the information of each player.
-     * @param menu Gives access to menu options.
-     * @param currentRoundNumber Integer that holds the number of the current round type.
-     * (For example: currentRoundNumber=1 if the game is on the first round type and 2 if the game has advanced to the next round type)
-     * @param categories Set of Strings that contains the name of each category.
-     */
-
-        public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String chosenCategory, ArrayList <Player> players,
-                                 Menu menu, int currentRoundNumber, HashSet<String> categories) {
-            switch(currentRound){ // If a new round type is added, create a new case for it.
+         public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer){
+            switch (currentRound){
                 case "RIGHT ANSWER":
                     RightAnswer r = new RightAnswer();
-                    r.rightAnswerPoints(availableQuestions, chosenCategory, players, currentRoundNumber, categories);
+                    r.rightAnswerPoints(currentPlayer, answered);
                     break;
                 case "BETTING":
                     Betting b =new Betting();
-                    b.bettingPoints(availableQuestions, chosenCategory, players, menu, currentRoundNumber, categories);
+                    b.bettingPoints(currentPlayer,answered);
                     break;
+                case "COUNTDOWN":
+                    Countdown c =new Countdown();
+                    break;
+                case "FASTEST FINGER":
+                    FastestFinger f= new FastestFinger();
+                    break;
+                case "THERMOMETER":
+                    Thermometer t= new Thermometer();
+                    break;
+
             }
          }
     }

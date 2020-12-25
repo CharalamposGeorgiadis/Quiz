@@ -5,3 +5,4 @@ How many heads does the demon Ravana have?
 10
 3
 10
+NULL

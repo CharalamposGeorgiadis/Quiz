@@ -5,3 +5,4 @@ How many balls are in total are there on the table at the start of a game of sno
 20
 18
 22
+NULL
