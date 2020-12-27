@@ -10,6 +10,11 @@ import java.util.*;
 public class Round {
 
     protected ArrayList<String> roundTypes; //List of Strings that holds the type of each round type.
+    final String rightAnswerDescription=("Correct answers grant 1000 points,\n       incorrect answers grant 0.");
+    final String bettingDescription=("      Bet points for each question.\n      Correct answers grant points\n      equal to the ones you bet.\n      Incorrect answers subtract\n      the same amount.");
+    final String countdownDescription=("You have 5 seconds for each question.\nCorrect answers grant points equal to\nthe time remaining(in milliseconds)x0.2");
+    final String fasterFingerDescription=("");
+    final String thermometerDescription=("");
 
     /**
      * Constructor
@@ -17,12 +22,10 @@ public class Round {
      */
 
     public Round() {
-        roundTypes = new ArrayList<>(); //If a new round type is to be added, add its name in this list in Capital letters.
+        roundTypes = new ArrayList<>(); //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
         roundTypes.add("RIGHT ANSWER");
         roundTypes.add("BETTING");
         roundTypes.add("COUNTDOWN");
-        roundTypes.add("FASTEST FINGER");
-        roundTypes.add("THERMOMETER");
         //Collections.shuffle(roundTypes);
     }
 
@@ -36,100 +39,52 @@ public class Round {
         return roundTypes;
     }
 
-    /**
-     * Asks the player(s) a random question based on the chosen category.
-     * After each player has answered it removes that question from the list of available questions.
-     * @param availableQuestions A list holding all the available questions.
-     * @param chosenCategory A String that holds the chosen category for this round.
-     * @param players A list holding the information of each player.
-     * @return If the player has answered correctly it returns true, otherwise it returns false.
-     */
+    public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
+        roundTypes.add("FASTEST FINGER");
+        roundTypes.add("THERMOMETER");
+       // Collections.shuffle(roundTypes);
+        }
 
-
-    public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> players) {
-            for (Questions q: availableQuestions) {
-                if (chosenCategory.equals(q.getCategory())) {
-                    System.out.println(q.getQuestion());
-                    System.out.println("A. " + q.getAnswers().get(0));
-                    System.out.println("B. " + q.getAnswers().get(1));
-                    System.out.println("C. " + q.getAnswers().get(2));
-                    System.out.println("D. " + q.getAnswers().get(3));
-                    Scanner console = new Scanner(System.in);
-                    while (true) {
-                        String chosenAnswer = console.nextLine();
-                        if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(0)))) {
-                            if (q.getAnswers().get(0).equals(q.correctAnswer)){
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return true;
-                          }
-                            else{
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return false;
-                            }
-                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(1)))) {
-                            if (q.getAnswers().get(1).equals(q.correctAnswer)) {
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return true;
-                            }
-                            else{
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return false;
-                            }
-                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(2)))) {
-                            if (q.getAnswers().get(2).equals(q.correctAnswer)) {
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return true;
-                            }
-                            else{
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return false;
-                            }
-                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(3)))) {
-                            if (q.getAnswers().get(3).equals(q.correctAnswer)) {
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return true;
-                            }
-                            else {
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return false;
-                            }
-                        }
-                        else
-                            System.out.println("Please choose a suitable answer!");
-                    }
-                }
-            }
-        return true;
-    }
-
-         public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer){
-            switch (currentRound){
-                case "RIGHT ANSWER":
-                    RightAnswer r = new RightAnswer();
-                    r.rightAnswerPoints(currentPlayer, answered);
-                    break;
-                case "BETTING":
-                    Betting b =new Betting();
-                    b.bettingPoints(currentPlayer,answered);
-                    break;
-                case "COUNTDOWN":
-                    Countdown c =new Countdown();
-                    break;
-                case "FASTEST FINGER":
-                    FastestFinger f= new FastestFinger();
-                    break;
-                case "THERMOMETER":
-                    Thermometer t= new Thermometer();
-                    break;
-
+    public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer,int currentRoundParameter){
+        switch (currentRound){
+            case "RIGHT ANSWER":
+                RightAnswer r = new RightAnswer();
+                r.rightAnswerPoints(currentPlayer, answered);
+                break;
+            case "BETTING":
+                Betting b =new Betting();
+                b.bettingPoints(currentPlayer,answered);
+                break;
+            case "COUNTDOWN":
+                Countdown c =new Countdown();
+                c.countdownPoints(currentPlayer,answered,currentRoundParameter);
+                break;
+            case "FASTEST FINGER":
+                FastestFinger f= new FastestFinger();
+                break;
+            case "THERMOMETER":
+                Thermometer t= new Thermometer();
+                break;
             }
          }
+
+    public String getRightAnswerDescription(){
+        return rightAnswerDescription;
     }
+
+    public String getBettingDescription(){
+        return bettingDescription;
+    }
+
+    public String getCountdownDescription(){
+        return countdownDescription;
+    }
+
+    public String getFasterFingerDescription(){
+        return fasterFingerDescription;
+    }
+
+    public String getThermometerDescription(){
+        return thermometerDescription;
+    }
+}

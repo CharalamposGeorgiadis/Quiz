@@ -1,5 +1,3 @@
-
-
 /**
  * This class extends the Round Class and implements the Right Answer round of the Game.
  * @author Anastasios Kachrimanis

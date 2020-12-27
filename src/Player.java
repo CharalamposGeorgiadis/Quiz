@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Player {
     private String username; // String that holds the username of a player.
     private int points; // Integer that holds the points of a player.
-    private String[] controls; // Char Array that holds the controls of a player.
+    private String[] controls; // String Array that holds the controls of a player.
     private boolean hasAnswered;
     private int bet;
 
@@ -68,7 +68,7 @@ public class Player {
      */
 
     public void setPlayerControls(int currentAnswer, String chosenControl){
-        controls[currentAnswer]=chosenControl;
+        controls[currentAnswer]=chosenControl.toUpperCase();
     }
 
     /**
@@ -102,7 +102,7 @@ public class Player {
             setPlayerControls(i,"");
     }
 
-    public void clearUsernames(){
+    public void clearUsername(){
         setUsername("");
     }
 

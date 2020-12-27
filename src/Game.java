@@ -65,9 +65,9 @@ public class Game {
         return round.getRounds();
     }
 
-    /**
-     * Starts the game.
-     */
+    public ArrayList<Questions> getAvailableQuestions() {
+        return availableQuestions;
+    }
 
     public Questions getRandomQuestion(String chosenCategory) {
         for (Questions q : availableQuestions) {
@@ -132,21 +132,21 @@ public class Game {
         } else {
             for (int i = 0; i < randomCategories.size(); i++)
                 random4[i] = randomCategories.get(i);
-            for (int i = randomCategories.size() - 1; i < 4; i++)
+            for (int i = randomCategories.size(); i < 4; i++)
                 random4[i] = "";
         }
         return random4;
     }
 
-    public int correctAnswer(char answer, Questions question, String currentRound) {
+    public int correctAnswer(char answer, Questions question, String currentRound, int currentRoundTypeParameter) {
         for (Player p : getPlayers()) {
             for (int i = 0; i < 4; i++)
                 if (Character.toLowerCase(answer) == Character.toLowerCase(p.getControl(i).charAt(0)) && !p.getHasAnswered()) {
                     p.setHasAnswered(true);
-                    if (question.getAnswers().get(i).equals(question.correctAnswer))
-                        round.calculatePoints(true, currentRound, p);
-                    else
-                        round.calculatePoints(false, currentRound, p);
+                        if (question.getAnswers().get(i).equals(question.correctAnswer))
+                            round.calculatePoints(true, currentRound, p, currentRoundTypeParameter);
+                        else
+                            round.calculatePoints(false, currentRound, p, 0);
                     return 1;
                 }
         }
@@ -165,11 +165,43 @@ public class Game {
         return 0;
     }
 
-    public void haveAnswered(int playersAnswered) {
-        if (playersAnswered == getPlayers().size()) {
+    public void resetHaveAnswered() {
             for (Player p : getPlayers())
                 p.setHasAnswered(false);
+    }
+
+    public String getRoundDescription(String currentRound){
+        switch (currentRound){
+            case "RIGHT ANSWER":
+                return round.getRightAnswerDescription();
+            case "BETTING":
+                return round.getBettingDescription();
+            case "COUNTDOWN":
+                return round.getCountdownDescription();
+            case "FASTEST FINGER":
+                return round.getFasterFingerDescription();
+            case "THERMOMETER":
+                return round.getThermometerDescription();
         }
+        return "";
+    }
+
+    public void sortPlayersByPoints(){
+        for (int i=1; i<=getPlayers().size()-1;i++){
+            for (int j=1;j<=getPlayers().size()-i;j++){
+                Player first=getPlayers().get(j-1);
+                Player second=getPlayers().get(j);
+                if (first.getPoints()<second.getPoints()){
+                    Player temp=getPlayers().get(j-1);
+                    getPlayers().set(j-1,getPlayers().get(j));
+                    getPlayers().set(j,temp);
+                }
+            }
+        }
+    }
+
+    public void addMultiplayerRounds(){
+        round.addMultiplayerRounds();
     }
 }
 
