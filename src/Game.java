@@ -1,6 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -70,12 +70,15 @@ public class Game {
     }
 
     public Questions getRandomQuestion(String chosenCategory) {
-        for (Questions q : availableQuestions) {
-            if (q.getCategory().equals(chosenCategory)) {
-                availableQuestions.remove(q);
-                return q;
+        if(chosenCategory!=null)
+            for (Questions q : availableQuestions) {
+                if (q.getCategory().equals(chosenCategory)) {
+                    availableQuestions.remove(q);
+                    return q;
+                }
             }
-        }
+        else
+            return getAvailableQuestions().get(0);
         return null;
     }
 
@@ -94,9 +97,9 @@ public class Game {
 
     public int setControls(String currentControl, int currentPlayer, int currentControlNumber) {
         // Loop that checks if the chosen control is already bound, whereupon it asks for a new control and restarts.
-        for (int i = 0; i < players.size(); i++) {
+        for (Player player : players) {
             for (int j = 0; j < 4; j++) {
-                if (currentControl.equals(String.valueOf(players.get(i).getControl(j)))) {
+                if (currentControl.equals(String.valueOf(player.getControl(j)))) {
                     return -1;
                 } else if (currentControl.length() != 1 || currentControl.trim().isEmpty()) {
                     return 0;
@@ -144,9 +147,9 @@ public class Game {
                 if (Character.toLowerCase(answer) == Character.toLowerCase(p.getControl(i).charAt(0)) && !p.getHasAnswered()) {
                     p.setHasAnswered(true);
                         if (question.getAnswers().get(i).equals(question.correctAnswer))
-                            round.calculatePoints(true, currentRound, p, currentRoundTypeParameter);
+                            round.calculatePoints(true, currentRound, p, currentRoundTypeParameter,getPlayers().size());
                         else
-                            round.calculatePoints(false, currentRound, p, 0);
+                            round.calculatePoints(false, currentRound, p, 0,getPlayers().size());
                     return 1;
                 }
         }
@@ -197,6 +200,50 @@ public class Game {
                     getPlayers().set(j,temp);
                 }
             }
+        }
+    }
+
+    public void addStats() throws IOException {
+        File oldFile=new File("Player Stats.txt");
+        if (!oldFile.exists()) {
+            oldFile.createNewFile();
+        }
+        Writer writer= new BufferedWriter(new FileWriter("Player Stats.txt", true));
+        Scanner scannerMain=new Scanner(new File("Player Stats.txt"));
+        if (!scannerMain.hasNextLine())
+            for (Player p: getPlayers()){
+                writer.write(" "+p.getUsername() + " " + p.getPoints()+ " "+p.getMultiplayerWins()+ "\n");
+            }
+        else {
+            while (scannerMain.hasNextLine()) {
+                Player tempPlayer=new Player();
+                tempPlayer.setUsername(scannerMain.next());
+                tempPlayer.setPoints(scannerMain.nextInt());
+                tempPlayer.setMultiplayerWins(scannerMain.nextInt());
+                for (Player p: players){
+                    if (tempPlayer.getUsername().equals(p.getUsername()))
+                        if (tempPlayer.getPoints()>p.getPoints()) {
+                            players.remove(p);
+                            players.add(tempPlayer);
+                        }
+                }
+                if (scannerMain.hasNextLine())
+                    scannerMain.nextLine();
+                else
+                    break;
+            }
+            sortPlayersByPoints();
+
+            scannerMain.close();
+            writer.close();
+            Files.deleteIfExists(Paths.get("Player Stats.txt"));
+            File newFile=new File("Player Stats.txt");
+            newFile.createNewFile();
+            Writer newWriter= new BufferedWriter(new FileWriter("Player Stats.txt", true));
+            for (Player p:getPlayers()){
+                newWriter.append(" "+p.getUsername() + " " + p.getPoints()+ " "+p.getMultiplayerWins()+ "\n");
+            }
+            newWriter.close();
         }
     }
 

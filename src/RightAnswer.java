@@ -15,7 +15,5 @@ public class RightAnswer extends Round {
     public void rightAnswerPoints(Player currentPlayer, boolean answered) {
         if (answered)
             currentPlayer.addPoints(1000);
-        else
-            currentPlayer.addPoints(0);
     }
 }
