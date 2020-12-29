@@ -23,7 +23,7 @@ public class Questions {
         category="";
         answers=new ArrayList<>();
         correctAnswer="";
-        hasMedia="NULL";
+        hasMedia="";
     }
 
     /**

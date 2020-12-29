@@ -149,7 +149,7 @@ public class Game {
     public int correctAnswer(char answer, Questions question, String currentRound, int currentRoundTypeParameter) {
         for (Player p : getPlayers()) {
             for (int i = 0; i < 4; i++)
-                if (Character.toLowerCase(answer) == Character.toLowerCase(p.getControl(i).charAt(0)) && !p.getHasAnswered()) {
+                if (Character.toUpperCase(answer) == p.getControl(i).charAt(0) && !p.getHasAnswered()) {
                     p.setHasAnswered(true);
                     if (question.getAnswers().get(i).equals(question.correctAnswer))
                         round.calculatePoints(true, currentRound, p, currentRoundTypeParameter,getPlayers().size());
@@ -291,6 +291,10 @@ public class Game {
 
     public void addMultiplayerRounds(){
         round.addMultiplayerRounds();
+    }
+
+    public void refillRoundTypes(){
+        round.refillRoundTypes();
     }
 }
 

@@ -24,10 +24,10 @@ public class Round {
 
     public Round() {
         roundTypes = new ArrayList<>(); //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
-        //roundTypes.add("RIGHT ANSWER");
-        //roundTypes.add("BETTING");
-        // roundTypes.add("COUNTDOWN");
-        // Collections.shuffle(roundTypes);
+        roundTypes.add("RIGHT ANSWER");
+       // roundTypes.add("BETTING");
+        //roundTypes.add("COUNTDOWN");
+        Collections.shuffle(roundTypes);
     }
 
 
@@ -41,9 +41,9 @@ public class Round {
     }
 
     public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
-        roundTypes.add("FASTEST FINGER");
+        //roundTypes.add("FASTEST FINGER");
         Collections.shuffle(roundTypes);
-        roundTypes.add("THERMOMETER");
+       // roundTypes.add("THERMOMETER");
     }
 
     public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){
@@ -87,6 +87,13 @@ public class Round {
 
     public String getThermometerDescription(){
         return thermometerDescription;
+    }
+
+    public void refillRoundTypes(){
+        // roundTypes.add("RIGHT ANSWER");
+        // roundTypes.add("BETTING");
+        roundTypes.add("COUNTDOWN");
+        Collections.shuffle(roundTypes);
     }
 }
 

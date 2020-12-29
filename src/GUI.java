@@ -4,10 +4,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.Random;
 
-
 public class GUI {
     private JFrame window;
-    private ImageIcon mainMenu;
     private JLabel mainLabel;
     private Font neonFont;
     private Game game;
@@ -19,28 +17,24 @@ public class GUI {
         window.setSize(970, 550);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
+        window.setLocationRelativeTo(null);
 
         //Displays the Main Menu screen.
-        mainMenu = new ImageIcon("MainMenu.png");
-        mainLabel = new JLabel(mainMenu);
+        mainLabel = new JLabel(new ImageIcon("MainMenu.png"));
         window.add(mainLabel);
 
         //Creates Exit button.
         exitButton(mainLabel, 698, 75, 140, 140, "MainMenuDark.png", "MainMenu.png");
 
-        //Adds custom font from file.
+        //Creates custom font from file.
         neonFont = Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")).deriveFont(60f);
         GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
         g.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")));
 
-
         if (questions != null) {
             game = new Game(questions);//Loads the questions into the game.
             boolean statsExist;
-            if (game.loadPlayerStats())
-                statsExist=true;
-            else
-                statsExist=false;
+            statsExist= game.loadPlayerStats();
 
             //Creates the Start Game button.
             JButton startButton = new JButton("START GAME");
@@ -61,12 +55,7 @@ public class GUI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
-                    try {
-                        if (SwingUtilities.isLeftMouseButton(e))
                             viewLeaderboards(statsExist);
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
                 }
             });
         }
@@ -76,7 +65,7 @@ public class GUI {
         }
     }
 
-    public void viewLeaderboards(boolean statsExist) throws IOException {
+    public void viewLeaderboards(boolean statsExist) {
 
         //Displays the Leaderboard screen.
         JLabel leaderboardBackground = new JLabel((new ImageIcon("LeaderBoard.png")));
@@ -140,8 +129,6 @@ public class GUI {
         //Displays the "HIGHSCORES" title.
         JTextArea highscoresTitle = new JTextArea("HIGHSCORES");
         setAreaParameters(highscoresTitle, neonFont.deriveFont(50f), Color.ORANGE, 320, 90, 360, 50, highscoreLeaderboardLabel);
-
-
 
         game.sortStatsByPoints();
         //Displays players usernames based on highscores.
@@ -248,7 +235,6 @@ public class GUI {
             }
         });
     }
-
 
     public void enterUsername(int numberOfPlayers, JLabel currentLabel,JTextField chooseNumber){
         final int[] currentPlayer = {1};
@@ -662,9 +648,25 @@ public class GUI {
 
         //Displays the chosen category.
         JTextField chosenCategoryField=new JTextField(chosenCategory);
-        setFieldParameters(chosenCategoryField,neonFont.deriveFont(60f),Color.ORANGE,150,0,700,80, questionsLabel);
+        setFieldParameters(chosenCategoryField,neonFont.deriveFont(40f),Color.ORANGE,130,-10,700,80, questionsLabel);
         chosenCategoryField.setEditable(false);
 
+        //Displays the "Players Answered title"
+        JTextField playersAnsweredTitle=new JTextField(" Players Answered");
+        setFieldParameters(playersAnsweredTitle,neonFont.deriveFont(27f),Color.yellow,0,-10,280,80,questionsLabel);
+        playersAnsweredTitle.setEditable(false);
+
+        //Displays the players who have already answered, except from the last one;
+        JTextArea playersAnsweredArea =new JTextArea();
+        setAreaParameters(playersAnsweredArea,neonFont.deriveFont(25f),Color.cyan,10,50,400,200,questionsLabel);
+        if (game.getPlayers().size()==1) {
+            playersAnsweredTitle.setVisible(false);
+            playersAnsweredArea.setVisible(false);
+        }
+
+
+        JButton imageQuestion=new JButton();
+        setButtonParameters(imageQuestion,null,null,280,45,400,185,questionsLabel);
         final int[] currentQuestion = {1};
         final int[] playersAnswered = {0};
         switch (currentRound) {
@@ -678,8 +680,15 @@ public class GUI {
                         super.keyTyped(e);
                         switch (currentQuestion[0]%2){
                             case 0:
+                                for (Player p:game.getPlayers()){
+                                    for (int i=0;i<4;i++){
+                                        if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                            playersAnsweredArea.append(p.getUsername()+"\n");
+                                    }
+                                }
                                 playersAnswered[0] += game.correctAnswer(e.getKeyChar(), randomQuestion[0], currentRound,0);
                                 if (playersAnswered[0]==game.getPlayers().size()) {
+                                    playersAnsweredArea.setText("");
                                     game.resetHaveAnswered();
                                     playersAnswered[0] = 0;
                                     currentQuestion[0]++;
@@ -702,8 +711,15 @@ public class GUI {
                                 }
                                 break;
                             case 1:
+                                for (Player p:game.getPlayers()){
+                                    for (int i=0;i<4;i++){
+                                        if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                            playersAnsweredArea.setText(p.getUsername()+"\n");
+                                    }
+                                }
                                 playersAnswered[0] += game.hasBet(e.getKeyChar());
                                 if (playersAnswered[0]==game.getPlayers().size()) {
+                                    playersAnsweredArea.setText("");
                                     game.resetHaveAnswered();
                                     playersAnswered[0] = 0;
                                     currentQuestion[0]++;
@@ -717,7 +733,7 @@ public class GUI {
                 randomQuestion = new Questions[]{game.getRandomQuestion(chosenCategory)};
                 game.getRoundTypes().remove(currentRound);
                 JTextField timerField= new JTextField();
-                setFieldParameters(timerField,questionFont.deriveFont(60f),Color.red,0,0,100,100, questionsLabel);
+                setFieldParameters(timerField,questionFont.deriveFont(60f),Color.red,860,80,100,100, questionsLabel);
                 timerField.setEditable(false);
                 displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
                 final int[] milliseconds = {5000};
@@ -730,11 +746,18 @@ public class GUI {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         super.keyTyped(e);
+                        for (Player p:game.getPlayers()){
+                            for (int i=0;i<4;i++){
+                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                    playersAnsweredArea.append(p.getUsername()+"\n");
+                            }
+                        }
                         playersAnswered[0] += game.correctAnswer(e.getKeyChar(), randomQuestion[0], currentRound, milliseconds[0]);
                         if (playersAnswered[0] == game.getPlayers().size()) {
                             game.resetHaveAnswered();
                         }
                         if (milliseconds[0]==0 || playersAnswered[0] == game.getPlayers().size()) {
+                            playersAnsweredArea.setText("");
                             playersAnswered[0] = 0;
                             currentQuestion[0]++;
                             if (currentQuestion[0] != 6) {
@@ -770,11 +793,18 @@ public class GUI {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         super.keyTyped(e);
+                        for (Player p:game.getPlayers()){
+                            for (int i=0;i<4;i++){
+                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                    playersAnsweredArea.append(p.getUsername()+"\n");
+                            }
+                        }
                         playersAnswered[0] += game.correctAnswer(e.getKeyChar(), randomQuestion[0], currentRound,0);
                         for (Player p:game.getPlayers())
                             if (p.getThermometerCorrectAnswers()==5)
                                 resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true,true);
                         if (playersAnswered[0]==game.getPlayers().size()) {
+                            playersAnsweredArea.setText("");
                             game.resetHaveAnswered();
                             playersAnswered[0] = 0;
                             resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), game.getAvailableQuestions().size() == 0,true); //Simplified if statement.
@@ -793,8 +823,15 @@ public class GUI {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         super.keyTyped(e);
+                        for (Player p:game.getPlayers()){
+                            for (int i=0;i<4;i++){
+                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                    playersAnsweredArea.append(p.getUsername()+"\n");
+                            }
+                        }
                         playersAnswered[0] += game.correctAnswer(e.getKeyChar(), randomQuestion[0], currentRound,0);
                         if (playersAnswered[0]==game.getPlayers().size()) {
+                            playersAnsweredArea.setText("");
                             game.resetHaveAnswered();
                             playersAnswered[0] = 0;
                             currentQuestion[0]++;
@@ -1062,12 +1099,28 @@ public class GUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //Creates an exit button.
-        endScreenLabel.addKeyListener(new KeyAdapter() {
+
+        //Creates a "Return to Main Menu" button.
+        JButton returnToMainMenuButton=new JButton("MAIN MENU");
+        setButtonParameters(returnToMainMenuButton,neonFont.deriveFont(40f),Color.green,105,350,250,80,endScreenLabel);
+        returnToMainMenuButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                System.exit(0);
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                changeScene(endScreenLabel,mainLabel);
+                game.refillRoundTypes();
+                game.clearPlayers();
+            }
+        });
+
+        //Creates a "EXIT" button.
+        JButton exitButton=new JButton("EXIT");
+        setButtonParameters(exitButton,neonFont.deriveFont(40f),Color.green,600,350,250,80,endScreenLabel);
+        exitButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                window.dispose();
             }
         });
     }
