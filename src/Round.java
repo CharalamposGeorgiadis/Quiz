@@ -14,7 +14,7 @@ public class Round {
     final String bettingDescription=("Bet points for each question. Correct answers grant points equal to the ones you bet. Incorrect answers subtract the same amount.");
     final String countdownDescription=("You have 5 seconds for each question. Correct answers grant points equal to the time remaining(in milliseconds)x0.2");
     final String fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 500.");
-    final String thermometerDescription=("First player to answer correctly gains 5000 points. Then, or if there are no more questions left, the game finishes.");
+    final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or if there are no more questions left, the game finishes.");
 
 
     /**
@@ -26,8 +26,8 @@ public class Round {
         roundTypes = new ArrayList<>(); //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
         //roundTypes.add("RIGHT ANSWER");
         //roundTypes.add("BETTING");
-       // roundTypes.add("COUNTDOWN");
-        //Collections.shuffle(roundTypes);
+        // roundTypes.add("COUNTDOWN");
+        // Collections.shuffle(roundTypes);
     }
 
 
@@ -42,9 +42,9 @@ public class Round {
 
     public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
         roundTypes.add("FASTEST FINGER");
+        Collections.shuffle(roundTypes);
         roundTypes.add("THERMOMETER");
-       // Collections.shuffle(roundTypes);
-        }
+    }
 
     public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){
         switch (currentRound){
@@ -66,8 +66,8 @@ public class Round {
             case "THERMOMETER":
                 Thermometer.thermometerPoints(currentPlayer,answered);
                 break;
-            }
-         }
+        }
+    }
 
     public String getRightAnswerDescription(){
         return rightAnswerDescription;
