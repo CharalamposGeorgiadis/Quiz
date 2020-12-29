@@ -42,7 +42,7 @@ public class Round {
 
     public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
         roundTypes.add("FASTEST FINGER");
-        roundTypes.add("THERMOMETER");
+        //roundTypes.add("THERMOMETER");
        // Collections.shuffle(roundTypes);
         }
 

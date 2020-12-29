@@ -71,46 +71,78 @@ public class GUI {
     }
 
     public void viewLeaderboards() throws IOException {
-        //Displays the Leaderboard screen.
-        JLabel leaderboardBackground = new JLabel((new ImageIcon("LeaderBoard.png")));
-        changeScene(mainLabel,leaderboardBackground);
 
-        //Adds a "LEADERBOARDS" title to the label.
-        JTextArea leaderboardTitle = new JTextArea("LEADERBOARDS");
-        setAreaParameters(leaderboardTitle,neonFont.deriveFont(50f),Color.ORANGE,310,90,360,50, leaderboardBackground);
+            //Displays the Leaderboard screen.
+            JLabel leaderboardBackground = new JLabel((new ImageIcon("LeaderBoard.png")));
+            changeScene(mainLabel, leaderboardBackground);
 
-        //Adds a "USERNAME" title.
-        JTextArea usernameTitle = new JTextArea(" USERNAME");
-        setAreaParameters(usernameTitle,neonFont.deriveFont(30f),Color.ORANGE,100,150,220,50, leaderboardBackground);
+        if (game.loadPlayerStats()) {
+            //Adds a "LEADERBOARDS" title to the label.
+            JTextArea leaderboardTitle = new JTextArea("LEADERBOARDS");
+            setAreaParameters(leaderboardTitle, neonFont.deriveFont(50f), Color.ORANGE, 310, 90, 360, 50, leaderboardBackground);
 
-        //Adds a "HIGHSCORE" title.
-        JTextArea highscoreTitle = new JTextArea(" HIGHSCORE");
-        setAreaParameters(highscoreTitle,neonFont.deriveFont(30f),Color.ORANGE,380,150,300,50, leaderboardBackground);
+            //Adds a "USERNAME" title.
+            JTextArea usernameTitle = new JTextArea(" USERNAME");
+            setAreaParameters(usernameTitle, neonFont.deriveFont(40f), Color.ORANGE, 100, 150, 250, 60, leaderboardBackground);
 
-        //Adds a "MULTIPLAYER WINS" title.
-        JTextArea multiplayerWinsTitle = new JTextArea(" MULTIPLAYER WINS");
-        setAreaParameters(multiplayerWinsTitle,neonFont.deriveFont(30f),Color.ORANGE,600,150,300,50, leaderboardBackground);
+            //Adds a "HIGHSCORE" title.
+            JTextArea highscoreTitle = new JTextArea("HIGHSCORE");
+            setAreaParameters(highscoreTitle, neonFont.deriveFont(40f), Color.ORANGE, 380, 150, 300, 60, leaderboardBackground);
+
+            //Adds a "MULTIPLAYER WINS" title.
+            JTextArea multiplayerWinsTitle = new JTextArea("MULTIPLAYER\n    WINS");
+            setAreaParameters(multiplayerWinsTitle, neonFont.deriveFont(35f), Color.ORANGE, 620, 140, 220, 60, leaderboardBackground);
+
+            //Adds the username Area.
+            JTextArea statsArea = new JTextArea();
+            setAreaParameters(statsArea, neonFont.deriveFont(30f), Color.cyan, 105, 190, 740, 226, leaderboardBackground);
+
+            for (int i = 0; i < game.getUsernames().size(); i++) {
+                statsArea.append(" " + game.getUsernames().get(i));
+                for (int j = 0; j < 16 - game.getUsernames().get(i).length(); j++)
+                    statsArea.append("  ");
+                for (int k = 0; k < 5 - String.valueOf(game.getHighScores().get(i)).length(); k++)
+                    statsArea.append("  ");
+                statsArea.append("" + game.getHighScores().get(i));
+                for (int j = 0; j < 10 - String.valueOf(game.getHighScores().get(i)).length(); j++)
+                    statsArea.append("  ");
+                if (!game.getUsernames().get(i).equals(game.getUsernames().get(game.getUsernames().size() - 1)))
+                    statsArea.append("" + game.getMultiplayerWins().get(i) + "\n");
+                else
+                    statsArea.append("" + game.getMultiplayerWins().get(i));
+            }
+
+            JScrollPane scroll = new JScrollPane(statsArea);
+            setScrollPaneParameters(scroll, 105, 204, 740, 226);
+            leaderboardBackground.add(scroll);
+            scroll.requestFocus();
+            SwingUtilities.invokeLater(() -> scroll.getViewport().setViewPosition(new Point(0, 0)));
+        }
+        else {
+            JTextArea noFileFound = new JTextArea("NO STATS FILE\n     FOUND");
+            setAreaParameters(noFileFound,neonFont.deriveFont(50f),Color.orange,310,90,360,100,leaderboardBackground);
+        }
+
 
         //Adds the Area where the leaderboards will be displayed.
-        Font font=new Font("Arial",Font.BOLD, 25);
-        JTextArea leaderboardArea = new JTextArea();
-        setAreaParameters(leaderboardArea,neonFont.deriveFont(30f) ,Color.cyan,110,200,735,230, leaderboardBackground);
-        leaderboardArea.setLineWrap(true);
-
+//        Font font=new Font("Arial",Font.BOLD, 25);
+//        JTextArea leaderboardArea = new JTextArea();
+//        setAreaParameters(leaderboardArea,neonFont.deriveFont(30f) ,Color.cyan,110,200,735,230, leaderboardBackground);
+//        leaderboardArea.setLineWrap(true);
         //Loads stats into the Leaderboard screen.
-        try {
-            BufferedReader stats = new BufferedReader(new FileReader("PLAYER STATS.txt"));
-            leaderboardArea.read(stats, null);
-            stats.close();
-        }
-        catch(FileNotFoundException s){
-            leaderboardArea.setText("\n                   STATS FILE NOT FOUND\n");
-        }
+//        try {
+//            BufferedReader stats = new BufferedReader(new FileReader("PLAYER STATS.txt"));
+//            leaderboardArea.read(stats, null);
+//            stats.close();
+//        }
+//        catch(FileNotFoundException s){
+//            leaderboardArea.setText("\n                   STATS FILE NOT FOUND\n");
+//        }
 
         //Adds Scrolling function in the leaderboard display area.
-        JScrollPane scroll=new JScrollPane(leaderboardArea);
-        setScrollPaneParameters(scroll,110,200,735,230);
-        leaderboardBackground.add(scroll);
+        //JScrollPane scroll=new JScrollPane(leaderboardArea);
+        //setScrollPaneParameters(scroll,110,200,735,230);
+       // leaderboardBackground.add(scroll);
 
         //Adds a Back button in the Leaderboard screen.
         JButton backButton = new JButton("BACK");
@@ -120,7 +152,6 @@ public class GUI {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    window.remove(leaderboardTitle);
                     changeScene(leaderboardBackground,mainLabel);
                 }
             }
@@ -712,7 +743,7 @@ public class GUI {
                             game.resetHaveAnswered();
                             playersAnswered[0] = 0;
                             resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), game.getAvailableQuestions().size() == 0,true); //Simplified if statement.
-                            randomQuestion[0] = game.getRandomQuestion(chosenCategory);
+                            randomQuestion[0] = game.getRandomQuestion(null);
                             chosenCategoryField.setText(randomQuestion[0].getCategory());
                             displayQuestionAndAnswers(questionText, answer1, answer2, answer3, answer4, randomQuestion[0]);
                             }
@@ -967,11 +998,6 @@ public class GUI {
                 game.sortPlayersByPoints();
                 if(game.getPlayers().get(0).getPoints()>game.getPlayers().get(1).getPoints())
                     game.getPlayers().get(0).addMultiplayerWin();
-                try {
-                    game.addStats();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 for (int i=0; i<game.getPlayers().size();i++){
                     playerUsername=new JTextField(" " +game.getPlayers().get(i).getUsername());
                     setFieldParameters(playerUsername,neonFont.deriveFont(50f-10*i),Color.CYAN,155,200+100*i,650,50-10*i,endScreenLabel);
@@ -981,6 +1007,11 @@ public class GUI {
                     setFieldParameters(playerPoints,neonFont.deriveFont(50f-10*i),Color.CYAN,155,200+(50-10*i)+100*i,650,50-10*i,endScreenLabel);
                     playerPoints.setEditable(false);
                 }
+        }
+        try {
+            game.addStats();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         //Creates an exit button.
         endScreenLabel.addKeyListener(new KeyAdapter() {
