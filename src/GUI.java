@@ -9,9 +9,11 @@ public class GUI {
     private JLabel mainLabel;
     private Font neonFont;
     private Game game;
+    private File[] questions;
 
     public GUI(File[] questions) throws IOException, FontFormatException {
 
+        this.questions=questions;
         //Creates the Main frame of the game.
         window = new JFrame("Buzz");
         window.setSize(970, 550);
@@ -31,8 +33,8 @@ public class GUI {
         GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
         g.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")));
 
-        if (questions != null) {
-            game = new Game(questions);//Loads the questions into the game.
+        if (this.questions != null) {
+            game = new Game(this.questions);//Loads the questions into the game.
             boolean statsExist;
             statsExist= game.loadPlayerStats();
 
@@ -664,7 +666,6 @@ public class GUI {
             playersAnsweredArea.setVisible(false);
         }
 
-
         JButton imageQuestion=new JButton();
         setButtonParameters(imageQuestion,null,null,280,45,400,185,questionsLabel);
         final int[] currentQuestion = {1};
@@ -724,6 +725,10 @@ public class GUI {
                                     playersAnswered[0] = 0;
                                     currentQuestion[0]++;
                                     displayQuestionAndAnswers(questionText, answer1, answer2, answer3, answer4, randomQuestion[0]);
+                                    if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"))
+                                        imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
+                                    else
+                                        imageQuestion.setIcon(null);
                                 }
                         }
                     }
@@ -736,6 +741,8 @@ public class GUI {
                 setFieldParameters(timerField,questionFont.deriveFont(60f),Color.red,860,80,100,100, questionsLabel);
                 timerField.setEditable(false);
                 displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
+                if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"))
+                    imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
                 final int[] milliseconds = {5000};
                 Timer timer = new Timer(100, t -> {
                     milliseconds[0] -= 100;
@@ -765,6 +772,10 @@ public class GUI {
                                     resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), false,false);
                                     randomQuestion[0] = game.getRandomQuestion(chosenCategory);
                                     displayQuestionAndAnswers(questionText, answer1, answer2, answer3, answer4, randomQuestion[0]);
+                                    if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"))
+                                        imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
+                                    else
+                                        imageQuestion.setIcon(null);
                                     milliseconds[0] = 9000;
                                     timer.restart();
                                 } else {
@@ -789,6 +800,8 @@ public class GUI {
                 chosenCategoryField.setText(randomQuestion[0].getCategory());
                 game.getRoundTypes().remove(currentRound);
                 displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
+                if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"))
+                    imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
                 questionsLabel.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyTyped(KeyEvent e) {
@@ -811,6 +824,10 @@ public class GUI {
                             randomQuestion[0] = game.getRandomQuestion(null);
                             chosenCategoryField.setText(randomQuestion[0].getCategory());
                             displayQuestionAndAnswers(questionText, answer1, answer2, answer3, answer4, randomQuestion[0]);
+                            if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"))
+                                imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
+                            else
+                                imageQuestion.setIcon(null);
                         }
                     }
                 });
@@ -819,6 +836,8 @@ public class GUI {
                 randomQuestion = new Questions[]{game.getRandomQuestion(chosenCategory)};
                 game.getRoundTypes().remove(currentRound);
                 displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
+                if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"));
+                    imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
                 questionsLabel.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyTyped(KeyEvent e) {
@@ -839,6 +858,10 @@ public class GUI {
                                 resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), game.getAvailableQuestions().size() == 0,false); //Simplified if statement.
                                 randomQuestion[0] = game.getRandomQuestion(chosenCategory);
                                 displayQuestionAndAnswers(questionText, answer1, answer2, answer3, answer4, randomQuestion[0]);
+                                if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"))
+                                    imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
+                                else
+                                    imageQuestion.setIcon(null);
                             } else {
                                 if (game.getAvailableQuestions().size()!=0&&game.getRoundTypes().size()!=0) {
                                     changeScene(questionsLabel, chooseCategory);
@@ -1108,6 +1131,11 @@ public class GUI {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 changeScene(endScreenLabel,mainLabel);
+                try {
+                    game.reloadQuestions(questions);
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
                 game.refillRoundTypes();
                 game.clearPlayers();
             }

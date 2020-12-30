@@ -15,6 +15,18 @@ public class PlayerStats {
         multiplayerWins = new ArrayList<>();
     }
 
+    public ArrayList<String> getUsernames(){
+        return usernames;
+    }
+
+    public ArrayList<Integer> getHighScore(){
+        return highScore;
+    }
+
+    public ArrayList<Integer> getMultiplayerWins(){
+        return multiplayerWins;
+    }
+
     public boolean loadPlayerStats() throws FileNotFoundException {
         File stats = new File("Player Stats.txt");
         if (stats.exists()) {
@@ -33,7 +45,6 @@ public class PlayerStats {
         }
         else
             return false;
-
     }
 
     public void sortStatsByPoints(){
@@ -75,17 +86,4 @@ public class PlayerStats {
             }
         }
     }
-
-    public ArrayList<String> getUsernames(){
-        return usernames;
-    }
-
-    public ArrayList<Integer> getHighScore(){
-        return highScore;
-    }
-
-    public ArrayList<Integer> getMultiplayerWins(){
-        return multiplayerWins;
-    }
 }
-

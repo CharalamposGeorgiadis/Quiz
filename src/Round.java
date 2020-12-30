@@ -16,7 +16,6 @@ public class Round {
     final String fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 500.");
     final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or if there are no more questions left, the game finishes.");
 
-
     /**
      * Constructor
      * Creates a list that holds the names of each round type.
@@ -24,26 +23,49 @@ public class Round {
 
     public Round() {
         roundTypes = new ArrayList<>(); //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
-        roundTypes.add("RIGHT ANSWER");
-       // roundTypes.add("BETTING");
-        //roundTypes.add("COUNTDOWN");
-        Collections.shuffle(roundTypes);
+        refillRoundTypes();
     }
-
 
     /**
      * Gets the name of the current round type.
      * @return The name of the current round type.
      */
 
-    public ArrayList<String> getRounds() {
+    public ArrayList<String> getRoundTypes() {
         return roundTypes;
     }
 
+    public String getRightAnswerDescription(){
+        return rightAnswerDescription;
+    }
+
+    public String getBettingDescription(){
+        return bettingDescription;
+    }
+
+    public String getCountdownDescription(){
+        return countdownDescription;
+    }
+
+    public String getFasterFingerDescription(){
+        return fasterFingerDescription;
+    }
+
+    public String getThermometerDescription(){
+        return thermometerDescription;
+    }
+
     public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
-        //roundTypes.add("FASTEST FINGER");
+        roundTypes.add("FASTEST FINGER");
         Collections.shuffle(roundTypes);
-       // roundTypes.add("THERMOMETER");
+        roundTypes.add("THERMOMETER");
+    }
+
+    public void refillRoundTypes(){
+        roundTypes.add("RIGHT ANSWER");
+        roundTypes.add("BETTING");
+        roundTypes.add("COUNTDOWN");
+        Collections.shuffle(roundTypes);
     }
 
     public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){
@@ -68,32 +90,4 @@ public class Round {
                 break;
         }
     }
-
-    public String getRightAnswerDescription(){
-        return rightAnswerDescription;
-    }
-
-    public String getBettingDescription(){
-        return bettingDescription;
-    }
-
-    public String getCountdownDescription(){
-        return countdownDescription;
-    }
-
-    public String getFasterFingerDescription(){
-        return fasterFingerDescription;
-    }
-
-    public String getThermometerDescription(){
-        return thermometerDescription;
-    }
-
-    public void refillRoundTypes(){
-        // roundTypes.add("RIGHT ANSWER");
-        // roundTypes.add("BETTING");
-        roundTypes.add("COUNTDOWN");
-        Collections.shuffle(roundTypes);
-    }
 }
-

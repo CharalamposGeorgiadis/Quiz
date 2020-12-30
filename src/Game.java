@@ -15,7 +15,7 @@ public class Game {
     private ArrayList<Questions> availableQuestions; // List that holds every available question.
     private HashSet<String> categories; // Set of Strings that holds the name of each category once.
     private Round round; // Grants access to Round methods.
-    private PlayerStats playerStats;
+    private PlayerStats playerStats; //Grants access to Player Stats.
 
     /**
      * Constructor.
@@ -30,6 +30,10 @@ public class Game {
         round = new Round();
         players = new ArrayList<>();
         playerStats=new PlayerStats();
+        loadQuestions(questions);
+    }
+
+    public void loadQuestions(File[] questions) throws FileNotFoundException {
         for (File question : questions) {
             if (question.isFile()) {
                 Scanner scan = new Scanner(question);
@@ -43,15 +47,32 @@ public class Game {
                     tempQuestion.setAnswer(scan.nextLine());
                     tempQuestion.setAnswer(scan.nextLine());
                     tempQuestion.setCorrectAnswer(scan.nextLine());
-                    tempQuestion.setHasMedia(scan.nextLine());
+                    tempQuestion.setMedia(scan.nextLine());
                     categories.add(tempQuestion.getCategory());
                     Collections.shuffle(tempQuestion.getAnswers()); //Shuffles the list that holds the answers of each question, so that they appear at a different order in every game.
                     availableQuestions.add(tempQuestion);
-                    //In version 2 add image
                 }
                 Collections.shuffle(availableQuestions); //Shuffles the list that holds all the questions, so that they appear at a different order in every game.
             }
         }
+    }
+
+    public ArrayList<Questions> getAvailableQuestions() {
+        return availableQuestions;
+    }
+
+    public HashSet<String> getCategories(){return categories;}
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<String> getRoundTypes() {
+        return round.getRoundTypes();
+    }
+
+    public void clearPlayers() {
+        players.clear();
     }
 
     public void createPlayer() {
@@ -59,16 +80,22 @@ public class Game {
         players.add(tempPlayer);
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+    public void reloadQuestions(File[] questions) throws FileNotFoundException {
+        availableQuestions.clear();
+        loadQuestions(questions);
     }
 
-    public ArrayList<String> getRoundTypes() {
-        return round.getRounds();
+    public void resetHaveAnswered() {
+        for (Player p : getPlayers())
+            p.setHasAnswered(false);
     }
 
-    public ArrayList<Questions> getAvailableQuestions() {
-        return availableQuestions;
+    public void addMultiplayerRounds(){
+        round.addMultiplayerRounds();
+    }
+
+    public void refillRoundTypes(){
+        round.refillRoundTypes();
     }
 
     public Questions getRandomQuestion(String chosenCategory) {
@@ -104,7 +131,7 @@ public class Game {
         // Loop that checks if the chosen control is already bound, whereupon it asks for a new control and restarts.
         for (Player player : players) {
             for (int j = 0; j < 4; j++) {
-                if (currentControl.equals(String.valueOf(player.getControl(j)))) {
+                if (currentControl.equals(player.getControl(j))) {
                     return -1;
                 } else if (currentControl.length() != 1 || currentControl.trim().isEmpty()) {
                     return 0;
@@ -115,18 +142,18 @@ public class Game {
         return 1;
     }
 
-    public void clearPlayers() {
-        players.clear();
-    }
-
     public String[] randomCategories() {
         ArrayList<String> randomCategories = new ArrayList<>();
         boolean flag = false;
         for (String s : categories) {
+            int questionCount=0;
             for (Questions q : availableQuestions) {
                 if (q.getCategory().equals(s) && !randomCategories.contains(s)) {
-                    randomCategories.add(s);
-                    flag = true;
+                    questionCount++;
+                    if(questionCount>4) {
+                        randomCategories.add(s);
+                        flag = true;
+                    }
                 }
             }
             if (!flag)
@@ -171,11 +198,6 @@ public class Game {
                 }
         }
         return 0;
-    }
-
-    public void resetHaveAnswered() {
-        for (Player p : getPlayers())
-            p.setHasAnswered(false);
     }
 
     public String getRoundDescription(String currentRound){
@@ -288,15 +310,4 @@ public class Game {
             newWriter.close();
         }
     }
-
-    public void addMultiplayerRounds(){
-        round.addMultiplayerRounds();
-    }
-
-    public void refillRoundTypes(){
-        round.refillRoundTypes();
-    }
 }
-
-
-

@@ -12,7 +12,7 @@ public class Questions {
     private String category; // String that holds the category of the question.
     private ArrayList<String> answers; // List of Strings that holds the possible answers of the question.
     protected String correctAnswer; // String that holds the correct answer of the question.
-    private String hasMedia;
+    private String media;
 
     /**
      * Constructor
@@ -23,7 +23,16 @@ public class Questions {
         category="";
         answers=new ArrayList<>();
         correctAnswer="";
-        hasMedia="";
+        media ="";
+    }
+
+    /**
+     * Gets a question.
+     * @return A string representing a question.
+     */
+
+    public String getQuestion(){
+        return question;
     }
 
     /**
@@ -36,12 +45,30 @@ public class Questions {
     }
 
     /**
+     * Gets the question's category.
+     * @return A string representing the question's category.
+     */
+
+    public String getCategory(){
+        return category;
+    }
+
+    /**
      * Sets the question's category.
      * @param category A String containing the question's category.
      */
 
     public void setCategory(String category){
         this.category=category;
+    }
+
+    /**
+     * Gets the question's possible answers.
+     * @return An ArrayList of Strings representing the question's possible answers.
+     */
+
+    public ArrayList<String> getAnswers(){
+        return answers;
     }
 
     /**
@@ -58,41 +85,6 @@ public class Questions {
      * @param correctAnswer A String containing the question's correct answer.
      */
 
-    public void setCorrectAnswer(String correctAnswer){
-        this.correctAnswer=correctAnswer;
-    }
-
-    public void setHasMedia(String hasMedia) {
-        this.hasMedia = hasMedia;
-    }
-
-    /**
-     * Gets the question's category.
-     * @return A string representing the question's category.
-     */
-
-    public String getCategory(){
-        return category;
-    }
-
-    /**
-     * Gets a question.
-     * @return A string representing a question.
-     */
-
-    public String getQuestion(){
-        return question;
-    }
-
-    /**
-     * Gets the question's possible answers.
-     * @return An ArrayList of Strings representing the question's possible answers.
-     */
-
-    public ArrayList<String> getAnswers(){
-        return answers;
-    }
-
     /**
      * Gets the question's correct answer.
      * @return An ArrayList of Strings representing the question's possible answers.
@@ -102,7 +94,15 @@ public class Questions {
         return correctAnswer;
     }
 
-    public String getHasMedia(){
-        return hasMedia;
+    public void setCorrectAnswer(String correctAnswer){
+        this.correctAnswer=correctAnswer;
+    }
+
+    public String getMedia(){
+        return media;
+    }
+
+    public void setMedia(String media) {
+        this.media = media;
     }
 }

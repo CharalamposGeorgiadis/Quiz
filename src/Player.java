@@ -1,5 +1,4 @@
 
-
 /**
  * This class represents a player playing the game.
  * @author Anastasios Kachrimanis
@@ -62,16 +61,6 @@ public class Player {
     }
 
     /**
-     * Sets the player's controls.
-     * @param currentAnswer The answer of which we want to set the control (A, B, C or D)
-     * @param chosenControl A String containing the control chosen by the player.
-     */
-
-    public void setPlayerControls(int currentAnswer, String chosenControl){
-        controls[currentAnswer]=chosenControl.toUpperCase();
-    }
-
-    /**
      * Gets one of the player's controls.
      * @param currentControl One of the player's controls.
      * @return A char containing one of the player's controls.
@@ -81,36 +70,46 @@ public class Player {
         return controls[currentControl];
     }
 
-    public void setHasAnswered(Boolean answered){
-        hasAnswered=answered;
+    /**
+     * Sets the player's controls.
+     * @param currentAnswer The answer of which we want to set the control (A, B, C or D)
+     * @param chosenControl A String containing the control chosen by the player.
+     */
+
+    public void setPlayerControls(int currentAnswer, String chosenControl){
+        controls[currentAnswer]=chosenControl.toUpperCase();
     }
 
     public boolean getHasAnswered(){
         return hasAnswered;
     }
 
-    public void setBet(int bet){
-        this.bet=bet;
+    public void setHasAnswered(Boolean answered){
+        hasAnswered=answered;
     }
 
     public int getBet(){
         return bet;
     }
 
-    public void addThermometerCorrectAnswer(){
-        thermometerCorrectAnswers++;
+    public void setBet(int bet){
+        this.bet=bet;
     }
 
     public int getThermometerCorrectAnswers(){
         return thermometerCorrectAnswers;
     }
 
-    public void setMultiplayerWins(int multiplayerWins) {
-        this.multiplayerWins = multiplayerWins;
+    public void addThermometerCorrectAnswer(){
+        thermometerCorrectAnswers++;
     }
 
     public int getMultiplayerWins(){
         return multiplayerWins;
+    }
+
+    public void setMultiplayerWins(int multiplayerWins) {
+        this.multiplayerWins = multiplayerWins;
     }
 
     public void addMultiplayerWin(){
@@ -122,10 +121,6 @@ public class Player {
             setPlayerControls(i,"");
     }
 
-    public void clearUsername(){
-        setUsername("");
-    }
-
     /**
      * Adds points to the player.
      * @param points An Integer containing the points that will be added.
@@ -134,5 +129,4 @@ public class Player {
     public void addPoints(int points) {
         this.points+=points;
     }
-
 }
