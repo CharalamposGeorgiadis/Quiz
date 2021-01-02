@@ -683,7 +683,7 @@ public class GUI {
                             case 0:
                                 for (Player p:game.getPlayers()){
                                     for (int i=0;i<4;i++){
-                                        if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                        if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0) && !playersAnsweredArea.getText().contains(p.getUsername()))
                                             playersAnsweredArea.append(p.getUsername()+"\n");
                                     }
                                 }
@@ -714,7 +714,7 @@ public class GUI {
                             case 1:
                                 for (Player p:game.getPlayers()){
                                     for (int i=0;i<4;i++){
-                                        if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                        if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0) && !playersAnsweredArea.getText().contains(p.getUsername()))
                                             playersAnsweredArea.setText(p.getUsername()+"\n");
                                     }
                                 }
@@ -755,7 +755,7 @@ public class GUI {
                         super.keyTyped(e);
                         for (Player p:game.getPlayers()){
                             for (int i=0;i<4;i++){
-                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0) && !playersAnsweredArea.getText().contains(p.getUsername()))
                                     playersAnsweredArea.append(p.getUsername()+"\n");
                             }
                         }
@@ -808,7 +808,7 @@ public class GUI {
                         super.keyTyped(e);
                         for (Player p:game.getPlayers()){
                             for (int i=0;i<4;i++){
-                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0) && !playersAnsweredArea.getText().contains(p.getUsername()))
                                     playersAnsweredArea.append(p.getUsername()+"\n");
                             }
                         }
@@ -844,7 +844,7 @@ public class GUI {
                         super.keyTyped(e);
                         for (Player p:game.getPlayers()){
                             for (int i=0;i<4;i++){
-                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0))
+                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0) && !playersAnsweredArea.getText().contains(p.getUsername()))
                                     playersAnsweredArea.append(p.getUsername()+"\n");
                             }
                         }
