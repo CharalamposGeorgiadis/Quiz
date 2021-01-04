@@ -1,7 +1,7 @@
 
 
 
-public class FastestFinger extends Round{
+public class FastestFinger{
 
     static Player firstPlayer;
     static Player secondPlayer;

@@ -5,7 +5,7 @@
  * @version 24/11/2020
  */
 
-public class RightAnswer extends Round {
+public class RightAnswer{
 
     /**
      * Represents the Right Answer portion of the game.

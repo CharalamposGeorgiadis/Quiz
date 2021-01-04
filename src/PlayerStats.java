@@ -6,12 +6,12 @@ import java.util.Scanner;
 public class PlayerStats {
 
     private ArrayList<String> usernames;
-    private ArrayList<Integer> highScore;
+    private ArrayList<Integer> highScores;
     private ArrayList<Integer> multiplayerWins;
 
     public PlayerStats() throws FileNotFoundException {
         usernames=new ArrayList<>();
-        highScore =new ArrayList<>();
+        highScores =new ArrayList<>();
         multiplayerWins = new ArrayList<>();
     }
 
@@ -19,8 +19,8 @@ public class PlayerStats {
         return usernames;
     }
 
-    public ArrayList<Integer> getHighScore(){
-        return highScore;
+    public ArrayList<Integer> getHighScores(){
+        return highScores;
     }
 
     public ArrayList<Integer> getMultiplayerWins(){
@@ -33,7 +33,7 @@ public class PlayerStats {
             Scanner scanner = new Scanner(stats);
             while (scanner.hasNextLine()) {
                 usernames.add(scanner.next());
-                highScore.add(scanner.nextInt());
+                highScores.add(scanner.nextInt());
                 multiplayerWins.add(scanner.nextInt());
                 if (scanner.hasNextLine())
                     scanner.nextLine();
@@ -48,14 +48,14 @@ public class PlayerStats {
     }
 
     public void sortStatsByPoints(){
-        for (int i=1; i<=getHighScore().size()-1;i++){
-            for (int j=1;j<=getHighScore().size()-i;j++){
-                int first=getHighScore().get(j-1);
-                int second=getHighScore().get(j)    ;
+        for (int i=1; i<=getHighScores().size()-1;i++){
+            for (int j=1;j<=getHighScores().size()-i;j++){
+                int first=getHighScores().get(j-1);
+                int second=getHighScores().get(j)    ;
                 if (first<second){
                     int tempPoints=first;
-                    getHighScore().set(j-1,second);
-                    getHighScore().set(j,tempPoints);
+                    getHighScores().set(j-1,second);
+                    getHighScores().set(j,tempPoints);
                     int tempWins= getMultiplayerWins().get(j-1);
                     getMultiplayerWins().set(j-1, getMultiplayerWins().get(j));
                     getMultiplayerWins().set(j,tempWins);
@@ -76,9 +76,9 @@ public class PlayerStats {
                     int tempWins=first;
                     getMultiplayerWins().set(j-1,second);
                     getMultiplayerWins().set(j,tempWins);
-                    int tempPoints= getHighScore().get(j-1);
-                    getHighScore().set(j-1, getHighScore().get(j));
-                    getHighScore().set(j,tempPoints);
+                    int tempPoints= getHighScores().get(j-1);
+                    getHighScores().set(j-1, getHighScores().get(j));
+                    getHighScores().set(j,tempPoints);
                     String tempUsername= getUsernames().get(j-1);
                     getUsernames().set(j-1, getUsernames().get(j));
                     getUsernames().set(j,tempUsername);

@@ -36,7 +36,7 @@ public class GUI {
         if (this.questions != null) {
             game = new Game(this.questions);//Loads the questions into the game.
             boolean statsExist;
-            statsExist= game.loadPlayerStats();
+            statsExist= game.getPlayerStats().loadPlayerStats();
 
             //Creates the Start Game button.
             JButton startButton = new JButton("START GAME");
@@ -132,13 +132,13 @@ public class GUI {
         JTextArea highscoresTitle = new JTextArea("HIGHSCORES");
         setAreaParameters(highscoresTitle, neonFont.deriveFont(50f), Color.ORANGE, 320, 90, 360, 50, highscoreLeaderboardLabel);
 
-        game.sortStatsByPoints();
+        game.getPlayerStats().sortStatsByPoints();
         //Displays players usernames based on highscores.
         JTextArea highscoresArea=new JTextArea();
         setAreaParameters(highscoresArea, neonFont.deriveFont(40f), Color.cyan, 310, 150, 534, 260, highscoreLeaderboardLabel);
-        for (int i=0;i<game.getUsernames().size();i++){
-            highscoresArea.setText(highscoresArea.getText()+" "+game.getUsernames().get(i)+"  "+game.getHighScores().get(i));
-            if (i!=game.getHighScores().size()-1)
+        for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
+            highscoresArea.setText(highscoresArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getHighScores().get(i));
+            if (i!=game.getPlayerStats().getHighScores().size()-1)
                 highscoresArea.setText(highscoresArea.getText()+"\n");
         }
 
@@ -161,13 +161,13 @@ public class GUI {
         JTextArea highscoresTitle = new JTextArea("MULTIPLAYER WINS");
         setAreaParameters(highscoresTitle, neonFont.deriveFont(50f), Color.ORANGE, 280, 90, 440, 50, multiplayerWinsLeaderboardLabel);
 
-        game.sortStatsByMultiplayerWins();
+        game.getPlayerStats().sortStatsByMultiplayerWins();
         //Displays players usernames based on multiplayer wins.
         JTextArea multiplayerWinsArea=new JTextArea();
         setAreaParameters(multiplayerWinsArea, neonFont.deriveFont(40f), Color.cyan, 350, 150, 494, 260, multiplayerWinsLeaderboardLabel);
-        for (int i=0;i<game.getUsernames().size();i++){
-            multiplayerWinsArea.setText(multiplayerWinsArea.getText()+" "+game.getUsernames().get(i)+"  "+game.getMultiplayerWins().get(i));
-            if (i!=game.getMultiplayerWins().size()-1)
+        for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
+            multiplayerWinsArea.setText(multiplayerWinsArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getMultiplayerWins().get(i));
+            if (i!=game.getPlayerStats().getMultiplayerWins().size()-1)
                 multiplayerWinsArea.setText(multiplayerWinsArea.getText()+"\n");
         }
 
@@ -456,17 +456,12 @@ public class GUI {
     }
 
     public void chooseCategory(JLabel currentLabel) {
-
         if (game.getPlayers().size()>1)
-            game.addMultiplayerRounds();
-
+            game.getRound().addMultiplayerRounds();
         //Displays the "Choose Category" screen.
         JLabel chooseCategoryLabel = new JLabel(new ImageIcon("ChooseCategory.png"));
         changeScene(currentLabel, chooseCategoryLabel);
         chooseCategoryLabel.requestFocus();
-
-        chooseCategoryLabel.setVisible(false);
-        chooseCategoryLabel.setVisible(true);
 
         //Add the button that allows the player(s) to view their controls.
         JButton controlsButton = new JButton();
@@ -580,30 +575,30 @@ public class GUI {
         //Adds an exit button to this screen.
         exitButton(currentRoundLabel, 855, 0, 100, 100, "CurrentRoundDarkX.png", "CurrentRound.png");
 
-        switch (game.getRoundTypes().get(0)) {
+        switch (game.getRound().getRoundTypes().get(0)) {
             case "RIGHT ANSWER":
                 currentRoundField.setText("RIGHT ANSWER");
-                descriptionArea.setText(game.getRoundDescription("RIGHT ANSWER"));
+                descriptionArea.setText(game.getRound().getRightAnswerDescription());
                 delayRoundType("RIGHT ANSWER", currentRoundLabel, chosenCategory, currentLabel);
                 break;
             case "BETTING":
                 currentRoundField.setText("BETTING");
-                descriptionArea.setText(game.getRoundDescription("BETTING"));
+                descriptionArea.setText(game.getRound().getBettingDescription());
                 delayRoundType("BETTING", currentRoundLabel, chosenCategory, currentLabel);
                 break;
             case "COUNTDOWN":
                 currentRoundField.setText("COUNTDOWN");
-                descriptionArea.setText(game.getRoundDescription("COUNTDOWN"));
+                descriptionArea.setText(game.getRound().getCountdownDescription());
                 delayRoundType("COUNTDOWN", currentRoundLabel, chosenCategory, currentLabel);
                 break;
             case "FASTEST FINGER":
                 currentRoundField.setText("FASTEST FINGER");
-                descriptionArea.setText(game.getRoundDescription("FASTEST FINGER"));
+                descriptionArea.setText(game.getRound().getFasterFingerDescription());
                 delayRoundType("FASTEST FINGER", currentRoundLabel, chosenCategory, currentLabel);
                 break;
             case "THERMOMETER":
                 currentRoundField.setText("THERMOMETER");
-                descriptionArea.setText(game.getRoundDescription("THERMOMETER"));
+                descriptionArea.setText(game.getRound().getThermometerDescription());
                 delayRoundType("THERMOMETER", currentRoundLabel, chosenCategory, currentLabel);
                 break;
         }
@@ -672,8 +667,8 @@ public class GUI {
         final int[] playersAnswered = {0};
         switch (currentRound) {
             case "BETTING":
+                game.getRound().getRoundTypes().remove(currentRound);
                 Questions[] randomQuestion = {game.getRandomQuestion(chosenCategory)};
-                game.getRoundTypes().remove(currentRound);
                 displayBettingOptions(questionText,answer1,answer2,answer3,answer4);
                 questionsLabel.addKeyListener(new KeyAdapter() {
                     @Override
@@ -694,7 +689,8 @@ public class GUI {
                                     playersAnswered[0] = 0;
                                     currentQuestion[0]++;
                                     if (currentQuestion[0] == 11) {
-                                        if (game.getAvailableQuestions().size()!=0 && game.getRoundTypes().size()!=0) {
+                                        if (game.getAvailableQuestions().size()!=0 && game.getRound().getRoundTypes().size()!=0) {
+                                            game.getRound().getRoundTypes().remove(currentRound);
                                             changeScene(questionsLabel, chooseCategory);
                                             resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
                                         }
@@ -735,8 +731,8 @@ public class GUI {
                 });
                 break;
             case "COUNTDOWN":
+                game.getRound().getRoundTypes().remove(currentRound);
                 randomQuestion = new Questions[]{game.getRandomQuestion(chosenCategory)};
-                game.getRoundTypes().remove(currentRound);
                 JTextField timerField= new JTextField();
                 setFieldParameters(timerField,questionFont.deriveFont(60f),Color.red,860,80,100,100, questionsLabel);
                 timerField.setEditable(false);
@@ -783,7 +779,8 @@ public class GUI {
                                     timer.stop();
                                 }
                             } else {
-                                if (game.getAvailableQuestions().size() != 0 && game.getRoundTypes().size()!=0) {
+                                if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size()!=0) {
+                                    game.getRound().getRoundTypes().remove(currentRound);
                                     changeScene(questionsLabel, chooseCategory);
                                     resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
                                 } else{
@@ -796,9 +793,9 @@ public class GUI {
                 });
                 break;
             case "THERMOMETER":
+                game.getRound().getRoundTypes().remove(currentRound);
                 randomQuestion = new Questions[]{game.getRandomQuestion(null)};
                 chosenCategoryField.setText(randomQuestion[0].getCategory());
-                game.getRoundTypes().remove(currentRound);
                 displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
                 if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"))
                     imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
@@ -834,7 +831,6 @@ public class GUI {
                 break;
             default://"RIGHT ANSWER" OR "FASTEST FINGER".
                 randomQuestion = new Questions[]{game.getRandomQuestion(chosenCategory)};
-                game.getRoundTypes().remove(currentRound);
                 displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
                 if (!randomQuestion[0].getMedia().equals("NULL") && randomQuestion[0].getMedia().contains("png"));
                     imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
@@ -863,11 +859,12 @@ public class GUI {
                                 else
                                     imageQuestion.setIcon(null);
                             } else {
-                                if (game.getAvailableQuestions().size()!=0&&game.getRoundTypes().size()!=0) {
+                                if (game.getAvailableQuestions().size()!=0 && game.getRound().getRoundTypes().size()!=0) {
+                                    game.getRound().getRoundTypes().remove(currentRound);
                                     changeScene(questionsLabel, chooseCategory);
                                     resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
                                 }
-                                else if(game.getAvailableQuestions().size()==0||game.getRoundTypes().size()==0)
+                                else if(game.getAvailableQuestions().size()==0 || game.getRound().getRoundTypes().size()==0)
                                     resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true,false);
                             }
                         }
@@ -1037,7 +1034,7 @@ public class GUI {
                     }
                 break;
         }
-        delayResults(resultScreenLabel,currentLabel,hasEnded);
+            delayResults(resultScreenLabel,currentLabel,hasEnded);
     }
 
     public void leaderboardBackButton(JLabel currentLabel,JLabel newLabel){
@@ -1057,7 +1054,14 @@ public class GUI {
     public void delayResults(JLabel currentLabel, JLabel newLabel, boolean hasEnded){
         Timer timer = new Timer(4000, e -> {
             if (!hasEnded)
-                changeScene(currentLabel,newLabel);
+                if (game.getRound().getRoundTypes().size()>0){
+                    if (!game.getRound().getRoundTypes().get(0).equals("THERMOMETER"))
+                        changeScene(currentLabel, newLabel);
+                    else
+                        startGame(currentLabel, null);
+                }
+                else
+                    changeScene(currentLabel, newLabel);
             else {
                 endgameScreen(currentLabel);
             }
@@ -1136,7 +1140,7 @@ public class GUI {
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
-                game.refillRoundTypes();
+                game.getRound().refillRoundTypes();
                 game.clearPlayers();
             }
         });

@@ -15,6 +15,7 @@ public class Round {
     final String countdownDescription=("You have 5 seconds for each question. Correct answers grant points equal to the time remaining(in milliseconds)x0.2");
     final String fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 500.");
     final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or if there are no more questions left, the game finishes.");
+    int totalAnswered;
 
     /**
      * Constructor
@@ -24,6 +25,7 @@ public class Round {
     public Round() {
         roundTypes = new ArrayList<>(); //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
         refillRoundTypes();
+        totalAnswered=0;
     }
 
     /**
@@ -71,22 +73,35 @@ public class Round {
     public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){
         switch (currentRound){
             case "RIGHT ANSWER":
-                RightAnswer r=new RightAnswer();
-                r.rightAnswerPoints(currentPlayer, answered);
+                if (answered)
+                    currentPlayer.addPoints(1000);
                 break;
             case "BETTING":
-                Betting b=new Betting();
-                b.bettingPoints(currentPlayer,answered);
+                if (answered)
+                    currentPlayer.addPoints(currentPlayer.getBet());
+                else
+                    currentPlayer.addPoints(-currentPlayer.getBet());
                 break;
             case "COUNTDOWN":
-                Countdown c=new Countdown();
-                c.countdownPoints(currentPlayer,answered,currentRoundParameter);
+                if (answered)
+                    currentPlayer.addPoints((int) (currentRoundParameter * 0.2));
                 break;
             case "FASTEST FINGER":
-                FastestFinger.fastestFingerPoints(currentPlayer,answered,totalPlayers);
+                totalAnswered++;
+                if (answered){
+                    if (totalAnswered == 1)
+                        currentPlayer.addPoints(1000);
+                    else if (totalAnswered == 2)
+                        currentPlayer.addPoints(500);
+                }
+                if (totalAnswered == totalPlayers)
+                    totalAnswered = 0;
                 break;
             case "THERMOMETER":
-                Thermometer.thermometerPoints(currentPlayer,answered);
+                if (answered)
+                    currentPlayer.addThermometerCorrectAnswer();
+                if (currentPlayer.getThermometerCorrectAnswers()==5)
+                    currentPlayer.addPoints(5000);
                 break;
         }
     }

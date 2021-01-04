@@ -67,9 +67,9 @@ public class Game {
         return players;
     }
 
-    public ArrayList<String> getRoundTypes() {
-        return round.getRoundTypes();
-    }
+    public Round getRound(){return round;}
+
+    public PlayerStats getPlayerStats(){return playerStats;}
 
     public void clearPlayers() {
         players.clear();
@@ -88,14 +88,6 @@ public class Game {
     public void resetHaveAnswered() {
         for (Player p : getPlayers())
             p.setHasAnswered(false);
-    }
-
-    public void addMultiplayerRounds(){
-        round.addMultiplayerRounds();
-    }
-
-    public void refillRoundTypes(){
-        round.refillRoundTypes();
     }
 
     public Questions getRandomQuestion(String chosenCategory) {
@@ -128,7 +120,6 @@ public class Game {
     }
 
     public int setControls(String currentControl, int currentPlayer, int currentControlNumber) {
-        // Loop that checks if the chosen control is already bound, whereupon it asks for a new control and restarts.
         for (Player player : players) {
             for (int j = 0; j < 4; j++) {
                 if (currentControl.equals(player.getControl(j))) {
@@ -200,22 +191,6 @@ public class Game {
         return 0;
     }
 
-    public String getRoundDescription(String currentRound){
-        switch (currentRound){
-            case "RIGHT ANSWER":
-                return round.getRightAnswerDescription();
-            case "BETTING":
-                return round.getBettingDescription();
-            case "COUNTDOWN":
-                return round.getCountdownDescription();
-            case "FASTEST FINGER":
-                return round.getFasterFingerDescription();
-            case "THERMOMETER":
-                return round.getThermometerDescription();
-        }
-        return "";
-    }
-
     public void sortPlayersByPoints(){
         for (int i=1; i<=getPlayers().size()-1;i++){
             for (int j=1;j<=getPlayers().size()-i;j++){
@@ -228,30 +203,6 @@ public class Game {
                 }
             }
         }
-    }
-
-    public boolean loadPlayerStats() throws FileNotFoundException {
-        return playerStats.loadPlayerStats();
-    }
-
-    public void sortStatsByPoints(){
-        playerStats.sortStatsByPoints();
-    }
-
-    public void sortStatsByMultiplayerWins(){
-        playerStats.sortStatsByMultiplayerWins();
-    }
-
-    public ArrayList<String> getUsernames(){
-        return playerStats.getUsernames();
-    }
-
-    public ArrayList<Integer> getHighScores(){
-        return playerStats.getHighScore();
-    }
-
-    public ArrayList<Integer> getMultiplayerWins(){
-        return playerStats.getMultiplayerWins();
     }
 
     public void addStats() throws IOException {

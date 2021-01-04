@@ -5,7 +5,7 @@
  * @version 24/11/2020
  */
 
-public class Betting extends Round{
+public class Betting{
 
     /**
      * Represents the Betting portion of the game.
