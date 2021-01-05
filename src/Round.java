@@ -74,34 +74,34 @@ public class Round {
         switch (currentRound){
             case "RIGHT ANSWER":
                 if (answered)
-                    currentPlayer.addPoints(1000);
+                    currentPlayer.setPoints(currentPlayer.getPoints()+1000);
                 break;
             case "BETTING":
                 if (answered)
-                    currentPlayer.addPoints(currentPlayer.getBet());
+                    currentPlayer.setPoints(currentPlayer.getPoints()+currentPlayer.getBet());
                 else
-                    currentPlayer.addPoints(-currentPlayer.getBet());
+                    currentPlayer.setPoints(currentPlayer.getPoints()-currentPlayer.getBet());
                 break;
             case "COUNTDOWN":
                 if (answered)
-                    currentPlayer.addPoints((int) (currentRoundParameter * 0.2));
+                    currentPlayer.setPoints(currentPlayer.getPoints()+ (int)(currentRoundParameter*0.2));
                 break;
             case "FASTEST FINGER":
                 totalAnswered++;
                 if (answered){
                     if (totalAnswered == 1)
-                        currentPlayer.addPoints(1000);
+                        currentPlayer.setPoints(currentPlayer.getPoints()+1000);
                     else if (totalAnswered == 2)
-                        currentPlayer.addPoints(500);
+                        currentPlayer.setPoints(currentPlayer.getPoints()+500);
                 }
                 if (totalAnswered == totalPlayers)
                     totalAnswered = 0;
                 break;
             case "THERMOMETER":
                 if (answered)
-                    currentPlayer.addThermometerCorrectAnswer();
+                    currentPlayer.setThermometerCorrectAnswers(currentPlayer.getThermometerCorrectAnswers()+1);
                 if (currentPlayer.getThermometerCorrectAnswers()==5)
-                    currentPlayer.addPoints(5000);
+                    currentPlayer.setPoints(currentPlayer.getPoints()+5000);
                 break;
         }
     }

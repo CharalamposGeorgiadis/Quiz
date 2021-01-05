@@ -100,9 +100,8 @@ public class Player {
         return thermometerCorrectAnswers;
     }
 
-    public void addThermometerCorrectAnswer(){
-        thermometerCorrectAnswers++;
-    }
+    public void setThermometerCorrectAnswers(int thermometerCorrectAnswers){this.thermometerCorrectAnswers=thermometerCorrectAnswers;}
+
 
     public int getMultiplayerWins(){
         return multiplayerWins;
@@ -110,10 +109,6 @@ public class Player {
 
     public void setMultiplayerWins(int multiplayerWins) {
         this.multiplayerWins = multiplayerWins;
-    }
-
-    public void addMultiplayerWin(){
-        multiplayerWins++;
     }
 
     public void clearControls(){
@@ -126,7 +121,7 @@ public class Player {
      * @param points An Integer containing the points that will be added.
      */
 
-    public void addPoints(int points) {
-        this.points+=points;
-    }
+//    public void addPoints(int points) {
+//        this.points+=points;
+//    }
 }

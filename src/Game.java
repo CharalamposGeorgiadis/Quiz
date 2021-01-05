@@ -39,7 +39,8 @@ public class Game {
                 Scanner scan = new Scanner(question);
                 Questions tempQuestion;
                 tempQuestion = new Questions();
-                while (scan.hasNextLine()) { //Scans each line of the txt files in the Directory and stores them in a appropriate variable.
+                //Scans each line of the txt files in the Directory and stores them in a appropriate variable.
+                while (scan.hasNextLine()) {
                     tempQuestion.setCategory(scan.nextLine());
                     tempQuestion.setQuestion(scan.nextLine());
                     tempQuestion.setAnswer(scan.nextLine());
@@ -49,10 +50,12 @@ public class Game {
                     tempQuestion.setCorrectAnswer(scan.nextLine());
                     tempQuestion.setMedia(scan.nextLine());
                     categories.add(tempQuestion.getCategory());
-                    Collections.shuffle(tempQuestion.getAnswers()); //Shuffles the list that holds the answers of each question, so that they appear at a different order in every game.
+                    //Shuffles the list that holds the answers of each question, so that they appear at a different order in every game.
+                    Collections.shuffle(tempQuestion.getAnswers());
                     availableQuestions.add(tempQuestion);
                 }
-                Collections.shuffle(availableQuestions); //Shuffles the list that holds all the questions, so that they appear at a different order in every game.
+                //Shuffles the list that holds all the questions, so that they appear at a different order in every game.
+                Collections.shuffle(availableQuestions);
             }
         }
     }
@@ -70,10 +73,6 @@ public class Game {
     public Round getRound(){return round;}
 
     public PlayerStats getPlayerStats(){return playerStats;}
-
-    public void clearPlayers() {
-        players.clear();
-    }
 
     public void createPlayer() {
         Player tempPlayer = new Player();
@@ -109,13 +108,13 @@ public class Game {
     public int enterUsernames(String chosenUsername, int currentPlayer) {
         if (chosenUsername.length() != 0 && chosenUsername.length() < 15 && !chosenUsername.trim().isEmpty())
             for (Player p : players) {
-                if (chosenUsername.equals(p.getUsername()))
+                if (chosenUsername.toUpperCase().equals(p.getUsername()))
                     return -1;
             }
         else
             return 0;
         createPlayer();
-        getPlayers().get(currentPlayer).setUsername(chosenUsername);
+        getPlayers().get(currentPlayer).setUsername(chosenUsername.toUpperCase());
         return 1;
     }
 
