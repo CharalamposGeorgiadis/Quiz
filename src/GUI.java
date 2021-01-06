@@ -45,7 +45,7 @@ public class GUI {
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
                     if (SwingUtilities.isLeftMouseButton(e))
-                        chooseNumberOfPlayers();
+                        enterNumberOfPlayers();
                 }
             });
 
@@ -183,14 +183,14 @@ public class GUI {
         leaderboardBackButton(multiplayerWinsLeaderboardLabel,mainLeaderboardLabel);
     }
 
-    public void chooseNumberOfPlayers(){
+    public void enterNumberOfPlayers(){
         //Displays the "Choose Number of Players" screen.
         JLabel choosePlayersLabel = new JLabel((new ImageIcon("SetControls.png")));
         changeScene(mainLabel,choosePlayersLabel);
 
-        //Displays the "CHOOSE NUMBER OF PLAYERS" title text.
-        JTextArea choosePlayersTitle = new JTextArea(" CHOOSE NUMBER" +"\n    OF PLAYERS");
-        setAreaParameters(choosePlayersTitle,neonFont.deriveFont(40f),Color.ORANGE,280,150,350,80, choosePlayersLabel);
+        //Displays the "ENTER NUMBER OF PLAYERS" title text.
+        JTextArea choosePlayersTitle = new JTextArea(" ENTER NUMBER" +"\n   OF PLAYERS");
+        setAreaParameters(choosePlayersTitle,neonFont.deriveFont(40f),Color.ORANGE,300,150,350,80, choosePlayersLabel);
 
         //Displays the "MAX PLAYERS" text.
         JTextArea maxPlayersArea=new JTextArea(" (MAX PLAYERS: 2)");
