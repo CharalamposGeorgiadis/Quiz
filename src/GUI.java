@@ -184,7 +184,7 @@ public class GUI {
     }
 
     public void enterNumberOfPlayers(){
-        //Displays the "Choose Number of Players" screen.
+        //Displays the "ENTER NUMBER OF PLAYERS" screen.
         JLabel choosePlayersLabel = new JLabel((new ImageIcon("SetControls.png")));
         changeScene(mainLabel,choosePlayersLabel);
 
@@ -224,7 +224,7 @@ public class GUI {
 
         //Creates an Area which will display the message "Invalid Number" if a player enters an invalid number of players.
         JTextArea invalidNumber = new JTextArea("");
-        setAreaParameters(invalidNumber,neonFont.deriveFont(30f),Color.ORANGE,250,260,400,40,choosePlayersLabel);
+        setAreaParameters(invalidNumber,neonFont.deriveFont(30f),Color.RED,250,260,400,40,choosePlayersLabel);
         chooseNumber.addActionListener(e -> {
             switch(chooseNumber.getText()) {
                 case "1":
@@ -285,8 +285,8 @@ public class GUI {
         setAreaParameters(maxCharactersArea,neonFont.deriveFont(30f),Color.ORANGE,290,250,350,45, usernameLabel);
 
         //Creates the Area where "Invalid username" will be displayed.
-        JTextArea invalidUsername=new JTextArea("");
-        setAreaParameters(invalidUsername,neonFont.deriveFont(30f),Color.orange,250,300,450,45, usernameLabel);
+        JTextArea invalidUsername=new JTextArea();
+        setAreaParameters(invalidUsername,neonFont.deriveFont(30f),Color.RED,250,300,450,45, usernameLabel);
 
         enterUsernameText.addActionListener(e -> {
             switch (game.enterUsernames(enterUsernameText.getText(), currentPlayer[0]-1)) {
@@ -318,13 +318,13 @@ public class GUI {
         JLabel setControlsLabel=new JLabel(new ImageIcon("SetControls.png"));
         changeScene(currentLabel,setControlsLabel);
 
-        //Creates the "Set Controls For.." title text.
-        JTextArea setControlArea= new JTextArea(" Set control\n       for");
-        setAreaParameters(setControlArea,neonFont.deriveFont(40f),Color.ORANGE,320,150,300,70, setControlsLabel);
+        //Creates the "Set Controls For" title text.
+        JTextArea setControlArea= new JTextArea(" SET CONTROLS\n        FOR ");
+        setAreaParameters(setControlArea,neonFont.deriveFont(40f),Color.ORANGE,300,150,300,70, setControlsLabel);
 
         //Displays the username of the player who is currently setting their controls.
         JTextField usernameField= new JTextField(game.getPlayers().get(0).getUsername());
-        setFieldParameters(usernameField,neonFont.deriveFont(40f),Color.orange,200,230,500,50,setControlsLabel);
+        setFieldParameters(usernameField,neonFont.deriveFont(40f),Color.CYAN,200,220,500,50,setControlsLabel);
         usernameField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//Removes the JTextField's borders.
         usernameField.setEditable(false);
         setControlsLabel.add(usernameField);
@@ -356,21 +356,21 @@ public class GUI {
         });
 
         //Displays the control that is currently set by the player
-        JTextArea currentControlArea=new JTextArea("A:");
+        JTextArea currentControlArea=new JTextArea("ANSWER A:");
         final int[] currentControlNumber = {0};
         final int[] currentPlayer = {0};
-        setAreaParameters(currentControlArea,neonFont.deriveFont(50f),Color.orange,330,320,80,80, setControlsLabel);
+        setAreaParameters(currentControlArea,neonFont.deriveFont(40f),Color.orange,170,320,220,80, setControlsLabel);
 
         /*Creates an Area which will display the message "Invalid Control" if a player enters an invalid control
           or "Control already bound" if the chosen control has already been chosen.*/
         JTextArea invalidControl = new JTextArea("");
-        setAreaParameters(invalidControl,neonFont.deriveFont(30f),Color.ORANGE,250,270,450,40, setControlsLabel);
+        setAreaParameters(invalidControl,neonFont.deriveFont(30f),Color.RED,250,270,450,40, setControlsLabel);
 
         setControlField.addActionListener(e -> {
             switch(game.setControls(setControlField.getText(), currentPlayer[0],currentControlNumber[0])) {
                 case -1:
                     setControlField.setText("");
-                    invalidControl.setText("    Control already bound");
+                    invalidControl.setText("  Control already bound");
                     break;
                 case 0:
                     setControlField.setText("");
@@ -382,29 +382,28 @@ public class GUI {
                     currentControlNumber[0]++;
                     switch (currentControlNumber[0]) {
                         case 0:
-                            currentControlArea.setText("A:");
+                            currentControlArea.setText("ANSWER A:");
                             break;
                         case 1:
-                            currentControlArea.setText("B:");
+                            currentControlArea.setText("ANSWER B:");
                             break;
                         case 2:
-                            currentControlArea.setText("C:");
+                            currentControlArea.setText("ANSWER C:");
                             break;
                         case 3:
-                            currentControlArea.setText("D:");
+                            currentControlArea.setText("ANSWER D:");
                             break;
                         default:
                             currentControlNumber[0]=0;
                             currentPlayer[0]++;
                             if(currentPlayer[0]==game.getPlayers().size()) {
-                                currentControlArea.setText("A:");
                                 currentPlayer[0]=0;
                                 usernameField.setText(game.getPlayers().get(currentPlayer[0]).getUsername());
                                 youCanView(setControlsLabel,setControlField);
                             }
                             else{
                                 usernameField.setText(game.getPlayers().get(currentPlayer[0]).getUsername());
-                                currentControlArea.setText("A:");
+                                currentControlArea.setText("ANSWER A:");
                             }
                             break;
                     }
@@ -755,47 +754,75 @@ public class GUI {
                 Timer timer = new Timer(100, t -> {
                     milliseconds[0] -= 100;
                     timerField.setText(String.valueOf(milliseconds[0] / 1000.0));
+                    if (milliseconds[0]==0){
+                        game.resetHaveAnswered();
+                        playersAnsweredArea.setText("");
+                        playersAnswered[0] = 0;
+                        currentQuestion[0]++;
+                        if (currentQuestion[0] != 6) {
+                            if (game.getAvailableQuestions().size() != 0) {
+                                resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), false, false);
+                                randomQuestion[0] = game.getRandomQuestion(chosenCategory);
+                                displayQuestionAndAnswers(questionText, answer1, answer2, answer3, answer4, randomQuestion[0]);
+                                //If a questions is accompanied by an image, it is displayed.
+                                imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\" + randomQuestion[0].getMedia()));
+                                milliseconds[0] = 8500;
+                                ((Timer)t.getSource()).restart();
+                            } else {
+                                game.getRound().getRoundTypes().remove(currentRound);
+                                resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
+                                ((Timer)t.getSource()).stop();
+                            }
+                        } else {
+                            game.getRound().getRoundTypes().remove(currentRound);
+                            if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size() != 0) {
+                                changeScene(questionsLabel, chooseCategory);
+                                resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
+                            } else {
+                                resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
+                                ((Timer)t.getSource()).stop();
+                            }
+                        }
+                    }
                 });
                 timer.start();
                 questionsLabel.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         super.keyTyped(e);
-                        for (Player p:game.getPlayers()){
-                            for (int i=0;i<4;i++){
-                                if (Character.toUpperCase(e.getKeyChar())==p.getControl(i).charAt(0) && !playersAnsweredArea.getText().contains(p.getUsername()))
-                                    playersAnsweredArea.append(p.getUsername()+"\n");
+                        for (Player p : game.getPlayers()) {
+                            for (int i = 0; i < 4; i++) {
+                                if (Character.toUpperCase(e.getKeyChar()) == p.getControl(i).charAt(0) && !playersAnsweredArea.getText().contains(p.getUsername()))
+                                    playersAnsweredArea.append(p.getUsername() + "\n");
                             }
                         }
                         playersAnswered[0] += game.correctAnswer(e.getKeyChar(), randomQuestion[0], currentRound, milliseconds[0]);
                         if (playersAnswered[0] == game.getPlayers().size()) {
                             game.resetHaveAnswered();
-                        }
-                        if (milliseconds[0]==0 || playersAnswered[0] == game.getPlayers().size()) {
                             playersAnsweredArea.setText("");
                             playersAnswered[0] = 0;
                             currentQuestion[0]++;
                             if (currentQuestion[0] != 6) {
                                 if (game.getAvailableQuestions().size() != 0) {
-                                    resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), false,false);
+                                    resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), false, false);
                                     randomQuestion[0] = game.getRandomQuestion(chosenCategory);
                                     displayQuestionAndAnswers(questionText, answer1, answer2, answer3, answer4, randomQuestion[0]);
                                     //If a questions is accompanied by an image, it is displayed.
-                                    imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
-                                    milliseconds[0] = 9000;
+                                    imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\" + randomQuestion[0].getMedia()));
+                                    milliseconds[0] = 8500;
                                     timer.restart();
                                 } else {
                                     game.getRound().getRoundTypes().remove(currentRound);
-                                    resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true,false);
+                                    resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
                                     timer.stop();
                                 }
                             } else {
                                 game.getRound().getRoundTypes().remove(currentRound);
-                                if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size()!=0) {
+                                if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size() != 0) {
                                     changeScene(questionsLabel, chooseCategory);
                                     resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
-                                } else{
-                                    resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true,false);
+                                } else {
+                                    resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
                                     timer.stop();
                                 }
                             }
