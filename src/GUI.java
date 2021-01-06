@@ -188,9 +188,13 @@ public class GUI {
         JLabel choosePlayersLabel = new JLabel((new ImageIcon("SetControls.png")));
         changeScene(mainLabel,choosePlayersLabel);
 
-        //Displays the "Choose Number of Players" title text.
-        JTextArea choosePlayersTitle = new JTextArea("CHOOSE NUMBER" +"\n    OF PLAYERS");
-        setAreaParameters(choosePlayersTitle,neonFont.deriveFont(40f),Color.ORANGE,290,150,350,80, choosePlayersLabel);
+        //Displays the "CHOOSE NUMBER OF PLAYERS" title text.
+        JTextArea choosePlayersTitle = new JTextArea(" CHOOSE NUMBER" +"\n    OF PLAYERS");
+        setAreaParameters(choosePlayersTitle,neonFont.deriveFont(40f),Color.ORANGE,280,150,350,80, choosePlayersLabel);
+
+        //Displays the "MAX PLAYERS" text.
+        JTextArea maxPlayersArea=new JTextArea(" (MAX PLAYERS: 2)");
+        setAreaParameters(maxPlayersArea,neonFont.deriveFont(30f),Color.ORANGE,310,220,350,80, choosePlayersLabel);
 
         //Adds a Back button to the current screen.
         JButton backButton = new JButton();
@@ -220,7 +224,7 @@ public class GUI {
 
         //Creates an Area which will display the message "Invalid Number" if a player enters an invalid number of players.
         JTextArea invalidNumber = new JTextArea("");
-        setAreaParameters(invalidNumber,neonFont.deriveFont(30f),Color.ORANGE,250,270,400,40,choosePlayersLabel);
+        setAreaParameters(invalidNumber,neonFont.deriveFont(30f),Color.ORANGE,250,260,400,40,choosePlayersLabel);
         chooseNumber.addActionListener(e -> {
             switch(chooseNumber.getText()) {
                 case "1":
