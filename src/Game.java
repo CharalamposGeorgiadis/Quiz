@@ -123,9 +123,10 @@ public class Game {
             for (int j = 0; j < 4; j++) {
                 if (currentControl.equals(player.getControl(j))) {
                     return -1;
-                } else if (currentControl.length() != 1 || currentControl.trim().isEmpty()) {
-                    return 0;
                 }
+            }
+            if (currentControl.length() != 1 || currentControl.trim().isEmpty()) {
+                    return 0;
             }
         }
         getPlayers().get(currentPlayer).setPlayerControls(currentControlNumber, currentControl);

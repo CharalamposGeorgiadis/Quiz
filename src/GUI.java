@@ -778,6 +778,7 @@ public class GUI {
                             if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size() != 0) {
                                 changeScene(questionsLabel, chooseCategory);
                                 resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
+                                ((Timer)t.getSource()).stop();
                             } else {
                                 resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
                                 ((Timer)t.getSource()).stop();
@@ -821,6 +822,7 @@ public class GUI {
                                 if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size() != 0) {
                                     changeScene(questionsLabel, chooseCategory);
                                     resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
+                                    timer.stop();
                                 } else {
                                     resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
                                     timer.stop();

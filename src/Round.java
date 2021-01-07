@@ -64,10 +64,10 @@ public class Round {
     }
 
     public void refillRoundTypes(){
+        roundTypes.add("COUNTDOWN");
         roundTypes.add("RIGHT ANSWER");
         roundTypes.add("BETTING");
-        roundTypes.add("COUNTDOWN");
-        Collections.shuffle(roundTypes);
+      //  Collections.shuffle(roundTypes);
     }
 
     public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){
