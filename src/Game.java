@@ -188,7 +188,7 @@ public class Game {
      * @return
      */
 
-    public String[] randomCategories() {
+    public  ArrayList<String> randomCategories() {
         ArrayList<String> randomCategories = new ArrayList<>();
         boolean flag = false;
         for (String s : categories) {
@@ -207,17 +207,11 @@ public class Game {
                 categories.remove(s);
         }
         Collections.shuffle(randomCategories);
-        String[] random4 = new String[4];
-        if (randomCategories.size() > 3) {
-            for (int i = 0; i < 4; i++)
-                random4[i] = randomCategories.get(i);
-        } else {
-            for (int i = 0; i < randomCategories.size(); i++)
-                random4[i] = randomCategories.get(i);
-            for (int i = randomCategories.size(); i < 4; i++)
-                random4[i] = "";
+        if (randomCategories.size()<4){
+            for (int i=randomCategories.size(); i<4;i++)
+                randomCategories.add("");
         }
-        return random4;
+        return randomCategories;
     }
 
     public int correctAnswer(char answer, Questions question, String currentRound, int currentRoundTypeParameter) {

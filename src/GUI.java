@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GUI {
@@ -494,7 +495,8 @@ public class GUI {
 
         //Adds an exit button to the current screen.
         exitButton(chooseCategoryLabel, 855, 0, 100, 100, "ChooseCategoryDarkX.png", "ChooseCategory.png");
-        final String[][] randomCategories = {game.randomCategories()};
+        //final String[][] randomCategories = {game.randomCategories()};
+        final ArrayList<String>[] randomCategories = new ArrayList[]{game.randomCategories()};
 
         //Creates the field where "Player x choose a category" will be displayed.
         JTextField chooseCategoryField = new JTextField();
@@ -527,7 +529,7 @@ public class GUI {
         category4.setEditable(false);
         requestFocusIfClicked(chooseCategoryLabel,category4);
         //Adds the names of the 4 randomly chosen categories to their respective boxes.
-        displayRandomCategories(chooseCategoryLabel,category1,category2,category3,category4,randomCategories);
+        displayRandomCategories(chooseCategoryLabel,category1,category2,category3,category4, randomCategories[0]);
 
         chooseCategoryLabel.addKeyListener(new KeyAdapter() {
             @Override
@@ -536,27 +538,27 @@ public class GUI {
                 if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(0).charAt(0)) {
                     randPlayer[0] = rand.nextInt(game.getPlayers().size());
                     chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
-                    proceedToRound(chooseCategoryLabel, randomCategories[0][0]);
+                    proceedToRound(chooseCategoryLabel, randomCategories[0].get(0));
                     randomCategories[0] = game.randomCategories();
-                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories);
-                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(1).toUpperCase().charAt(0) && !randomCategories[0][1].equals("")) {
+                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
+                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(1).toUpperCase().charAt(0) && !randomCategories[0].get(1).equals("")) {
                     randPlayer[0] = rand.nextInt(game.getPlayers().size());
                     chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
-                    proceedToRound(chooseCategoryLabel, randomCategories[0][1]);
+                    proceedToRound(chooseCategoryLabel, randomCategories[0].get(1));
                     randomCategories[0] = game.randomCategories();
-                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories);
-                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(2).toUpperCase().charAt(0) && !randomCategories[0][2].equals("")) {
+                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
+                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(2).toUpperCase().charAt(0) && !randomCategories[0].get(2).equals("")) {
                     randPlayer[0] = rand.nextInt(game.getPlayers().size());
                     chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
-                    proceedToRound(chooseCategoryLabel, randomCategories[0][2]);
+                    proceedToRound(chooseCategoryLabel, randomCategories[0].get(2));
                     randomCategories[0] = game.randomCategories();
-                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories);
-                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(3).toUpperCase().charAt(0) && !randomCategories[0][2].equals("")) {
+                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
+                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(3).toUpperCase().charAt(0) && !randomCategories[0].get(3).equals("")) {
                     randPlayer[0] = rand.nextInt(game.getPlayers().size());
                     chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
-                    proceedToRound(chooseCategoryLabel, randomCategories[0][3]);
+                    proceedToRound(chooseCategoryLabel, randomCategories[0].get(3));
                     randomCategories[0] = game.randomCategories();
-                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories);
+                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
                 }
             }
         });
@@ -1133,14 +1135,14 @@ public class GUI {
         timer.start();
     }
 
-    public void displayRandomCategories(JLabel chooseCategoryLabel, JTextField category1, JTextField category2, JTextField category3, JTextField category4, String[][] randomCategories){
-        if (randomCategories[0][0].equals("")) {
+    public void displayRandomCategories(JLabel chooseCategoryLabel, JTextField category1, JTextField category2, JTextField category3, JTextField category4, ArrayList<String> randomCategories){
+        if (randomCategories.get(0).equals("")) {
             endgameScreen(chooseCategoryLabel);
         }
-        category1.setText("A: "+ randomCategories[0][0]);
-        category2.setText("B: "+ randomCategories[0][1]);
-        category3.setText("C: "+ randomCategories[0][2]);
-        category4.setText("D: "+ randomCategories[0][3]);
+        category1.setText("A: "+ randomCategories.get(0));
+        category2.setText("B: "+ randomCategories.get(1));
+        category3.setText("C: "+ randomCategories.get(2));
+        category4.setText("D: "+ randomCategories.get(3));
     }
 
     public void endgameScreen(JLabel currentLabel){
@@ -1196,10 +1198,8 @@ public class GUI {
                 super.mouseClicked(e);
                 changeScene(endScreenLabel,mainLabel);
                 try {
-                    System.out.println(game.getAvailableQuestions().size());
                     game.getAvailableQuestions().clear();
                     game.loadQuestions(questions);
-                    System.out.println(game.getAvailableQuestions().size());
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
