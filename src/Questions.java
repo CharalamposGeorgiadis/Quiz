@@ -12,7 +12,7 @@ public class Questions {
     private String category; // String that holds the category of the question.
     private ArrayList<String> answers; // List of Strings that holds the possible answers of the question.
     protected String correctAnswer; // String that holds the correct answer of the question.
-    private String media;
+    private String media; // String containing the question's accompanying media.
 
     /**
      * Constructor
@@ -81,11 +81,6 @@ public class Questions {
     }
 
     /**
-     * Sets the question's correct answer.
-     * @param correctAnswer A String containing the question's correct answer.
-     */
-
-    /**
      * Gets the question's correct answer.
      * @return An ArrayList of Strings representing the question's possible answers.
      */
@@ -94,13 +89,28 @@ public class Questions {
         return correctAnswer;
     }
 
+    /**
+     * Sets the question's correct answer.
+     * @param correctAnswer A String containing the question's correct answer.
+     */
+
     public void setCorrectAnswer(String correctAnswer){
         this.correctAnswer=correctAnswer;
     }
 
+    /**
+     * Gets the question's accompanying image.
+     * @return String containing the question's accompanying media.
+     */
+
     public String getMedia(){
         return media;
     }
+
+    /**
+     * Sets the question's accompanying image.
+     * @param media A String containing the question's accompanying media. Media is NULL if the question is not accompanied by an image.
+     */
 
     public void setMedia(String media) {
         this.media = media;

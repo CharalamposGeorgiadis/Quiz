@@ -15,7 +15,7 @@ public class Game {
     private ArrayList<Questions> availableQuestions; // List that holds every available question.
     private HashSet<String> categories; // Set of Strings that holds the name of each category once.
     private Round round; // Grants access to Round methods.
-    private PlayerStats playerStats; //Grants access to Player Stats.
+    private PlayerStats playerStats; // Grants access to Player Stats.
 
     /**
      * Constructor.
@@ -32,6 +32,12 @@ public class Game {
         playerStats=new PlayerStats();
         loadQuestions(questions);
     }
+
+    /**
+     * Loads questions from the directory folder.
+     * @param questions Holds the directory of the questions folder.
+     * @throws FileNotFoundException if a file is not found.
+     */
 
     public void loadQuestions(File[] questions) throws FileNotFoundException {
         for (File question : questions) {
@@ -60,29 +66,49 @@ public class Game {
         }
     }
 
-    public ArrayList<Questions> getAvailableQuestions() {
-        return availableQuestions;
-    }
+    /**
+     * Gets the available questions.
+     * @return ArrayList of Questions that holds the available questions.
+     */
+
+    public ArrayList<Questions> getAvailableQuestions() {return availableQuestions;}
+
+    /**
+     * Gets the available categories.
+     * @return HashSet of Strings that holds the available categories.
+     */
 
     public HashSet<String> getCategories(){return categories;}
 
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
+    /**
+     * Gets the players of the current game.
+     * @return ArrayList of Player that holds the players of the current game.
+     */
+
+    public ArrayList<Player> getPlayers() {return players;}
+
+    /**
+     * Gets the round Object of the current game.
+     * @return Round Object of the current game.
+     */
 
     public Round getRound(){return round;}
 
+    /**
+     * Gets a PlayerStats Object.
+     * @return PlayerStats Object.
+     */
+
     public PlayerStats getPlayerStats(){return playerStats;}
 
+    /**
+     *
+     */
+
     public void createPlayer() {
-        Player tempPlayer = new Player();
-        players.add(tempPlayer);
+        players.add(new Player());
     }
 
-    public void reloadQuestions(File[] questions) throws FileNotFoundException {
-        availableQuestions.clear();
-        loadQuestions(questions);
-    }
 
     public void resetHaveAnswered() {
         for (Player p : getPlayers())

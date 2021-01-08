@@ -1196,7 +1196,10 @@ public class GUI {
                 super.mouseClicked(e);
                 changeScene(endScreenLabel,mainLabel);
                 try {
-                    game.reloadQuestions(questions);
+                    System.out.println(game.getAvailableQuestions().size());
+                    game.getAvailableQuestions().clear();
+                    game.loadQuestions(questions);
+                    System.out.println(game.getAvailableQuestions().size());
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }

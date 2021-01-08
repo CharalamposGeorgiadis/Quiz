@@ -10,10 +10,10 @@ public class Player {
     private String username; // String that holds the username of a player.
     private int points; // Integer that holds the points of a player.
     private String[] controls; // String Array that holds the controls of a player.
-    private boolean hasAnswered;
-    private int bet;
+    private boolean hasAnswered; // Boolean containing if the player has answered or not.
+    private int bet; // Integer containing the player's current bet.
     private int thermometerCorrectAnswers;
-    private int multiplayerWins;
+    private int multiplayerWins; // Integer containing the player's wins in multiplayer mode.
 
     /**
      * Constructor
@@ -80,17 +80,37 @@ public class Player {
         controls[currentAnswer]=chosenControl.toUpperCase();
     }
 
+    /**
+     * Gets a boolean containing if the player has answered or not.
+     * @return Boolean containing if the player has answered or not.
+     */
+
     public boolean getHasAnswered(){
         return hasAnswered;
     }
+
+    /**
+     * Sets whether the player has answered or not.
+     * @param  answered Boolean containing if the player has answered or not.
+     */
 
     public void setHasAnswered(Boolean answered){
         hasAnswered=answered;
     }
 
+    /**
+     * Gets the player's current bet.
+     * @return Integer containing the player's current bet.
+     */
+
     public int getBet(){
         return bet;
     }
+
+    /**
+     * Sets the player's current bet.
+     * @param bet Integer containing the player's current bet.
+     */
 
     public void setBet(int bet){
         this.bet=bet;
@@ -102,26 +122,30 @@ public class Player {
 
     public void setThermometerCorrectAnswers(int thermometerCorrectAnswers){this.thermometerCorrectAnswers=thermometerCorrectAnswers;}
 
+    /**
+     * Gets the player's wins in multiplayer mode.
+     * @return Integer containing the player's wins in multiplayer mode.
+     */
 
     public int getMultiplayerWins(){
         return multiplayerWins;
     }
 
+    /**
+     * Sets the player's wins in multiplayer mode.
+     * @param multiplayerWins Integer containing the player's wins in multiplayer mode.
+     */
+
     public void setMultiplayerWins(int multiplayerWins) {
         this.multiplayerWins = multiplayerWins;
     }
+
+    /**
+     * Clears the player's controls.
+     */
 
     public void clearControls(){
         for (int i=0; i<4; i++)
             setPlayerControls(i,"");
     }
-
-    /**
-     * Adds points to the player.
-     * @param points An Integer containing the points that will be added.
-     */
-
-//    public void addPoints(int points) {
-//        this.points+=points;
-//    }
 }
