@@ -184,8 +184,8 @@ public class Game {
     }
 
     /**
-     *
-     * @return
+     * Chooses up to four random categories with enough questions for the current round.
+     * @return Arraylist of Strings containing up to four categories.
      */
 
     public  ArrayList<String> randomCategories() {
@@ -214,6 +214,15 @@ public class Game {
         return randomCategories;
     }
 
+    /**
+     * If the key that was pressed belongs to the controls of a player, it checks if the answer corresponding to that key is correct.
+     * @param answer Character containing the player's answer.
+     * @param question Questions Object containing the current question.
+     * @param currentRound String containing the name of the current round.
+     * @param currentRoundTypeParameter Integer containing  a parameter that maybe required by a certain round type.
+     * @return 1 if the key was assigned to a player's controls, otherwise 0.
+     */
+
     public int correctAnswer(char answer, Questions question, String currentRound, int currentRoundTypeParameter) {
         for (Player p : getPlayers()) {
             for (int i = 0; i < 4; i++)
@@ -229,10 +238,16 @@ public class Game {
         return 0;
     }
 
+    /**
+     * If the key that was pressed belongs to the controls of a player, it sets the players bet equal to the bet corresponding to that key.
+     * @param answer Character containing the player's answer.
+     * @return 1 if the key was assigned to a player's controls, otherwise 0.
+     */
+
     public int hasBet(char answer) {
         for (Player p : getPlayers()) {
             for (int i = 0; i < 4; i++)
-                if (Character.toLowerCase(answer) == Character.toLowerCase(p.getControl(i).charAt(0)) && !p.getHasAnswered()) {
+                if (Character.toUpperCase(answer) == p.getControl(i).charAt(0) && !p.getHasAnswered()) {
                     p.setHasAnswered(true);
                     p.setBet((i+1) * 250);
                     return 1;
@@ -241,9 +256,13 @@ public class Game {
         return 0;
     }
 
+    /**
+     * Sorts players by points.
+     */
+
     public void sortPlayersByPoints(){
         for (int i=1; i<=getPlayers().size()-1;i++){
-            for (int j=1;j<=getPlayers().size()-i;j++){
+            for (int j=i;j<=getPlayers().size()-i;j++){
                 Player first=getPlayers().get(j-1);
                 Player second=getPlayers().get(j);
                 if (first.getPoints()<second.getPoints()){
@@ -254,6 +273,11 @@ public class Game {
             }
         }
     }
+
+    /**
+     * Add/updates the current game's player stats.
+     * @throws IOException If file is not found.
+     */
 
     public void addStats() throws IOException {
         File oldFile=new File("Player Stats.txt");
@@ -298,7 +322,6 @@ public class Game {
                 else
                     break;
             }
-            sortPlayersByPoints();
             scannerMain.close();
             writer.close();
             Files.deleteIfExists(Paths.get("Player Stats.txt"));

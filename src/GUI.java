@@ -1203,7 +1203,7 @@ public class GUI {
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
-                game.getRound().refillRoundTypes();
+                game.getRound().addEssentialRoundTypes();
                 game.getPlayers().clear();
             }
         });

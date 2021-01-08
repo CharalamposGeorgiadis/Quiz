@@ -23,8 +23,8 @@ public class Round {
      */
 
     public Round() {
-        roundTypes = new ArrayList<>(); //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
-        refillRoundTypes();
+        roundTypes = new ArrayList<>();
+        addEssentialRoundTypes();
         totalAnswered=0;
     }
 
@@ -37,25 +37,54 @@ public class Round {
         return roundTypes;
     }
 
+    /**
+     * Gets the description of the Right Answer round type.
+     * @return String containing the description of the Right Answer round type.
+     */
+
     public String getRightAnswerDescription(){
         return rightAnswerDescription;
     }
+
+    /**
+     * Gets the description of the Betting round type.
+     * @return String containing the description of the Betting round type.
+     */
 
     public String getBettingDescription(){
         return bettingDescription;
     }
 
+    /**
+     * Gets the description of the Countdown round type.
+     * @return String containing the description of the Countdown round type.
+     */
+
     public String getCountdownDescription(){
         return countdownDescription;
     }
+
+    /**
+     * Gets the description of the FasterFinger round type.
+     * @return String containing the description of the FasterFinger round type.
+     */
 
     public String getFasterFingerDescription(){
         return fasterFingerDescription;
     }
 
+    /**
+     * Gets the description of the Thermometer round type.
+     * @return String containing the description of the Thermometer round type.
+     */
+
     public String getThermometerDescription(){
         return thermometerDescription;
     }
+
+    /**
+     * Adds the multiplayer rounds to the roundTypes list.
+     */
 
     public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
         roundTypes.add("FASTEST FINGER");
@@ -63,12 +92,25 @@ public class Round {
         roundTypes.add("THERMOMETER");
     }
 
-    public void refillRoundTypes(){
+    /**
+     * Adds the essential rounds to the roundTypes list.
+     */
+
+    public void addEssentialRoundTypes(){ //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
         roundTypes.add("COUNTDOWN");
         roundTypes.add("RIGHT ANSWER");
         roundTypes.add("BETTING");
         Collections.shuffle(roundTypes);
     }
+
+    /**
+     * Calculates the points based on the current round type.
+     * @param answered Boolean containing whether the player has answered correctly or wrong.
+     * @param currentRound String containing the name of the current round.
+     * @param currentPlayer Player Object containing the player of which the points will be calculated.
+     * @param currentRoundParameter Integer containing  a parameter that maybe required by a certain round type.
+     * @param totalPlayers  Integer containing the total amount of players.
+     */
 
     public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){
         switch (currentRound){
