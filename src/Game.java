@@ -102,18 +102,27 @@ public class Game {
     public PlayerStats getPlayerStats(){return playerStats;}
 
     /**
-     *
+     * Creates a player.
      */
 
     public void createPlayer() {
         players.add(new Player());
     }
 
+    /**
+     * Resets the hasAnswered variable of every player to false.
+     */
 
     public void resetHaveAnswered() {
         for (Player p : getPlayers())
             p.setHasAnswered(false);
     }
+
+    /**
+     * Picks a question based on the chosen category from the shuffled Arraylist of available questions.
+     * @param chosenCategory String containing the chosen category.It is NULL if thermometer is about to be played.
+     * @return the question.
+     */
 
     public Questions getRandomQuestion(String chosenCategory) {
         if(chosenCategory!=null)
@@ -131,6 +140,14 @@ public class Game {
         return null;
     }
 
+    /**
+     * Sets the current players username, if it is valid.
+     * @param chosenUsername String containing the current player's chosen username.
+     * @param currentPlayer Integer containing the current player's position in the players ArrayList.
+     * @return -1 if the chosen username already exists in the current game. 0 if the chosen username's length is 0 or greater than 14,
+     * or consists only of empty spaces. 1 if the chosen username is valid.
+     */
+
     public int enterUsernames(String chosenUsername, int currentPlayer) {
         if (chosenUsername.length() != 0 && chosenUsername.length() < 15 && !chosenUsername.trim().isEmpty())
             for (Player p : players) {
@@ -144,20 +161,32 @@ public class Game {
         return 1;
     }
 
-    public int setControls(String currentControl, int currentPlayer, int currentControlNumber) {
+    /**
+     * Sets the current control of the current player.
+     * @param currentControl String containing the current chosen control of the current player.
+     * @param currentPlayer Integer containing the current player's position in the players ArrayList.
+     * @param currentControlNumber Integer containing the current position in the control Array.
+     * @return -1 if the chosen control is already bound. 0 if the chosen control's length is not 1. 1 if the chosen control is valid.
+     */
+
+    public int setCurrentControl(String currentControl, int currentPlayer, int currentControlNumber) {
+        currentControl =  currentControl.trim();
         for (Player player : players) {
             for (int j = 0; j < 4; j++) {
-                if (currentControl.equals(player.getControl(j))) {
+                if (currentControl.equals(player.getControl(j)))
                     return -1;
-                }
             }
-            if (currentControl.length() != 1 || currentControl.trim().isEmpty()) {
-                    return 0;
-            }
+            if (currentControl.length() != 1)
+                return 0;
         }
         getPlayers().get(currentPlayer).setPlayerControls(currentControlNumber, currentControl);
         return 1;
     }
+
+    /**
+     *
+     * @return
+     */
 
     public String[] randomCategories() {
         ArrayList<String> randomCategories = new ArrayList<>();
@@ -170,6 +199,7 @@ public class Game {
                     if(questionCount>4) {
                         randomCategories.add(s);
                         flag = true;
+                        break;
                     }
                 }
             }
