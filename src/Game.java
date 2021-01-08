@@ -146,8 +146,8 @@ public class Game {
 
     public int setControls(String currentControl, int currentPlayer, int currentControlNumber) {
         for (Player player : players) {
-            for (int j = 0; j < 4; j++) {
-                if (currentControl.equals(player.getControl(j))) {
+            for (int i = 0; i < 4; i++) {
+                if (currentControl.equals(player.getControl(i))) {
                     return -1;
                 }
             }

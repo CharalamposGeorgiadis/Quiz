@@ -367,7 +367,7 @@ public class GUI {
         setAreaParameters(invalidControl,neonFont.deriveFont(30f),Color.RED,250,270,450,40, setControlsLabel);
 
         setControlField.addActionListener(e -> {
-            switch(game.setControls(setControlField.getText(), currentPlayer[0],currentControlNumber[0])) {
+            switch(game.setControls(setControlField.getText().toUpperCase(), currentPlayer[0],currentControlNumber[0])) {
                 case -1:
                     setControlField.setText("");
                     invalidControl.setText("  Control already bound");
@@ -1199,7 +1199,6 @@ public class GUI {
                     System.out.println(game.getAvailableQuestions().size());
                     game.getAvailableQuestions().clear();
                     game.loadQuestions(questions);
-                    System.out.println(game.getAvailableQuestions().size());
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
