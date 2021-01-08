@@ -1194,9 +1194,8 @@ public class GUI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                changeScene(endScreenLabel,mainLabel);
+                changeScene(endScreenLabel, mainLabel);
                 try {
-                    System.out.println(game.getAvailableQuestions().size());
                     game.getAvailableQuestions().clear();
                     game.loadQuestions(questions);
                 } catch (FileNotFoundException fileNotFoundException) {
