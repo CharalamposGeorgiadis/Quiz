@@ -746,15 +746,13 @@ public class GUI {
                                 ((Timer)t.getSource()).stop();
                             }
                         } else {
+                            ((Timer)t.getSource()).stop();
                             game.getRound().getRoundTypes().remove(currentRound);
                             if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size() != 0) {
                                 changeScene(questionsLabel, chooseCategory);
                                 resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
-                                ((Timer)t.getSource()).stop();
-                            } else {
+                            } else
                                 resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
-                                ((Timer)t.getSource()).stop();
-                            }
                         }
                     }
                 });
@@ -791,14 +789,13 @@ public class GUI {
                                 }
                             } else {
                                 game.getRound().getRoundTypes().remove(currentRound);
+                                timer.stop();
                                 if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size() != 0) {
                                     changeScene(questionsLabel, chooseCategory);
                                     resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
-                                    timer.stop();
-                                } else {
+                                } else
                                     resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
-                                    timer.stop();
-                                }
+
                             }
                         }
                     }
