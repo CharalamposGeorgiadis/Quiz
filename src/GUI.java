@@ -26,13 +26,11 @@ public class GUI {
         mainLabel = new JLabel(new ImageIcon("MainMenu.png"));
         window.add(mainLabel);
 
-        ////Adds an exit button to the current screen.
+        //Adds an exit button to the current screen.
         exitButton(mainLabel, 698, 75, 140, 140, "MainMenuDark.png", "MainMenu.png");
 
         //Creates custom font from file.
         neonFont = Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")).deriveFont(60f);
-        // GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //g.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")));
 
         if (questions != null) {
             game = new Game(this.questions);//Loads the questions into the game.
@@ -57,7 +55,7 @@ public class GUI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
-                    viewLeaderboards(statsExist);
+                    leaderboards(statsExist);
                 }
             });
         }
@@ -68,120 +66,92 @@ public class GUI {
         }
     }
 
-    public void viewLeaderboards(boolean statsExist) {
+    public void leaderboards(boolean statsExist) {
         //Displays the Leaderboard screen.
-        JLabel leaderboardBackground = new JLabel((new ImageIcon("LeaderBoard.png")));
-        changeScene(mainLabel, leaderboardBackground);
+        JLabel mainLeaderboardLabel = new JLabel((new ImageIcon("LeaderBoard.png")));
+        changeScene(mainLabel, mainLeaderboardLabel);
         if (statsExist) {
             //Adds a "LEADERBOARDS" title to the label.
             JTextArea leaderboardTitle = new JTextArea("LEADERBOARDS");
-            setAreaParameters(leaderboardTitle, neonFont.deriveFont(50f), Color.ORANGE, 310, 90, 360, 50, leaderboardBackground);
+            setAreaParameters(leaderboardTitle, neonFont.deriveFont(50f), Color.ORANGE, 310, 90, 360, 50, mainLeaderboardLabel);
 
             //Adds a "View leaderboards based on" title.
             JTextArea viewLeaderboardsTitle = new JTextArea("VIEW LEADERBOARDS\n       BASED ON:");
-            setAreaParameters(viewLeaderboardsTitle, neonFont.deriveFont(40f), Color.yellow, 290, 150, 400, 100, leaderboardBackground);
+            setAreaParameters(viewLeaderboardsTitle, neonFont.deriveFont(40f), Color.yellow, 290, 150, 400, 100, mainLeaderboardLabel);
 
             //Adds a "HIGHSCORES" button.
             JButton highscoresButton=new JButton("HIGHSCORES");
-            setButtonParameters(highscoresButton, neonFont.deriveFont(40f), Color.green, 335, 230, 300, 60, leaderboardBackground);
+            setButtonParameters(highscoresButton, neonFont.deriveFont(40f), Color.green, 335, 230, 300, 60, mainLeaderboardLabel);
             highscoresButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
-                    highscoreLeaderboards(leaderboardBackground);
+                    viewLeaderboards(mainLeaderboardLabel, "HIGHSCORES");
                 }
             });
 
             //Adds a "MULTIPLAYER WINS" button.
             JButton multiplayerWinsButton=new JButton("MULTIPLAYER WINS");
-            setButtonParameters(multiplayerWinsButton, neonFont.deriveFont(40f), Color.green, 290, 300, 400, 60, leaderboardBackground);
+            setButtonParameters(multiplayerWinsButton, neonFont.deriveFont(40f), Color.green, 290, 300, 400, 60, mainLeaderboardLabel);
             multiplayerWinsButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
-                    multiplayerWinsLeaderboards(leaderboardBackground);
+                    viewLeaderboards(mainLeaderboardLabel, "MULTIPLAYER WINS");
                 }
             });
         }
         else {
             //Displays the "NO STATS FILE FOUND" text.
             JTextArea noFileFound = new JTextArea("NO STATS FILE\n     FOUND");
-            setAreaParameters(noFileFound,neonFont.deriveFont(50f),Color.orange,310,90,360,100,leaderboardBackground);
+            setAreaParameters(noFileFound,neonFont.deriveFont(50f),Color.orange,310,90,360,100,mainLeaderboardLabel);
         }
         //Adds a Back button to the current screen.
-        JButton backButton = new JButton("BACK");
-        setButtonParameters(backButton,neonFont.deriveFont(40f),Color.red,90,78,140,50,leaderboardBackground);
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    changeScene(leaderboardBackground,mainLabel);
-                }
-            }
-        });
+        leaderboardBackButton(mainLeaderboardLabel,mainLabel);
     }
 
-    public void highscoreLeaderboards(JLabel mainLeaderboardLabel){
+    public void viewLeaderboards(JLabel mainLeaderboardLabel, String chosenSorting){
         //Displays the highscore leaderboard screen.
-        JLabel highscoreLeaderboardLabel = new JLabel(new ImageIcon("Leaderboard.png"));
-        changeScene(mainLeaderboardLabel,highscoreLeaderboardLabel);
+        JLabel currentLeaderboardLabel = new JLabel(new ImageIcon("Leaderboard.png"));
+        changeScene(mainLeaderboardLabel,currentLeaderboardLabel);
 
         //Displays the "HIGHSCORES" title.
-        JTextArea highscoresTitle = new JTextArea("HIGHSCORES");
-        setAreaParameters(highscoresTitle, neonFont.deriveFont(50f), Color.ORANGE, 320, 90, 360, 50, highscoreLeaderboardLabel);
+        JTextArea currentLeaderboardTitle = new JTextArea();
+        setAreaParameters(currentLeaderboardTitle, neonFont.deriveFont(50f), Color.ORANGE, 320, 90, 360, 50, currentLeaderboardLabel);
 
-        game.getPlayerStats().sortStatsByPoints();
-        //Displays players usernames based on highscores.
-        JTextArea highscoresArea=new JTextArea();
-        setAreaParameters(highscoresArea, neonFont.deriveFont(40f), Color.cyan, 310, 150, 534, 260, highscoreLeaderboardLabel);
-        for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
-            highscoresArea.setText(highscoresArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getHighScores().get(i));
-            if (i!=game.getPlayerStats().getHighScores().size()-1)
-                highscoresArea.setText(highscoresArea.getText()+"\n");
+        //Displays players usernames based on chosen sorting.
+        JTextArea currentLeaderboardArea=new JTextArea();
+        setAreaParameters(currentLeaderboardArea, neonFont.deriveFont(40f), Color.cyan, 310, 150, 534, 260, currentLeaderboardLabel);
+
+        switch(chosenSorting){
+            case "HIGHSCORES":
+                currentLeaderboardTitle.setText("HIGHSCORES");
+                game.getPlayerStats().sortStatsByPoints();
+                for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
+                    currentLeaderboardArea.setText(currentLeaderboardArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getHighScores().get(i));
+                    if (i!=game.getPlayerStats().getHighScores().size()-1)
+                        currentLeaderboardArea.setText(currentLeaderboardArea.getText()+"\n");
+                }
+                break;
+            case "MULTIPLAYER WINS":
+                currentLeaderboardTitle.setText("MULTIPLAYER WINS");
+                game.getPlayerStats().sortStatsByMultiplayerWins();
+                for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
+                    currentLeaderboardArea.setText(currentLeaderboardArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getMultiplayerWins().get(i));
+                    if (i!=game.getPlayerStats().getHighScores().size()-1)
+                        currentLeaderboardArea.setText(currentLeaderboardArea.getText()+"\n");
+                }
+                break;
         }
-
         //Adds a scroll bar to the stats screen, if needed.
-        JScrollPane scroll = new JScrollPane(highscoresArea);
+        JScrollPane scroll = new JScrollPane(currentLeaderboardArea);
         setScrollPaneParameters(scroll, 310, 150, 534, 260);
-        highscoreLeaderboardLabel.add(scroll);
-        scroll.requestFocus();
+        currentLeaderboardLabel.add(scroll);
         //Sets the scroll bar at the top of the window.
         SwingUtilities.invokeLater(() -> scroll.getViewport().setViewPosition(new Point(0, 0)));
 
         //Adds a Back button to the current screen.
-        leaderboardBackButton(highscoreLeaderboardLabel,mainLeaderboardLabel);
-    }
-
-    public void multiplayerWinsLeaderboards(JLabel mainLeaderboardLabel){
-        //Displays the multiplayer wins leaderboard screen.
-        JLabel multiplayerWinsLeaderboardLabel = new JLabel(new ImageIcon("Leaderboard.png"));
-        changeScene(mainLeaderboardLabel,multiplayerWinsLeaderboardLabel);
-
-        //Displays the "HIGHSCORES" title.
-        JTextArea highscoresTitle = new JTextArea("MULTIPLAYER WINS");
-        setAreaParameters(highscoresTitle, neonFont.deriveFont(50f), Color.ORANGE, 280, 90, 440, 50, multiplayerWinsLeaderboardLabel);
-
-        game.getPlayerStats().sortStatsByMultiplayerWins();
-        //Displays players usernames based on multiplayer wins.
-        JTextArea multiplayerWinsArea=new JTextArea();
-        setAreaParameters(multiplayerWinsArea, neonFont.deriveFont(40f), Color.cyan, 350, 150, 494, 260, multiplayerWinsLeaderboardLabel);
-        for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
-            multiplayerWinsArea.setText(multiplayerWinsArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getMultiplayerWins().get(i));
-            if (i!=game.getPlayerStats().getMultiplayerWins().size()-1)
-                multiplayerWinsArea.setText(multiplayerWinsArea.getText()+"\n");
-        }
-
-        //Adds a scroll bar to the stats screen, if needed.
-        JScrollPane scroll = new JScrollPane(multiplayerWinsArea);
-        setScrollPaneParameters(scroll, 350, 150, 494, 260);
-        multiplayerWinsLeaderboardLabel.add(scroll);
-        scroll.requestFocus();
-        //Sets the scroll bar at the top of the window.
-        SwingUtilities.invokeLater(() -> scroll.getViewport().setViewPosition(new Point(0, 0)));
-
-        //Adds a Back button to the current screen.
-        leaderboardBackButton(multiplayerWinsLeaderboardLabel,mainLeaderboardLabel);
+        leaderboardBackButton(currentLeaderboardLabel,mainLeaderboardLabel);
     }
 
     public void enterNumberOfPlayers(){
