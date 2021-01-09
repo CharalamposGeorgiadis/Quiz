@@ -229,9 +229,9 @@ public class Game {
                 if (Character.toUpperCase(answer) == p.getControl(i).charAt(0) && !p.getHasAnswered()) {
                     p.setHasAnswered(true);
                     if (question.getAnswers().get(i).equals(question.correctAnswer))
-                        round.calculatePoints(true, currentRound, p, currentRoundTypeParameter,getPlayers().size());
+                        round.calculatePoints(true, currentRound, p, currentRoundTypeParameter, getPlayers().size());
                     else
-                        round.calculatePoints(false, currentRound, p, 0,getPlayers().size());
+                        round.calculatePoints(false, currentRound, p, 0, getPlayers().size());
                     return 1;
                 }
         }
@@ -281,14 +281,11 @@ public class Game {
 
     public void addStats() throws IOException {
         File oldFile=new File("Player Stats.txt");
-        if (!oldFile.exists()) {
-            oldFile.createNewFile();
-        }
         Writer writer= new BufferedWriter(new FileWriter(oldFile, true));
         Scanner scannerMain=new Scanner(oldFile);
         if (!scannerMain.hasNextLine()) {
             for (Player p : getPlayers()) {
-                writer.append(p.getUsername() + " " + p.getPoints() + " " + p.getMultiplayerWins() + "\n");
+                writer.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
             }
             writer.close();
         }
@@ -329,10 +326,9 @@ public class Game {
             writer.close();
             Files.deleteIfExists(Paths.get("Player Stats.txt"));
             File newFile=new File("Player Stats.txt");
-            newFile.createNewFile();
             Writer newWriter= new BufferedWriter(new FileWriter("Player Stats.txt", true));
             for (Player p:getPlayers()){
-                newWriter.append(p.getUsername() + " " + p.getPoints()+ " "+p.getMultiplayerWins()+ "\n");
+                newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
             }
             newWriter.close();
         }

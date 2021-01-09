@@ -38,6 +38,11 @@ public class Player {
         return username;
     }
 
+    /**
+     * Sets the player's username.
+     * @param username A String containing the player's points.
+     */
+
     public void setUsername(String username){
         this.username=username;
     }
@@ -53,7 +58,7 @@ public class Player {
 
     /**
      * Sets the player's points.
-     * @param points  A String containing the player's points.
+     * @param points  A Integer containing the player's points.
      */
 
     public void setPoints(int points){

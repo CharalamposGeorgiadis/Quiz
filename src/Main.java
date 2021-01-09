@@ -14,6 +14,7 @@ public class Main {
      * Main function of the application.
      * @param args An array of command-line arguments for the application
      * @throws FileNotFoundException if a file is not found.
+     * @throws FontFormatException if a specified font is bad.
      */
 
     public static void main(String[] args) throws IOException, FontFormatException {

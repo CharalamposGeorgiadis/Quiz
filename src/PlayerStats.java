@@ -3,29 +3,55 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class represents the player stats file.
+ * @author Anastasios Kachrimanis
+ * @author Charalampos Georgiadis
+ * @version 24/12/2020
+ */
+
 public class PlayerStats {
 
-    private ArrayList<String> usernames;
-    private ArrayList<Integer> highScores;
-    private ArrayList<Integer> multiplayerWins;
+    private ArrayList<String> usernames; // List that holds the username of every player.
+    private ArrayList<Integer> highScores; // List that holds the highscore of every player.
+    private ArrayList<Integer> multiplayerWins; // List that holds the multiplayer wins of every player.
 
-    public PlayerStats() throws FileNotFoundException {
+    /**
+     * Constructor.
+     */
+
+    public PlayerStats() {
         usernames=new ArrayList<>();
         highScores =new ArrayList<>();
         multiplayerWins = new ArrayList<>();
     }
 
-    public ArrayList<String> getUsernames(){
-        return usernames;
-    }
+    /**
+     * Gets the player's usernames.
+     * @return ArrayList of Strings containing the player's usernames.
+     */
 
-    public ArrayList<Integer> getHighScores(){
-        return highScores;
-    }
+    public ArrayList<String> getUsernames(){return usernames;}
 
-    public ArrayList<Integer> getMultiplayerWins(){
-        return multiplayerWins;
-    }
+    /**
+     * Gets the player's high scores.
+     * @return ArrayList of Integer containing the player's high scores.
+     */
+
+    public ArrayList<Integer> getHighScores(){return highScores;}
+
+    /**
+     * Gets the player's multiplayer wins.
+     * @return ArrayList of Integer containing the player's multiplayer wins.
+     */
+
+    public ArrayList<Integer> getMultiplayerWins(){return multiplayerWins; }
+
+    /**
+     * Loads the player's stats.
+     * @return True if file was found. False if file was not found.
+     * @throws FileNotFoundException if file was not found.
+     */
 
     public boolean loadPlayerStats() throws FileNotFoundException {
         File stats = new File("Player Stats.txt");
@@ -47,15 +73,18 @@ public class PlayerStats {
             return false;
     }
 
+    /**
+     * Sorts stats by points.
+     */
+
     public void sortStatsByPoints(){
         for (int i=1; i<=getHighScores().size()-1;i++){
             for (int j=1;j<=getHighScores().size()-i;j++){
                 int first=getHighScores().get(j-1);
                 int second=getHighScores().get(j)    ;
                 if (first<second){
-                    int tempPoints=first;
                     getHighScores().set(j-1,second);
-                    getHighScores().set(j,tempPoints);
+                    getHighScores().set(j, first);
                     int tempWins= getMultiplayerWins().get(j-1);
                     getMultiplayerWins().set(j-1, getMultiplayerWins().get(j));
                     getMultiplayerWins().set(j,tempWins);
@@ -67,15 +96,18 @@ public class PlayerStats {
         }
     }
 
+    /**
+     * Sorts stats by multiplayer wins.
+     */
+
     public void sortStatsByMultiplayerWins(){
         for (int i=1; i<=getMultiplayerWins().size()-1;i++){
             for (int j=1;j<=getMultiplayerWins().size()-i;j++){
                 int first=getMultiplayerWins().get(j-1);
                 int second=getMultiplayerWins().get(j)    ;
                 if (first<second){
-                    int tempWins=first;
                     getMultiplayerWins().set(j-1,second);
-                    getMultiplayerWins().set(j,tempWins);
+                    getMultiplayerWins().set(j, first);
                     int tempPoints= getHighScores().get(j-1);
                     getHighScores().set(j-1, getHighScores().get(j));
                     getHighScores().set(j,tempPoints);
