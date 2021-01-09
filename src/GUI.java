@@ -1178,6 +1178,7 @@ public class GUI {
                     setFieldParameters(playerPoints,neonFont.deriveFont(50f-10*i),Color.CYAN,155,200+(50-10*i)+100*i,650,50-10*i,endScreenLabel);
                     playerPoints.setEditable(false);
                 }
+                break;
         }
         try {
             game.addStats();

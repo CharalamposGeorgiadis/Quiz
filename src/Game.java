@@ -184,7 +184,7 @@ public class Game {
     }
 
     /**
-     * Chooses up to four random categories with enough questions for the current round.
+     * Chooses up to four random categories with enough remaining questions for the current round.
      * @return Arraylist of Strings containing up to four categories.
      */
 
@@ -220,7 +220,7 @@ public class Game {
      * @param question Questions Object containing the current question.
      * @param currentRound String containing the name of the current round.
      * @param currentRoundTypeParameter Integer containing  a parameter that maybe required by a certain round type.
-     * @return 1 if the key was assigned to a player's controls, otherwise 0.
+     * @return 1 if the key belongs to a player's controls, otherwise 0.
      */
 
     public int correctAnswer(char answer, Questions question, String currentRound, int currentRoundTypeParameter) {
@@ -241,7 +241,7 @@ public class Game {
     /**
      * If the key that was pressed belongs to the controls of a player, it sets the players bet equal to the bet corresponding to that key.
      * @param answer Character containing the player's answer.
-     * @return 1 if the key was assigned to a player's controls, otherwise 0.
+     * @return 1 if the key belongs to a player's controls, otherwise 0.
      */
 
     public int hasBet(char answer) {
@@ -262,7 +262,7 @@ public class Game {
 
     public void sortPlayersByPoints(){
         for (int i=1; i<=getPlayers().size()-1;i++){
-            for (int j=i;j<=getPlayers().size()-i;j++){
+            for (int j=1;j<=getPlayers().size()-i;j++){
                 Player first=getPlayers().get(j-1);
                 Player second=getPlayers().get(j);
                 if (first.getPoints()<second.getPoints()){
@@ -275,7 +275,7 @@ public class Game {
     }
 
     /**
-     * Add/updates the current game's player stats.
+     * Adds/updates the current game's player stats to the Player Stats.txt.
      * @throws IOException If file is not found.
      */
 
@@ -293,11 +293,14 @@ public class Game {
             writer.close();
         }
         else {
+            // For every player saved in the txt file, checks if they have played on the current game.
+            // If their score on the current game is higher than their score on the txt, their multiplayer on the txt file are added to their current wins.
+            // Otherwise, the player's current game stats are swapped with their stats from the txt file, after their multiplayer wins have been updated.
+            ArrayList<Player> toRemove=new ArrayList<>(); //Contains the Player Objects that will be removed from the players ArrayList.
+            ArrayList<Player> toAdd=new ArrayList<>(); //Contains the Player Objects that will be added to the players ArrayList.
             while (scannerMain.hasNextLine()) {
                 boolean flag=false;
-                ArrayList<Player> toRemove=new ArrayList<>();
-                ArrayList<Player> toAdd=new ArrayList<>();
-                Player tempPlayer=new Player();
+                Player tempPlayer=new Player(); //Temporary Player Object created from the current line of the txt file.
                 tempPlayer.setUsername(scannerMain.next());
                 tempPlayer.setPoints(scannerMain.nextInt());
                 tempPlayer.setMultiplayerWins(scannerMain.nextInt());
@@ -313,8 +316,6 @@ public class Game {
                         break;
                     }
                 }
-                getPlayers().removeAll(toRemove);
-                getPlayers().addAll(toAdd);
                 if (!flag)
                     getPlayers().add(tempPlayer);
                 if (scannerMain.hasNextLine())
@@ -322,6 +323,8 @@ public class Game {
                 else
                     break;
             }
+            getPlayers().removeAll(toRemove);
+            getPlayers().addAll(toAdd);
             scannerMain.close();
             writer.close();
             Files.deleteIfExists(Paths.get("Player Stats.txt"));

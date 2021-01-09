@@ -49,7 +49,7 @@ public class PlayerStats {
 
     public void sortStatsByPoints(){
         for (int i=1; i<=getHighScores().size()-1;i++){
-            for (int j=i;j<=getHighScores().size()-i;j++){
+            for (int j=1;j<=getHighScores().size()-i;j++){
                 int first=getHighScores().get(j-1);
                 int second=getHighScores().get(j)    ;
                 if (first<second){
@@ -69,7 +69,7 @@ public class PlayerStats {
 
     public void sortStatsByMultiplayerWins(){
         for (int i=1; i<=getMultiplayerWins().size()-1;i++){
-            for (int j=i;j<=getMultiplayerWins().size()-i;j++){
+            for (int j=1;j<=getMultiplayerWins().size()-i;j++){
                 int first=getMultiplayerWins().get(j-1);
                 int second=getMultiplayerWins().get(j)    ;
                 if (first<second){
