@@ -21,7 +21,7 @@ public class Game {
      * Constructor.
      *
      * @param questions Holds the directory of the questions folder.
-     * @throws FileNotFoundException if a file is not found.
+     * @throws IOException if a file is not found.
      */
 
     public Game(File[] questions) throws IOException {
@@ -49,10 +49,8 @@ public class Game {
                 while (scan.hasNextLine()) {
                     tempQuestion.setCategory(scan.nextLine());
                     tempQuestion.setQuestion(scan.nextLine());
-                    tempQuestion.setAnswer(scan.nextLine());
-                    tempQuestion.setAnswer(scan.nextLine());
-                    tempQuestion.setAnswer(scan.nextLine());
-                    tempQuestion.setAnswer(scan.nextLine());
+                    for (int i = 0; i < 4; i++)
+                        tempQuestion.setAnswer(scan.nextLine());
                     tempQuestion.setCorrectAnswer(scan.nextLine());
                     tempQuestion.setMedia(scan.nextLine());
                     categories.add(tempQuestion.getCategory());
@@ -78,7 +76,7 @@ public class Game {
      * @return HashSet of Strings that holds the available categories.
      */
 
-    public HashSet<String> getCategories(){return categories;}
+    public HashSet<String> getCategories() {return categories;}
 
     /**
      * Gets the players of the current game.
@@ -102,19 +100,11 @@ public class Game {
     public PlayerStats getPlayerStats(){return playerStats;}
 
     /**
-     * Creates a player.
-     */
-
-    public void createPlayer() {
-        players.add(new Player());
-    }
-
-    /**
      * Resets the hasAnswered variable of every player to false.
      */
 
     public void resetHaveAnswered() {
-        for (Player p : getPlayers())
+        for (Player p : players)
             p.setHasAnswered(false);
     }
 
@@ -156,8 +146,8 @@ public class Game {
             }
         else
             return 0;
-        createPlayer();
-        getPlayers().get(currentPlayer).setUsername(chosenUsername.toUpperCase());
+        players.add(new Player());
+        players.get(currentPlayer).setUsername(chosenUsername.toUpperCase());
         return 1;
     }
 
@@ -179,7 +169,7 @@ public class Game {
             if (currentControl.length() != 1)
                 return 0;
         }
-        getPlayers().get(currentPlayer).setPlayerControls(currentControlNumber, currentControl);
+        players.get(currentPlayer).setPlayerControls(currentControlNumber, currentControl);
         return 1;
     }
 
@@ -224,14 +214,14 @@ public class Game {
      */
 
     public int correctAnswer(char answer, Questions question, String currentRound, int currentRoundTypeParameter) {
-        for (Player p : getPlayers()) {
+        for (Player p : players) {
             for (int i = 0; i < 4; i++)
                 if (Character.toUpperCase(answer) == p.getControl(i).charAt(0) && !p.getHasAnswered()) {
                     p.setHasAnswered(true);
                     if (question.getAnswers().get(i).equals(question.correctAnswer))
-                        round.calculatePoints(true, currentRound, p, currentRoundTypeParameter, getPlayers().size());
+                        round.calculatePoints(true, currentRound, p, currentRoundTypeParameter, players.size());
                     else
-                        round.calculatePoints(false, currentRound, p, 0, getPlayers().size());
+                        round.calculatePoints(false, currentRound, p, 0, players.size());
                     return 1;
                 }
         }
@@ -245,7 +235,7 @@ public class Game {
      */
 
     public int hasBet(char answer) {
-        for (Player p : getPlayers()) {
+        for (Player p : players) {
             for (int i = 0; i < 4; i++)
                 if (Character.toUpperCase(answer) == p.getControl(i).charAt(0) && !p.getHasAnswered()) {
                     p.setHasAnswered(true);
@@ -261,14 +251,14 @@ public class Game {
      */
 
     public void sortPlayersByPoints(){
-        for (int i=1; i<=getPlayers().size()-1;i++){
-            for (int j=1;j<=getPlayers().size()-i;j++){
-                Player first=getPlayers().get(j-1);
-                Player second=getPlayers().get(j);
+        for (int i=1; i<=players.size()-1;i++){
+            for (int j=1;j<=players.size()-i;j++){
+                Player first=players.get(j-1);
+                Player second=players.get(j);
                 if (first.getPoints()<second.getPoints()){
-                    Player temp=getPlayers().get(j-1);
-                    getPlayers().set(j-1,getPlayers().get(j));
-                    getPlayers().set(j,temp);
+                    Player temp=players.get(j-1);
+                    players.set(j-1,players.get(j));
+                    players.set(j,temp);
                 }
             }
         }
@@ -284,7 +274,7 @@ public class Game {
         Writer writer= new BufferedWriter(new FileWriter(oldFile, true));
         Scanner scannerMain=new Scanner(oldFile);
         if (!scannerMain.hasNextLine()) {
-            for (Player p : getPlayers()) {
+            for (Player p : players) {
                 writer.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
             }
             writer.close();
@@ -301,7 +291,7 @@ public class Game {
                 tempPlayer.setUsername(scannerMain.next());
                 tempPlayer.setPoints(scannerMain.nextInt());
                 tempPlayer.setMultiplayerWins(scannerMain.nextInt());
-                for (Player p: getPlayers()){
+                for (Player p: players){
                     if (tempPlayer.getUsername().equals(p.getUsername())) {
                         if (tempPlayer.getPoints() > p.getPoints()) {
                             tempPlayer.setMultiplayerWins(tempPlayer.getMultiplayerWins() + p.getMultiplayerWins());
@@ -314,20 +304,20 @@ public class Game {
                     }
                 }
                 if (!flag)
-                    getPlayers().add(tempPlayer);
+                    players.add(tempPlayer);
                 if (scannerMain.hasNextLine())
                     scannerMain.nextLine();
                 else
                     break;
             }
-            getPlayers().removeAll(toRemove);
-            getPlayers().addAll(toAdd);
+            players.removeAll(toRemove);
+            players.addAll(toAdd);
             scannerMain.close();
             writer.close();
             Files.deleteIfExists(Paths.get("Player Stats.txt"));
-            File newFile=new File("Player Stats.txt");
+           // File newFile=new File("Player Stats.txt");
             Writer newWriter= new BufferedWriter(new FileWriter("Player Stats.txt", true));
-            for (Player p:getPlayers()){
+            for (Player p:players){
                 newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
             }
             newWriter.close();
