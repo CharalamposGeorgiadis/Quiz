@@ -18,7 +18,7 @@ public class Round {
     int totalAnswered;
 
     /**
-     * Constructor
+     * Constructor.
      * Creates a list that holds the names of each round type.
      */
 
@@ -60,17 +60,7 @@ public class Round {
     }
 
     /**
-     * Adds the multiplayer rounds to the roundTypes list.
-     */
-
-    public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
-        roundTypes.add("FASTEST FINGER");
-        Collections.shuffle(roundTypes);
-        roundTypes.add("THERMOMETER");
-    }
-
-    /**
-     * Adds the essential rounds to the roundTypes list.
+     * Adds the essential rounds to the roundTypes ArrayList.
      */
 
     public void addEssentialRoundTypes(){ //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
@@ -81,12 +71,22 @@ public class Round {
     }
 
     /**
-     * Calculates the points based on the current round type.
-     * @param answered Boolean containing whether the player has answered correctly or wrong.
+     * Adds the multiplayer rounds to the roundTypes ArrayList.
+     */
+
+    public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
+        roundTypes.add("FASTEST FINGER");
+        Collections.shuffle(roundTypes);
+        roundTypes.add("THERMOMETER");
+    }
+
+    /**
+     * Calculates the current player's points based on the current round type.
+     * @param answered Boolean containing whether the player has answered correctly or wrongly.
      * @param currentRound String containing the name of the current round.
      * @param currentPlayer Player Object containing the player of which the points will be calculated.
-     * @param currentRoundParameter Integer containing  a parameter that maybe required by a certain round type.
-     * @param totalPlayers  Integer containing the total amount of players.
+     * @param currentRoundParameter Integer containing  a parameter that may be required by a certain round type.
+     * @param totalPlayers Integer containing the total amount of players.
      */
 
     public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){

@@ -11,15 +11,14 @@ import java.util.*;
  */
 
 public class Game {
-    private ArrayList<Player> players; // List that holds the information of every player.
-    private ArrayList<Questions> availableQuestions; // List that holds every available question.
-    private HashSet<String> categories; // Set of Strings that holds the name of each category once.
-    private Round round; // Grants access to Round methods.
-    private PlayerStats playerStats; // Grants access to Player Stats.
+    private ArrayList<Player> players; // ArrayList that holds the information of every player.
+    private ArrayList<Questions> availableQuestions; // ArrayList that holds every available question.
+    private HashSet<String> categories; // HashSet of Strings that holds the name of each category once.
+    private Round round; // Round Object tha grants access to Round methods.
+    private PlayerStats playerStats; // PlayerStats Object that grants access to Player Stats.
 
     /**
      * Constructor.
-     *
      * @param questions Holds the directory of the questions folder.
      * @throws IOException if a file is not found.
      */
@@ -80,7 +79,7 @@ public class Game {
 
     /**
      * Gets the players of the current game.
-     * @return ArrayList of Player that holds the players of the current game.
+     * @return ArrayList of Players that holds the players of the current game.
      */
 
     public ArrayList<Player> getPlayers() {return players;}
@@ -93,7 +92,7 @@ public class Game {
     public Round getRound(){return round;}
 
     /**
-     * Gets a PlayerStats Object.
+     * Gets the playerStats Object.
      * @return PlayerStats Object.
      */
 
@@ -110,8 +109,8 @@ public class Game {
 
     /**
      * Picks a question based on the chosen category from the shuffled Arraylist of available questions.
-     * @param chosenCategory String containing the chosen category.It is NULL if thermometer is about to be played.
-     * @return the question.
+     * @param chosenCategory String containing the chosen category.It is NULL if THERMOMETER is about to be played.
+     * @return Questions Object that contains the chosen question.
      */
 
     public Questions getRandomQuestion(String chosenCategory) {
@@ -175,7 +174,8 @@ public class Game {
 
     /**
      * Chooses up to four random categories with enough remaining questions for the current round.
-     * @return Arraylist of Strings containing up to four categories.
+     * If there are not enough questions for 4 categories, the unfilled positions of the ArrayList are set to "".
+     * @return Arraylist of Strings containing up to 4 categories.
      */
 
     public  ArrayList<String> randomCategories() {
@@ -206,10 +206,10 @@ public class Game {
 
     /**
      * If the key that was pressed belongs to the controls of a player, it checks if the answer corresponding to that key is correct.
-     * @param answer Character containing the player's answer.
+     * @param answer Char containing the player's answer.
      * @param question Questions Object containing the current question.
      * @param currentRound String containing the name of the current round.
-     * @param currentRoundTypeParameter Integer containing  a parameter that maybe required by a certain round type.
+     * @param currentRoundTypeParameter Integer containing  a parameter that may be required by a certain round type.
      * @return 1 if the key belongs to a player's controls, otherwise 0.
      */
 
@@ -230,7 +230,7 @@ public class Game {
 
     /**
      * If the key that was pressed belongs to the controls of a player, it sets the players bet equal to the bet corresponding to that key.
-     * @param answer Character containing the player's answer.
+     * @param answer Char containing the player's answer.
      * @return 1 if the key belongs to a player's controls, otherwise 0.
      */
 
@@ -281,7 +281,7 @@ public class Game {
         }
         else {
             // For every player saved in the txt file, checks if they have played on the current game.
-            // If their score on the current game is higher than their score on the txt, their multiplayer on the txt file are added to their current wins.
+            // If their score on the current game is higher than their score on the txt, their multiplayer wins on the txt file are added to their current wins.
             // Otherwise, the player's current game stats are swapped with their stats from the txt file, after their multiplayer wins have been updated.
             ArrayList<Player> toRemove=new ArrayList<>(); //Contains the Player Objects that will be removed from the players ArrayList.
             ArrayList<Player> toAdd=new ArrayList<>(); //Contains the Player Objects that will be added to the players ArrayList.

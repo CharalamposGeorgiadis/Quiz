@@ -12,11 +12,11 @@ public class Player {
     private String[] controls; // String Array that holds the controls of a player.
     private boolean hasAnswered; // Boolean containing if the player has answered or not.
     private int bet; // Integer containing the player's current bet.
-    private int thermometerCorrectAnswers;
+    private int thermometerCorrectAnswers; //Integer containing the player's wins in THERMOMETER.
     private int multiplayerWins; // Integer containing the player's wins in multiplayer mode.
 
     /**
-     * Constructor
+     * Constructor.
      */
 
     public Player() {
@@ -31,7 +31,7 @@ public class Player {
 
     /**
      * Gets the player's username.
-     * @return A String containing the player's username.
+     * @return String containing the player's username.
      */
 
     public String getUsername(){
@@ -40,7 +40,7 @@ public class Player {
 
     /**
      * Sets the player's username.
-     * @param username A String containing the player's points.
+     * @param username String containing the player's points.
      */
 
     public void setUsername(String username){
@@ -49,7 +49,7 @@ public class Player {
 
     /**
      * Gets the player's points.
-     * @return An Integer containing the player's points.
+     * @return Integer containing the player's points.
      */
 
     public int getPoints(){
@@ -58,7 +58,7 @@ public class Player {
 
     /**
      * Sets the player's points.
-     * @param points  A Integer containing the player's points.
+     * @param points Integer containing the player's points.
      */
 
     public void setPoints(int points){
@@ -68,7 +68,7 @@ public class Player {
     /**
      * Gets one of the player's controls.
      * @param currentControl One of the player's controls.
-     * @return A char containing one of the player's controls.
+     * @return String containing one of the player's controls.
      */
 
     public String getControl(int currentControl){
@@ -78,7 +78,7 @@ public class Player {
     /**
      * Sets the player's controls.
      * @param currentAnswer The answer of which we want to set the control (A, B, C or D)
-     * @param chosenControl A String containing the control chosen by the player.
+     * @param chosenControl String containing the control chosen by the player.
      */
 
     public void setPlayerControls(int currentAnswer, String chosenControl){
@@ -96,7 +96,7 @@ public class Player {
 
     /**
      * Sets whether the player has answered or not.
-     * @param  answered Boolean containing if the player has answered or not.
+     * @param answered Boolean containing if the player has answered or not.
      */
 
     public void setHasAnswered(Boolean answered){
@@ -121,10 +121,19 @@ public class Player {
         this.bet=bet;
     }
 
+    /**
+     * Gets the player's wins in THERMOMETER.
+     * @return Integer containing the player's wins in THERMOMETER
+     */
+
     public int getThermometerCorrectAnswers(){
         return thermometerCorrectAnswers;
     }
 
+    /**
+     * Sets the player's wins in THERMOMETER
+     * @param thermometerCorrectAnswers Integer containing the player's wins in THERMOMETER.
+     */
     public void setThermometerCorrectAnswers(int thermometerCorrectAnswers){this.thermometerCorrectAnswers=thermometerCorrectAnswers;}
 
     /**

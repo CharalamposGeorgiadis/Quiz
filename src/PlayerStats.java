@@ -35,14 +35,14 @@ public class PlayerStats {
 
     /**
      * Gets the player's high scores.
-     * @return ArrayList of Integer containing the player's high scores.
+     * @return ArrayList of Integers containing the player's high scores.
      */
 
     public ArrayList<Integer> getHighScores(){return highScores;}
 
     /**
      * Gets the player's multiplayer wins.
-     * @return ArrayList of Integer containing the player's multiplayer wins.
+     * @return ArrayList of Integers containing the player's multiplayer wins.
      */
 
     public ArrayList<Integer> getMultiplayerWins(){return multiplayerWins; }
