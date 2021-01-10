@@ -42,44 +42,20 @@ public class Round {
      * @return String containing the description of the Right Answer round type.
      */
 
-    public String getRightAnswerDescription(){
-        return rightAnswerDescription;
-    }
-
-    /**
-     * Gets the description of the Betting round type.
-     * @return String containing the description of the Betting round type.
-     */
-
-    public String getBettingDescription(){
-        return bettingDescription;
-    }
-
-    /**
-     * Gets the description of the Countdown round type.
-     * @return String containing the description of the Countdown round type.
-     */
-
-    public String getCountdownDescription(){
-        return countdownDescription;
-    }
-
-    /**
-     * Gets the description of the FasterFinger round type.
-     * @return String containing the description of the FasterFinger round type.
-     */
-
-    public String getFasterFingerDescription(){
-        return fasterFingerDescription;
-    }
-
-    /**
-     * Gets the description of the Thermometer round type.
-     * @return String containing the description of the Thermometer round type.
-     */
-
-    public String getThermometerDescription(){
-        return thermometerDescription;
+    public String getRoundDescription(String currentRound){
+        switch (currentRound){
+            case "RIGHT ANSWER":
+                return rightAnswerDescription;
+            case "BETTING":
+                return bettingDescription;
+            case "COUNTDOWN":
+                return countdownDescription;
+            case "FASTEST FINGER":
+                return fasterFingerDescription;
+            case "THERMOMETER":
+                return thermometerDescription;
+        }
+        return "";
     }
 
     /**

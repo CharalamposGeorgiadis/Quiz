@@ -27,7 +27,7 @@ public class GUI {
         window.add(mainLabel);
 
         //Adds an exit button to the current screen.
-        exitButton(mainLabel, 698, 75, 140, 140, "MainMenuDark.png", "MainMenu.png");
+        exitButton(mainLabel,null,null, 698, 75, 140, 140, "MainMenuDark.png", "MainMenu.png");
 
         //Creates custom font from file.
         neonFont = Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")).deriveFont(60f);
@@ -47,7 +47,6 @@ public class GUI {
                         enterNumberOfPlayers();
                 }
             });
-
             //Creates the Leaderboards button.
             JButton leaderboardButton = new JButton("LEADERBOARDS");
             setButtonParameters(leaderboardButton,neonFont.deriveFont(60f),Color.orange,225,295,500,60, mainLabel);
@@ -89,7 +88,6 @@ public class GUI {
                     viewLeaderboards(mainLeaderboardLabel, "HIGHSCORES");
                 }
             });
-
             //Adds a "MULTIPLAYER WINS" button.
             JButton multiplayerWinsButton=new JButton("MULTIPLAYER WINS");
             setButtonParameters(multiplayerWinsButton, neonFont.deriveFont(40f), Color.green, 290, 300, 400, 60, mainLeaderboardLabel);
@@ -107,7 +105,7 @@ public class GUI {
             setAreaParameters(noFileFound,neonFont.deriveFont(50f),Color.orange,310,90,360,100,mainLeaderboardLabel);
         }
         //Adds a Back button to the current screen.
-        leaderboardBackButton(mainLeaderboardLabel,mainLabel);
+        backButton(mainLeaderboardLabel,mainLabel,null,neonFont.deriveFont(40f),Color.red,90,78,140,50,"LeaderBoard.png","LeaderBoard.png","");
     }
 
     public void viewLeaderboards(JLabel mainLeaderboardLabel, String chosenSorting){
@@ -151,7 +149,7 @@ public class GUI {
         SwingUtilities.invokeLater(() -> scroll.getViewport().setViewPosition(new Point(0, 0)));
 
         //Adds a Back button to the current screen.
-        leaderboardBackButton(currentLeaderboardLabel,mainLeaderboardLabel);
+        backButton(currentLeaderboardLabel,mainLeaderboardLabel,null,neonFont.deriveFont(40f),Color.red,90,78,140,50,"LeaderBoard.png","LeaderBoard.png","");
     }
 
     public void enterNumberOfPlayers(){
@@ -168,30 +166,30 @@ public class GUI {
         setAreaParameters(maxPlayersArea,neonFont.deriveFont(30f),Color.ORANGE,310,220,350,80, choosePlayersLabel);
 
         //Adds a Back button to the current screen.
-        backButton(choosePlayersLabel,mainLabel,null,698,75,140,140,"SetControlsDark.png","SetControls.png","ALL");
+        backButton(choosePlayersLabel,mainLabel,null,null,null,698,75,140,140,"SetControlsDark.png","SetControls.png","ALL");
 
         //Creates the TextField where the player(s) enter their chosen number of players.
-        JTextField chooseNumber= new JTextField();
-        setFieldParameters(chooseNumber,neonFont.deriveFont(50f),Color.cyan,400,300,110,80, choosePlayersLabel);
-        chooseNumber.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
+        JTextField chooseNumberField= new JTextField();
+        setFieldParameters(chooseNumberField,neonFont.deriveFont(50f),Color.cyan,400,300,110,80, choosePlayersLabel);
+        chooseNumberField.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
 
         //Creates an Area which will display the message "Invalid Number" if a player enters an invalid number of players.
         JTextArea invalidNumber = new JTextArea("");
         setAreaParameters(invalidNumber,neonFont.deriveFont(30f),Color.RED,250,260,400,40,choosePlayersLabel);
-        chooseNumber.addActionListener(e -> {
-            switch(chooseNumber.getText()) {
+        chooseNumberField.addActionListener(e -> {
+            switch(chooseNumberField.getText()) {
                 case "1":
-                    chooseNumber.setText("");
+                    chooseNumberField.setText("");
                     invalidNumber.setText("");
-                    enterUsername(1, choosePlayersLabel,chooseNumber);
+                    enterUsername(1, choosePlayersLabel,chooseNumberField);
                     break;
                 case "2":
-                    chooseNumber.setText("");
+                    chooseNumberField.setText("");
                     invalidNumber.setText("");
-                    enterUsername(2, choosePlayersLabel,chooseNumber);
+                    enterUsername(2, choosePlayersLabel,chooseNumberField);
                     break;
                 default:
-                    chooseNumber.setText("");
+                    chooseNumberField.setText("");
                     invalidNumber.setText("Invalid Number of Players");
             }
         });
@@ -213,7 +211,7 @@ public class GUI {
         enterUsernameText.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
 
         //Adds a Back button to the current screen.
-        backButton(usernameLabel,currentLabel,chooseNumber,698,75,140,140,"EnterUsernameDark.png","EnterUsername.png","ALL");
+        backButton(usernameLabel,currentLabel,chooseNumber,null,null,698,75,140,140,"EnterUsernameDark.png","EnterUsername.png","ALL");
 
         //Creates the Area where "(Max characters: 14)" will be displayed.
         JTextArea maxCharactersArea=new JTextArea("(Max characters: 14)");
@@ -270,7 +268,7 @@ public class GUI {
         setControlField.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
 
         //Adds a Back button to the current screen.
-        backButton(setControlsLabel,currentLabel,enterUsernameText,698,75,140,140,"SetControlsDark.png","SetControls.png","ALL");
+        backButton(setControlsLabel,currentLabel,enterUsernameText,null,null,698,75,140,140,"SetControlsDark.png","SetControls.png","ALL");
 
         //Displays the control that is currently set by the player
         JTextArea currentControlArea=new JTextArea("ANSWER A:");
@@ -354,10 +352,10 @@ public class GUI {
         });
 
         //Adds a Back button to the current screen.
-        backButton(youCanViewLabel,currentLabel,setControlField,0,0,100,100,"YouCanViewDarkBack.png","YouCanView.png","CONTROLS");
+        backButton(youCanViewLabel,currentLabel,setControlField,null,null,0,0,100,100,"YouCanViewDarkBack.png","YouCanView.png","CONTROLS");
 
         //Adds an exit button to the current screen.
-        exitButton(youCanViewLabel,855,0,100,100, "YouCanViewDarkX.png","YouCanView.png" );
+        exitButton(youCanViewLabel,null,null,855,0,100,100, "YouCanViewDarkX.png","YouCanView.png" );
     }
 
     public void chooseCategory(JLabel currentLabel) {
@@ -368,30 +366,11 @@ public class GUI {
         changeScene(currentLabel, chooseCategoryLabel);
         requestFocusIfClicked(chooseCategoryLabel,chooseCategoryLabel);
 
-        //Add the button that allows the player(s) to view their controls.
-        JButton controlsButton = new JButton();
-        setButtonParameters(controlsButton, null, null, 0, 0, 100, 100, chooseCategoryLabel);
-        controlsButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    chooseCategoryLabel.setIcon(new ImageIcon("ChooseCategory.png"));
-                    viewControls(chooseCategoryLabel);
-                }
-            }
-
-            public void mouseEntered(MouseEvent e) {
-                chooseCategoryLabel.setIcon(new ImageIcon("ChooseCategoryDarkC.png"));
-            }
-
-            public void mouseExited(MouseEvent e) {
-                chooseCategoryLabel.setIcon(new ImageIcon("ChooseCategory.png"));
-            }
-        });
+        //Add a CONTROLS button.
+        controlsButton(chooseCategoryLabel,null,null,0,0,100,100,"ChooseCategoryDarkC.png","ChooseCategory.png");
 
         //Adds an exit button to the current screen.
-        exitButton(chooseCategoryLabel, 855, 0, 100, 100, "ChooseCategoryDarkX.png", "ChooseCategory.png");
+        exitButton(chooseCategoryLabel, null,null,855, 0, 100, 100, "ChooseCategoryDarkX.png", "ChooseCategory.png");
         //final String[][] randomCategories = {game.randomCategories()};
         final ArrayList<String>[] randomCategories = new ArrayList[]{game.randomCategories()};
 
@@ -432,31 +411,18 @@ public class GUI {
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
-                if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(0).charAt(0)) {
-                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
-                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(0).charAt(0))
                     proceedToRound(chooseCategoryLabel, randomCategories[0].get(0));
-                    randomCategories[0] = game.randomCategories();
-                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
-                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(1).toUpperCase().charAt(0) && !randomCategories[0].get(1).equals("")) {
-                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
-                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(1).charAt(0) && !randomCategories[0].get(1).equals(""))
                     proceedToRound(chooseCategoryLabel, randomCategories[0].get(1));
-                    randomCategories[0] = game.randomCategories();
-                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
-                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(2).toUpperCase().charAt(0) && !randomCategories[0].get(2).equals("")) {
-                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
-                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(2).charAt(0) && !randomCategories[0].get(2).equals(""))
                     proceedToRound(chooseCategoryLabel, randomCategories[0].get(2));
-                    randomCategories[0] = game.randomCategories();
-                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
-                } else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(3).toUpperCase().charAt(0) && !randomCategories[0].get(3).equals("")) {
-                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
-                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(3).charAt(0) && !randomCategories[0].get(3).equals(""))
                     proceedToRound(chooseCategoryLabel, randomCategories[0].get(3));
-                    randomCategories[0] = game.randomCategories();
-                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
-                }
+                randPlayer[0] = rand.nextInt(game.getPlayers().size());
+                chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                randomCategories[0] = game.randomCategories();
+                displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
             }
         });
     }
@@ -479,32 +445,32 @@ public class GUI {
         descriptionArea.setWrapStyleWord(true);
 
         //Adds an exit button to the current screen.
-        exitButton(currentRoundLabel, 855, 0, 100, 100, "CurrentRoundDarkX.png", "CurrentRound.png");
+        exitButton(currentRoundLabel, null,null,855, 0, 100, 100, "CurrentRoundDarkX.png", "CurrentRound.png");
 
         switch (game.getRound().getRoundTypes().get(0)) {
             case "RIGHT ANSWER":
                 currentRoundField.setText("RIGHT ANSWER");
-                descriptionArea.setText(game.getRound().getRightAnswerDescription());
+                descriptionArea.setText(game.getRound().getRoundDescription("RIGHT ANSWER"));
                 delayRoundType("RIGHT ANSWER", currentRoundLabel, chosenCategory, currentLabel);
                 break;
             case "BETTING":
                 currentRoundField.setText("BETTING");
-                descriptionArea.setText(game.getRound().getBettingDescription());
+                descriptionArea.setText(game.getRound().getRoundDescription("BETTING"));
                 delayRoundType("BETTING", currentRoundLabel, chosenCategory, currentLabel);
                 break;
             case "COUNTDOWN":
                 currentRoundField.setText("COUNTDOWN");
-                descriptionArea.setText(game.getRound().getCountdownDescription());
+                descriptionArea.setText(game.getRound().getRoundDescription("COUNTDOWN"));
                 delayRoundType("COUNTDOWN", currentRoundLabel, chosenCategory, currentLabel);
                 break;
             case "FASTEST FINGER":
                 currentRoundField.setText("FASTEST FINGER");
-                descriptionArea.setText(game.getRound().getFasterFingerDescription());
+                descriptionArea.setText(game.getRound().getRoundDescription("FASTEST FINGER"));
                 delayRoundType("FASTEST FINGER", currentRoundLabel, chosenCategory, currentLabel);
                 break;
             case "THERMOMETER":
                 currentRoundField.setText("THERMOMETER");
-                descriptionArea.setText(game.getRound().getThermometerDescription());
+                descriptionArea.setText(game.getRound().getRoundDescription("THERMOMETER"));
                 delayRoundType("THERMOMETER", currentRoundLabel, chosenCategory, currentLabel);
                 break;
         }
@@ -517,10 +483,9 @@ public class GUI {
         requestFocusIfClicked(questionsLabel,questionsLabel);
 
         //Adds an exit button to the current screen.
-        exitButton(questionsLabel,855,0,100,100, "QuestionsDark.png","Questions.png" );
+        exitButton(questionsLabel,null,null,855,0,100,100, "QuestionsDark.png","Questions.png" );
 
         Font questionFont=new Font("Arial",Font.PLAIN, 20);
-
         //Displays the questions
         JTextField questionText=new JTextField();
         setFieldParameters(questionText, questionFont,Color.red,80,245,805,50, questionsLabel);
@@ -568,7 +533,6 @@ public class GUI {
             playersAnsweredTitle.setVisible(false);
             playersAnsweredArea.setVisible(false);
         }
-
         //Creates the area where an image of a question,if it exists, will be displayed.
         JButton imageQuestion=new JButton();
         setButtonParameters(imageQuestion,null,null,280,45,400,185,questionsLabel);
@@ -898,77 +862,6 @@ public class GUI {
         });
     }
 
-    public void displayQuestionAndAnswers(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4, Questions currentQuestion){
-        question.setText(currentQuestion.getQuestion());
-        answer1.setText("A: "+currentQuestion.getAnswers().get(0));
-        answer2.setText("B: "+currentQuestion.getAnswers().get(1));
-        answer3.setText("C: "+currentQuestion.getAnswers().get(2));
-        answer4.setText("D: "+currentQuestion.getAnswers().get(3));
-    }
-
-    public void displayBettingOptions(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4){
-        question.setText("BET POINTS FOR THE NEXT QUESTION");
-        answer1.setText("A: 250");
-        answer2.setText("B: 500");
-        answer3.setText("C: 750");
-        answer4.setText("D: 1000");
-    }
-
-    public void exitButton(JLabel currentLabel,int x, int y, int width, int height, String buttonDark, String buttonNotDark ){
-        JButton exitButton = new JButton();
-        setButtonParameters(exitButton,null,null,x,y,width,height,currentLabel);
-        exitButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e))
-                    System.exit(0);
-            }
-            //Adds hovering effect to the Exit button.
-            public void mouseEntered(MouseEvent e){
-                currentLabel.setIcon(new ImageIcon(buttonDark));
-            }
-            public void mouseExited(MouseEvent e){
-                currentLabel.setIcon(new ImageIcon(buttonNotDark));
-            }
-        });
-        currentLabel.add(exitButton);
-    }
-
-    public void backButton(JLabel currentLabel, JLabel previousLabel, JTextField previousField, int x, int y, int width, int height, String buttonDark, String buttonNotDark, String toClear){
-        JButton backButton = new JButton();
-        setButtonParameters(backButton,null,null,x,y,width,height,currentLabel);
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e))
-                    switch (toClear){
-                        case "ALL":
-                            game.getPlayers().clear();
-                            break;
-                        case "CONTROLS":
-                            for (Player p:game.getPlayers())
-                                p.clearControls();
-                          break;
-                    }
-                {
-                    changeScene(currentLabel, previousLabel);
-                    previousField.requestFocusInWindow();
-                }
-
-            }
-            //Adds hovering effect to the Exit button.
-            public void mouseEntered(MouseEvent e){
-                currentLabel.setIcon(new ImageIcon(buttonDark));
-            }
-            public void mouseExited(MouseEvent e){
-                currentLabel.setIcon(new ImageIcon(buttonNotDark));
-            }
-        });
-        currentLabel.add(backButton);
-    }
-
     public void resultScreen(JLabel currentLabel, String correctAnswer,boolean hasEnded, boolean thermometer){
         //Displays the current question's result screen.
         JLabel resultScreenLabel=new JLabel(new ImageIcon("CurrentRound.png"));
@@ -984,7 +877,7 @@ public class GUI {
         correctAnswerField.setEditable(false);
 
         //Adds an exit button to the current screen.
-        exitButton(resultScreenLabel,855,0,100,100, "CurrentRoundDarkX.png","CurrentRound.png" );
+        exitButton(resultScreenLabel,null,null,855,0,100,100, "CurrentRoundDarkX.png","CurrentRound.png" );
 
         //Displays Player Username and Points.
         switch(game.getPlayers().size()){
@@ -1023,20 +916,6 @@ public class GUI {
         delayResults(resultScreenLabel,currentLabel,hasEnded);
     }
 
-    public void leaderboardBackButton(JLabel currentLabel,JLabel newLabel){
-        JButton backButton = new JButton("BACK");
-        setButtonParameters(backButton,neonFont.deriveFont(40f),Color.red,90,78,140,50,currentLabel);
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    changeScene(currentLabel,newLabel);
-                }
-            }
-        });
-    }
-
     public void delayResults(JLabel currentLabel, JLabel newLabel, boolean hasEnded){
         Timer timer = new Timer(4000, e -> {
             if (!hasEnded)
@@ -1061,16 +940,6 @@ public class GUI {
         Timer timer = new Timer( delay, e -> startRound(currentRound, currentLabel, chosenCategory, chooseCategoryLabel));
         timer.setRepeats( false );
         timer.start();
-    }
-
-    public void displayRandomCategories(JLabel chooseCategoryLabel, JTextField category1, JTextField category2, JTextField category3, JTextField category4, ArrayList<String> randomCategories){
-        if (randomCategories.get(0).equals("")) {
-            endgameScreen(chooseCategoryLabel);
-        }
-        category1.setText("A: "+ randomCategories.get(0));
-        category2.setText("B: "+ randomCategories.get(1));
-        category3.setText("C: "+ randomCategories.get(2));
-        category4.setText("D: "+ randomCategories.get(3));
     }
 
     public void endgameScreen(JLabel currentLabel){
@@ -1117,15 +986,48 @@ public class GUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         //Creates a "Return to Main Menu" button.
+        returnToMainMenuButton(endScreenLabel,neonFont.deriveFont(40f),Color.green,105,350,250,80);
+        //Creates a "EXIT" button.
+        exitButton(endScreenLabel,neonFont.deriveFont(40f),Color.green,600,350,250,80,"Endgame.png","Endgame.png");
+    }
+
+    public void displayQuestionAndAnswers(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4, Questions currentQuestion){
+        question.setText(currentQuestion.getQuestion());
+        answer1.setText("A: "+currentQuestion.getAnswers().get(0));
+        answer2.setText("B: "+currentQuestion.getAnswers().get(1));
+        answer3.setText("C: "+currentQuestion.getAnswers().get(2));
+        answer4.setText("D: "+currentQuestion.getAnswers().get(3));
+    }
+
+    public void displayBettingOptions(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4){
+        question.setText("BET POINTS FOR THE NEXT QUESTION");
+        answer1.setText("A: 250");
+        answer2.setText("B: 500");
+        answer3.setText("C: 750");
+        answer4.setText("D: 1000");
+    }
+
+    public void displayRandomCategories(JLabel chooseCategoryLabel, JTextField category1, JTextField category2, JTextField category3, JTextField category4, ArrayList<String> randomCategories){
+        if (randomCategories.get(0).equals("")) {
+            endgameScreen(chooseCategoryLabel);
+        }
+        else {
+            category1.setText("A: " + randomCategories.get(0));
+            category2.setText("B: " + randomCategories.get(1));
+            category3.setText("C: " + randomCategories.get(2));
+            category4.setText("D: " + randomCategories.get(3));
+        }
+    }
+
+    public void returnToMainMenuButton(JLabel currentLabel,Font font,Color color,int x,int y,int width, int height){
         JButton returnToMainMenuButton=new JButton("MAIN MENU");
-        setButtonParameters(returnToMainMenuButton,neonFont.deriveFont(40f),Color.green,105,350,250,80,endScreenLabel);
+        setButtonParameters(returnToMainMenuButton,font,color,x,y,width,height,currentLabel);
         returnToMainMenuButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                changeScene(endScreenLabel,mainLabel);
+                changeScene(currentLabel,mainLabel);
                 try {
                     game.getAvailableQuestions().clear();
                     game.loadQuestions(questions);
@@ -1136,16 +1038,76 @@ public class GUI {
                 game.getPlayers().clear();
             }
         });
+    }
 
-        //Creates a "EXIT" button.
-        JButton exitButton=new JButton("EXIT");
-        setButtonParameters(exitButton,neonFont.deriveFont(40f),Color.green,600,350,250,80,endScreenLabel);
+    public void controlsButton(JLabel currentLabel,Font font,Color color,int x,int y,int width, int height,String buttonDark, String buttonNotDark) {
+        JButton controlsButton = new JButton();
+        setButtonParameters(controlsButton, font, color, x, y, width, height, currentLabel);
+        controlsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    currentLabel.setIcon(new ImageIcon(buttonNotDark));
+                    viewControls(currentLabel);
+                }
+            }
+            //Adds hovering effect to the Controls button.
+            public void mouseEntered(MouseEvent e) { currentLabel.setIcon(new ImageIcon(buttonDark)); }
+            public void mouseExited(MouseEvent e) { currentLabel.setIcon(new ImageIcon(buttonNotDark)); }
+        });
+    }
+
+    public void exitButton(JLabel currentLabel,Font font, Color color,int x, int y, int width, int height, String buttonDark, String buttonNotDark ){
+        JButton exitButton = new JButton();
+        if (font!=null)
+            exitButton.setText("EXIT");
+        setButtonParameters(exitButton,font,color,x,y,width,height,currentLabel);
         exitButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                window.dispose();
+                if (SwingUtilities.isLeftMouseButton(e))
+                    System.exit(0);
             }
+            //Adds hovering effect to the Exit button.
+            public void mouseEntered(MouseEvent e){
+                currentLabel.setIcon(new ImageIcon(buttonDark));
+            }
+            public void mouseExited(MouseEvent e){
+                currentLabel.setIcon(new ImageIcon(buttonNotDark));
+            }
+        });
+    }
+
+    public void backButton(JLabel currentLabel, JLabel previousLabel, JTextField previousField,Font font, Color color, int x, int y, int width, int height, String buttonDark, String buttonNotDark, String toClear){
+        JButton backButton = new JButton();
+        if (font!=null)
+            backButton.setText("BACK");
+        setButtonParameters(backButton,font,color,x,y,width,height,currentLabel);
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (SwingUtilities.isLeftMouseButton(e))
+                    switch (toClear){
+                        case "ALL":
+                            game.getPlayers().clear();
+                            break;
+                        case "CONTROLS":
+                            for (Player p:game.getPlayers())
+                                p.clearControls();
+                            break;
+                    }
+                {
+                    changeScene(currentLabel, previousLabel);
+                    if (previousField!=null)
+                        previousField.requestFocusInWindow();
+                }
+            }
+            //Adds hovering effect to the Back button.
+            public void mouseEntered (MouseEvent e){ currentLabel.setIcon(new ImageIcon(buttonDark)); }
+            public void mouseExited (MouseEvent e){ currentLabel.setIcon(new ImageIcon(buttonNotDark)); }
         });
     }
 
@@ -1163,39 +1125,35 @@ public class GUI {
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setBounds(x, y, width, height);
-        scroll.setOpaque(false);
         scroll.getViewport().setOpaque(false);
         scroll.setBorder(null);
+        scroll.setOpaque(false);
     }
 
     public void setButtonParameters(JButton currentButton,Font font, Color color,int x,int y,int width,int height, JLabel currentLabel){
-        currentButton.setFont(font);
-        currentButton.setForeground(color);
-        currentButton.setBounds(x,y,width,height);
+        setMainComponentParameters(currentButton,font,color,x,y,width,height,currentLabel);
         currentButton.setContentAreaFilled(false);
         currentButton.setBorderPainted(false);
         currentButton.setHorizontalAlignment(SwingConstants.CENTER);
-        currentLabel.add(currentButton);
-
     }
 
     public void setFieldParameters(JTextField currentField, Font font, Color color,int x,int y,int width,int height, JLabel currentLabel){
-        currentField.setFont(font);
-        currentField.setForeground(color);
-        currentField.setBounds(x,y,width,height);
+        setMainComponentParameters(currentField,font,color,x,y,width,height,currentLabel);
         currentField.setBorder(null);
         currentField.setHorizontalAlignment(JTextField.CENTER);
-        currentField.setOpaque(false);
-        currentLabel.add(currentField);
     }
 
     public void setAreaParameters(JTextArea currentArea, Font font,Color color, int x, int y, int width, int height, JLabel currentLabel){
-        currentArea.setFont(font);
-        currentArea.setForeground(color);
-        currentArea.setBounds(x, y, width, height);
-        currentArea.setOpaque(false);
+        setMainComponentParameters(currentArea,font,color,x,y,width,height,currentLabel);
         currentArea.setEditable(false);
-        currentLabel.add(currentArea);
+    }
+
+    public void setMainComponentParameters(JComponent currentComponent,Font font,Color color, int x, int y, int width, int height, JLabel currentLabel){
+        currentComponent.setFont(font);
+        currentComponent.setForeground(color);
+        currentComponent.setBounds(x,y,width,height);
+        currentComponent.setOpaque(false);
+        currentLabel.add(currentComponent);
     }
 
     public void changeScene(JLabel currentLabel, JLabel newLabel){
