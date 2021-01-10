@@ -479,6 +479,8 @@ public class GUI {
         });
     }
 
+
+
     public void proceedToRound(JLabel currentLabel, String chosenCategory) {
         //Displays the "Current Round" screen.
         JLabel currentRoundLabel = new JLabel(new ImageIcon("CurrentRound.png"));
@@ -528,13 +530,7 @@ public class GUI {
         }
     }
 
-    /**
-     *
-     * @param currentRound
-     * @param currentLabel
-     * @param chosenCategory
-     * @param chooseCategory
-     */
+
 
     public void startRound(String currentRound, JLabel currentLabel, String chosenCategory,JLabel chooseCategory){
         //Displays the "Questions" screen.
@@ -1067,6 +1063,16 @@ public class GUI {
         answer4.setText("D: 1000");
     }
 
+    /**
+     *
+     * @param chooseCategoryLabel
+     * @param category1
+     * @param category2
+     * @param category3
+     * @param category4
+     * @param randomCategories
+     */
+
     public void displayRandomCategories(JLabel chooseCategoryLabel, JTextField category1, JTextField category2, JTextField category3, JTextField category4, ArrayList<String> randomCategories){
         if (randomCategories.get(0).equals("")) {
             endgameScreen(chooseCategoryLabel);
@@ -1078,6 +1084,17 @@ public class GUI {
             category4.setText("D: " + randomCategories.get(3));
         }
     }
+
+    /**
+     * Creates a main menu button at the current label.
+     * @param currentLabel JLabel containing the current button's label.
+     * @param font Font containing the current button's font.
+     * @param color Color containing the current button's color.
+     * @param x Integer containing the current button's x-axis coordinates.
+     * @param y Integer containing the current button's y-axis coordinates.
+     * @param width Integer containing the current scroll's width.
+     * @param height Integer containing the current button's height.
+     */
 
     public void returnToMainMenuButton(JLabel currentLabel,Font font,Color color,int x,int y,int width, int height){
         JButton returnToMainMenuButton=new JButton("MAIN MENU");
@@ -1099,6 +1116,19 @@ public class GUI {
         });
     }
 
+    /**
+     * Creates a controls button at the current label.
+     * @param currentLabel JLabel containing the current button's label.
+     * @param font Font containing the current button's font.
+     * @param color Color containing the current button's color.
+     * @param x Integer containing the current button's x-axis coordinates.
+     * @param y Integer containing the current button's y-axis coordinates.
+     * @param width Integer containing the current scroll's width.
+     * @param height Integer containing the current button's height.
+     * @param buttonDark String containing the label's icon when the mouse is over the button.
+     * @param buttonNotDark String containing the label's icon when the mouse is not over the button.
+     */
+
     public void controlsButton(JLabel currentLabel,Font font,Color color,int x,int y,int width, int height,String buttonDark, String buttonNotDark) {
         JButton controlsButton = new JButton();
         setButtonParameters(controlsButton, font, color, x, y, width, height, currentLabel);
@@ -1116,6 +1146,19 @@ public class GUI {
             public void mouseExited(MouseEvent e) { currentLabel.setIcon(new ImageIcon(buttonNotDark)); }
         });
     }
+
+    /**
+     * Creates a exit button at the current label.
+     * @param currentLabel JLabel containing the current button's label.
+     * @param font Font containing the current button's font.
+     * @param color Color containing the current button's color.
+     * @param x Integer containing the current button's x-axis coordinates.
+     * @param y Integer containing the current button's y-axis coordinates.
+     * @param width Integer containing the current scroll's width.
+     * @param height Integer containing the current button's height.
+     * @param buttonDark String containing the label's icon when the mouse is over the button.
+     * @param buttonNotDark String containing the label's icon when the mouse is not over the button.
+     */
 
     public void exitButton(JLabel currentLabel,Font font, Color color,int x, int y, int width, int height, String buttonDark, String buttonNotDark ){
         JButton exitButton = new JButton();
@@ -1138,6 +1181,22 @@ public class GUI {
             }
         });
     }
+
+    /**
+     * Creates a back button at the current label.
+     * @param currentLabel JLabel containing the current button's label.
+     * @param previousLabel JLabel containing the previous label.
+     * @param previousField JTextField of the previous screen so that the back button, if pressed, can restore its focus.
+     * @param font Font containing the current button's font.
+     * @param color Color containing the current button's color.
+     * @param x Integer containing the current button's x-axis coordinates.
+     * @param y Integer containing the current button's y-axis coordinates.
+     * @param width Integer containing the current scroll's width.
+     * @param height Integer containing the current button's height.
+     * @param buttonDark String containing the label's icon when the mouse is over the button.
+     * @param buttonNotDark String containing the label's icon when the mouse is not over the button.
+     * @param toClear String containing whether going back will clear only the player controls or all the players entirely.
+     */
 
     public void backButton(JLabel currentLabel, JLabel previousLabel, JTextField previousField,Font font, Color color, int x, int y, int width, int height, String buttonDark, String buttonNotDark, String toClear){
         JButton backButton = new JButton();
