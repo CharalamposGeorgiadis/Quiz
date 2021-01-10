@@ -168,25 +168,7 @@ public class GUI {
         setAreaParameters(maxPlayersArea,neonFont.deriveFont(30f),Color.ORANGE,310,220,350,80, choosePlayersLabel);
 
         //Adds a Back button to the current screen.
-        JButton backButton = new JButton();
-        setButtonParameters(backButton,null,null,698,75,140,140, choosePlayersLabel);
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    for (Player p:game.getPlayers())
-                        p.clearControls();
-                    changeScene(choosePlayersLabel,mainLabel);
-                }
-            }
-            public void mouseEntered(MouseEvent e){
-                choosePlayersLabel.setIcon(new ImageIcon("SetControlsDark.png"));
-            }
-            public void mouseExited(MouseEvent e){
-                choosePlayersLabel.setIcon(new ImageIcon("SetControls.png"));
-            }
-        });
+        backButton(choosePlayersLabel,mainLabel,null,698,75,140,140,"SetControlsDark.png","SetControls.png","ALL");
 
         //Creates the TextField where the player(s) enter their chosen number of players.
         JTextField chooseNumber= new JTextField();
@@ -231,25 +213,7 @@ public class GUI {
         enterUsernameText.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
 
         //Adds a Back button to the current screen.
-        JButton backButton = new JButton();
-        setButtonParameters(backButton,null,null,698,75,140,140, usernameLabel);
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    game.getPlayers().clear();
-                    changeScene(usernameLabel, currentLabel);
-                    chooseNumber.requestFocusInWindow();
-                }
-            }
-            public void mouseEntered(MouseEvent e){
-                usernameLabel.setIcon(new ImageIcon("EnterUsernameDark.png"));
-            }
-            public void mouseExited(MouseEvent e){
-                usernameLabel.setIcon(new ImageIcon("EnterUsername.png"));
-            }
-        });
+        backButton(usernameLabel,currentLabel,chooseNumber,698,75,140,140,"EnterUsernameDark.png","EnterUsername.png","ALL");
 
         //Creates the Area where "(Max characters: 14)" will be displayed.
         JTextArea maxCharactersArea=new JTextArea("(Max characters: 14)");
@@ -306,25 +270,7 @@ public class GUI {
         setControlField.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
 
         //Adds a Back button to the current screen.
-        JButton backButton = new JButton();
-        setButtonParameters(backButton,null,null,698,75,140,140, setControlsLabel);
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    game.getPlayers().clear();
-                    changeScene(setControlsLabel, currentLabel);
-                    enterUsernameText.requestFocusInWindow();
-                }
-            }
-            public void mouseEntered(MouseEvent e){
-                setControlsLabel.setIcon(new ImageIcon("SetControlsDark.png"));
-            }
-            public void mouseExited(MouseEvent e){
-                setControlsLabel.setIcon(new ImageIcon("SetControls.png"));
-            }
-        });
+        backButton(setControlsLabel,currentLabel,enterUsernameText,698,75,140,140,"SetControlsDark.png","SetControls.png","ALL");
 
         //Displays the control that is currently set by the player
         JTextArea currentControlArea=new JTextArea("ANSWER A:");
@@ -370,6 +316,7 @@ public class GUI {
                             if(currentPlayer[0]==game.getPlayers().size()) {
                                 currentPlayer[0]=0;
                                 usernameField.setText(game.getPlayers().get(currentPlayer[0]).getUsername());
+                                currentControlArea.setText("ANSWER A:");
                                 youCanView(setControlsLabel,setControlField);
                             }
                             else{
@@ -407,27 +354,7 @@ public class GUI {
         });
 
         //Adds a Back button to the current screen.
-        JButton backButton = new JButton();
-        setButtonParameters(backButton,null,null,0,0,100,100, youCanViewLabel);
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    for (Player p:game.getPlayers()) {
-                        p.clearControls();
-                    }
-                    changeScene(youCanViewLabel, currentLabel);
-                    setControlField.requestFocusInWindow();
-                }
-            }
-            public void mouseEntered(MouseEvent e){
-                youCanViewLabel.setIcon(new ImageIcon("YouCanViewDarkBack.png"));
-            }
-            public void mouseExited(MouseEvent e){
-                youCanViewLabel.setIcon(new ImageIcon("YouCanView.png"));
-            }
-        });
+        backButton(youCanViewLabel,currentLabel,setControlField,0,0,100,100,"YouCanViewDarkBack.png","YouCanView.png","CONTROLS");
 
         //Adds an exit button to the current screen.
         exitButton(youCanViewLabel,855,0,100,100, "YouCanViewDarkX.png","YouCanView.png" );
@@ -1006,6 +933,40 @@ public class GUI {
             }
         });
         currentLabel.add(exitButton);
+    }
+
+    public void backButton(JLabel currentLabel, JLabel previousLabel, JTextField previousField, int x, int y, int width, int height, String buttonDark, String buttonNotDark, String toClear){
+        JButton backButton = new JButton();
+        setButtonParameters(backButton,null,null,x,y,width,height,currentLabel);
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if (SwingUtilities.isLeftMouseButton(e))
+                    switch (toClear){
+                        case "ALL":
+                            game.getPlayers().clear();
+                            break;
+                        case "CONTROLS":
+                            for (Player p:game.getPlayers())
+                                p.clearControls();
+                          break;
+                    }
+                {
+                    changeScene(currentLabel, previousLabel);
+                    previousField.requestFocusInWindow();
+                }
+
+            }
+            //Adds hovering effect to the Exit button.
+            public void mouseEntered(MouseEvent e){
+                currentLabel.setIcon(new ImageIcon(buttonDark));
+            }
+            public void mouseExited(MouseEvent e){
+                currentLabel.setIcon(new ImageIcon(buttonNotDark));
+            }
+        });
+        currentLabel.add(backButton);
     }
 
     public void resultScreen(JLabel currentLabel, String correctAnswer,boolean hasEnded, boolean thermometer){
