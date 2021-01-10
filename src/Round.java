@@ -38,8 +38,9 @@ public class Round {
     }
 
     /**
-     * Gets the description of the Right Answer round type.
-     * @return String containing the description of the Right Answer round type.
+     * Gets the description of the current round type.
+     * @param currentRound String containing the name of the current round.
+     * @return String containing the description of the current round type.
      */
 
     public String getRoundDescription(String currentRound){

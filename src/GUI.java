@@ -5,13 +5,27 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class represents the GUI of the game.
+ * @author Anastasios Kachrimanis
+ * @author Charalampos Georgiadis
+ * @version 24/12/2020
+ */
+
 public class GUI {
-    private JFrame window;
-    private JLabel mainLabel;
-    private Font neonFont;
-    private Game game;
-    private File[] questions;
-    private boolean statsExist;
+    private JFrame window; // Main Frame of the game.
+    private JLabel mainLabel; // Main Menu screen.
+    private Font neonFont; // Custom font.
+    private Game game; // Grants access to the game functions.
+    private File[] questions; // Directory of the questions folder.
+    private boolean statsExist; // Boolean containing whether the stats file exists or not.
+
+    /**
+     * Constructor.
+     * @param questions Holds the directory of the questions folder.
+     * @throws IOException if a file is not found.
+     * @throws FontFormatException if a specified font is bad.
+     */
 
     public GUI(File[] questions) throws IOException, FontFormatException {
         this.questions=questions;
@@ -65,15 +79,19 @@ public class GUI {
         }
     }
 
+    /**
+     * Displays the main leaderboards screen.
+     * @param statsExist Boolean containing whether the stats file exists or not.
+     */
+
     public void leaderboards(boolean statsExist) {
         //Displays the Leaderboard screen.
         JLabel mainLeaderboardLabel = new JLabel((new ImageIcon("LeaderBoard.png")));
         changeScene(mainLabel, mainLeaderboardLabel);
+        //Adds a "LEADERBOARDS" title to the label.
+        JTextArea leaderboardTitle = new JTextArea("LEADERBOARDS");
+        setAreaParameters(leaderboardTitle, neonFont.deriveFont(50f), Color.ORANGE, 310, 90, 360, 100, mainLeaderboardLabel);
         if (statsExist) {
-            //Adds a "LEADERBOARDS" title to the label.
-            JTextArea leaderboardTitle = new JTextArea("LEADERBOARDS");
-            setAreaParameters(leaderboardTitle, neonFont.deriveFont(50f), Color.ORANGE, 310, 90, 360, 50, mainLeaderboardLabel);
-
             //Adds a "View leaderboards based on" title.
             JTextArea viewLeaderboardsTitle = new JTextArea("VIEW LEADERBOARDS\n       BASED ON:");
             setAreaParameters(viewLeaderboardsTitle, neonFont.deriveFont(40f), Color.yellow, 290, 150, 400, 100, mainLeaderboardLabel);
@@ -85,7 +103,7 @@ public class GUI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
-                    viewLeaderboards(mainLeaderboardLabel, "HIGHSCORES");
+                    viewSelectedLeaderboards(mainLeaderboardLabel, "HIGHSCORES");
                 }
             });
             //Adds a "MULTIPLAYER WINS" button.
@@ -95,20 +113,25 @@ public class GUI {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
-                    viewLeaderboards(mainLeaderboardLabel, "MULTIPLAYER WINS");
+                    viewSelectedLeaderboards(mainLeaderboardLabel, "MULTIPLAYER WINS");
                 }
             });
         }
         else {
             //Displays the "NO STATS FILE FOUND" text.
-            JTextArea noFileFound = new JTextArea("NO STATS FILE\n     FOUND");
-            setAreaParameters(noFileFound,neonFont.deriveFont(50f),Color.orange,310,90,360,100,mainLeaderboardLabel);
+            leaderboardTitle.setText("NO STATS FILE\n     FOUND");
         }
         //Adds a Back button to the current screen.
         backButton(mainLeaderboardLabel,mainLabel,null,neonFont.deriveFont(40f),Color.red,90,78,140,50,"LeaderBoard.png","LeaderBoard.png","");
     }
 
-    public void viewLeaderboards(JLabel mainLeaderboardLabel, String chosenSorting){
+    /**
+     * View leaderboards based on selected sorting.
+     * @param mainLeaderboardLabel JLabel containing the main leaderboard label.
+     * @param chosenSorting String containing the selected sorting.
+     */
+
+    public void viewSelectedLeaderboards(JLabel mainLeaderboardLabel, String chosenSorting){
         //Displays the highscore leaderboard screen.
         JLabel currentLeaderboardLabel = new JLabel(new ImageIcon("Leaderboard.png"));
         changeScene(mainLeaderboardLabel,currentLeaderboardLabel);
@@ -143,14 +166,17 @@ public class GUI {
         }
         //Adds a scroll bar to the stats screen, if needed.
         JScrollPane scroll = new JScrollPane(currentLeaderboardArea);
-        setScrollPaneParameters(scroll, 310, 150, 534, 260);
-        currentLeaderboardLabel.add(scroll);
+        setScrollPaneParameters(scroll, 310, 150, 534, 260, currentLeaderboardLabel);
         //Sets the scroll bar at the top of the window.
         SwingUtilities.invokeLater(() -> scroll.getViewport().setViewPosition(new Point(0, 0)));
 
         //Adds a Back button to the current screen.
         backButton(currentLeaderboardLabel,mainLeaderboardLabel,null,neonFont.deriveFont(40f),Color.red,90,78,140,50,"LeaderBoard.png","LeaderBoard.png","");
     }
+
+    /**
+     * Displays the "ENTER NUMBER OF PLAYERS" screen.
+     */
 
     public void enterNumberOfPlayers(){
         //Displays the "ENTER NUMBER OF PLAYERS" screen.
@@ -194,6 +220,13 @@ public class GUI {
             }
         });
     }
+
+    /**
+     * Displays the "Enter Username" screen.
+     * @param numberOfPlayers Integer containing the total number of players.
+     * @param currentLabel Label of the previous screen.
+     * @param chooseNumber TextField of the previous screen so that the back button, if pressed, can restore its focus.
+     */
 
     public void enterUsername(int numberOfPlayers, JLabel currentLabel,JTextField chooseNumber){
         final int[] currentPlayer = {1};
@@ -246,6 +279,12 @@ public class GUI {
         });
     }
 
+    /**
+     * Displays the "Set Controls" screen.
+     * @param currentLabel Label of the previous screen.
+     * @param enterUsernameText TextField of the previous screen so that the back button, if pressed, can restore its focus.
+     */
+
     public void setControls(JLabel currentLabel,JTextField enterUsernameText){
         //Displays the "Set Controls" screen.
         JLabel setControlsLabel=new JLabel(new ImageIcon("SetControls.png"));
@@ -258,9 +297,7 @@ public class GUI {
         //Displays the username of the player who is currently setting their controls.
         JTextField usernameField= new JTextField(game.getPlayers().get(0).getUsername());
         setFieldParameters(usernameField,neonFont.deriveFont(40f),Color.CYAN,200,220,500,50,setControlsLabel);
-        usernameField.setBorder(javax.swing.BorderFactory.createEmptyBorder());//Removes the JTextField's borders.
         usernameField.setEditable(false);
-        setControlsLabel.add(usernameField);
 
         //Creates the TextField where the player(s) enter their chosen controls.
         JTextField setControlField= new JTextField();
@@ -296,9 +333,6 @@ public class GUI {
                     setControlField.setText("");
                     currentControlNumber[0]++;
                     switch (currentControlNumber[0]) {
-                        case 0:
-                            currentControlArea.setText("ANSWER A:");
-                            break;
                         case 1:
                             currentControlArea.setText("ANSWER B:");
                             break;
@@ -313,19 +347,21 @@ public class GUI {
                             currentPlayer[0]++;
                             if(currentPlayer[0]==game.getPlayers().size()) {
                                 currentPlayer[0]=0;
-                                usernameField.setText(game.getPlayers().get(currentPlayer[0]).getUsername());
-                                currentControlArea.setText("ANSWER A:");
                                 youCanView(setControlsLabel,setControlField);
                             }
-                            else{
-                                usernameField.setText(game.getPlayers().get(currentPlayer[0]).getUsername());
-                                currentControlArea.setText("ANSWER A:");
-                            }
+                            usernameField.setText(game.getPlayers().get(currentPlayer[0]).getUsername());
+                            currentControlArea.setText("ANSWER A:");
                             break;
                     }
             }
         });
     }
+
+    /**
+     * Displays the "You can view each player's controls by clicking:.." screen.
+     * @param currentLabel Label of the previous screen.
+     * @param setControlField TextField of the previous screen so that the back button, if pressed, can restore its focus.
+     */
 
     public void youCanView(JLabel currentLabel,JTextField setControlField){
         //Displays the "You can view each player's controls by clicking:.." screen.
@@ -357,6 +393,11 @@ public class GUI {
         //Adds an exit button to the current screen.
         exitButton(youCanViewLabel,null,null,855,0,100,100, "YouCanViewDarkX.png","YouCanView.png" );
     }
+
+    /**
+     * Displays the "Choose Category" screen.
+     * @param currentLabel Label of the previous screen.
+     */
 
     public void chooseCategory(JLabel currentLabel) {
         if (game.getPlayers().size()>1)
@@ -406,23 +447,34 @@ public class GUI {
         requestFocusIfClicked(chooseCategoryLabel,category4);
         //Adds the names of the 4 randomly chosen categories to their respective boxes.
         displayRandomCategories(chooseCategoryLabel,category1,category2,category3,category4, randomCategories[0]);
-
+        final boolean[] flag = {false};
         chooseCategoryLabel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
-                if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(0).charAt(0))
+                if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(0).charAt(0)){
+                    flag[0] = true;
                     proceedToRound(chooseCategoryLabel, randomCategories[0].get(0));
-                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(1).charAt(0) && !randomCategories[0].get(1).equals(""))
+                }
+                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(1).charAt(0) && !randomCategories[0].get(1).equals("")){
+                    flag[0] = true;
                     proceedToRound(chooseCategoryLabel, randomCategories[0].get(1));
-                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(2).charAt(0) && !randomCategories[0].get(2).equals(""))
+                }
+                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(2).charAt(0) && !randomCategories[0].get(2).equals("")){
+                    flag[0] = true;
                     proceedToRound(chooseCategoryLabel, randomCategories[0].get(2));
-                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(3).charAt(0) && !randomCategories[0].get(3).equals(""))
+                }
+                else if (Character.toUpperCase(e.getKeyChar()) == game.getPlayers().get(randPlayer[0]).getControl(3).charAt(0) && !randomCategories[0].get(3).equals("")){
+                    flag[0] = true;
                     proceedToRound(chooseCategoryLabel, randomCategories[0].get(3));
-                randPlayer[0] = rand.nextInt(game.getPlayers().size());
-                chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
-                randomCategories[0] = game.randomCategories();
-                displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
+                }
+                if (flag[0]) {
+                    flag[0] = false;
+                    randPlayer[0] = rand.nextInt(game.getPlayers().size());
+                    chooseCategoryField.setText(game.getPlayers().get(randPlayer[0]).getUsername() + " choose a category");
+                    randomCategories[0] = game.randomCategories();
+                    displayRandomCategories(chooseCategoryLabel, category1, category2, category3, category4, randomCategories[0]);
+                }
             }
         });
     }
@@ -475,6 +527,14 @@ public class GUI {
                 break;
         }
     }
+
+    /**
+     *
+     * @param currentRound
+     * @param currentLabel
+     * @param chosenCategory
+     * @param chooseCategory
+     */
 
     public void startRound(String currentRound, JLabel currentLabel, String chosenCategory,JLabel chooseCategory){
         //Displays the "Questions" screen.
@@ -845,8 +905,7 @@ public class GUI {
         }
         //Adds Scrolling function in the leaderboard display area.
         JScrollPane scroll=new JScrollPane(controlsArea);
-        setScrollPaneParameters(scroll,110,150,720,280);
-        viewControlsLabel.add(scroll);
+        setScrollPaneParameters(scroll,110,150,720,280, viewControlsLabel);
 
         //Adds a Back button to the current screen.
         JButton backButton = new JButton("BACK");
@@ -1111,6 +1170,12 @@ public class GUI {
         });
     }
 
+    /**
+     * Restores focus to the current label if one of its components is clicked on.
+     * @param currentLabel Label containing the current button's label.
+     * @param clickedComponent JComponent containing the clicked component.
+     */
+
     public void requestFocusIfClicked(JLabel currentLabel, JComponent clickedComponent){
         clickedComponent.addMouseListener(new MouseAdapter() {
             @Override
@@ -1121,14 +1186,37 @@ public class GUI {
         });
     }
 
-    public void setScrollPaneParameters(JScrollPane scroll,int x, int y, int width,int height){
+    /**
+     * Sets essential parameters for a JScrollPane.
+     * @param scroll JScrollPane containing the current scroll.
+     * @param x Integer containing the current scroll's x-axis coordinates.
+     * @param y Integer containing the current scroll's y-axis coordinates.
+     * @param width Integer containing the current scroll's width.
+     * @param height Integer containing the current scroll's height.
+     * @param currentLabel Label containing the current button's label.
+     */
+
+    public void setScrollPaneParameters(JScrollPane scroll,int x, int y, int width,int height,JLabel currentLabel){
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setBounds(x, y, width, height);
         scroll.getViewport().setOpaque(false);
         scroll.setBorder(null);
         scroll.setOpaque(false);
+        currentLabel.add(scroll);
     }
+
+    /**
+     * Sets essential parameters for a JButton.
+     * @param currentButton JButton containing the current button.
+     * @param font Font containing the current button's font.
+     * @param color Color containing the current button's color.
+     * @param x Integer containing the current button's x-axis coordinates.
+     * @param y Integer containing the current button's y-axis coordinates.
+     * @param width Integer containing the current button's width.
+     * @param height Integer containing the current button's height.
+     * @param currentLabel Label containing the current button's label.
+     */
 
     public void setButtonParameters(JButton currentButton,Font font, Color color,int x,int y,int width,int height, JLabel currentLabel){
         setMainComponentParameters(currentButton,font,color,x,y,width,height,currentLabel);
@@ -1137,16 +1225,52 @@ public class GUI {
         currentButton.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
+    /**
+     * Sets essential parameters for a JTextField.
+     * @param currentField JTextField containing the current field.
+     * @param font Font containing the current field's font.
+     * @param color Color containing the current field's color.
+     * @param x Integer containing the current field's x-axis coordinates.
+     * @param y Integer containing the current field's y-axis coordinates.
+     * @param width Integer containing the current field's width.
+     * @param height Integer containing the current field's height.
+     * @param currentLabel Label containing the current field's label.
+     */
+
     public void setFieldParameters(JTextField currentField, Font font, Color color,int x,int y,int width,int height, JLabel currentLabel){
         setMainComponentParameters(currentField,font,color,x,y,width,height,currentLabel);
         currentField.setBorder(null);
         currentField.setHorizontalAlignment(JTextField.CENTER);
     }
 
+    /**
+     * Sets essential parameters for a JTextArea.
+     * @param currentArea TextArea containing the current area.
+     * @param font Font containing the current area's font.
+     * @param color Color containing the current area's color.
+     * @param x Integer containing the current area's x-axis coordinates.
+     * @param y Integer containing the current area's y-axis coordinates.
+     * @param width Integer containing the current area's width.
+     * @param height Integer containing the current area's height.
+     * @param currentLabel Label containing the current area's label.
+     */
+
     public void setAreaParameters(JTextArea currentArea, Font font,Color color, int x, int y, int width, int height, JLabel currentLabel){
         setMainComponentParameters(currentArea,font,color,x,y,width,height,currentLabel);
         currentArea.setEditable(false);
     }
+
+    /**
+     * Sets essential parameters for a JComponent.
+     * @param currentComponent JComponent containing the current component.
+     * @param font Font containing the current component's font.
+     * @param color Color containing the current component's color.
+     * @param x Integer containing the current component's x-axis coordinates.
+     * @param y Integer containing the current component's y-axis coordinates.
+     * @param width Integer containing the current component's width.
+     * @param height Integer containing the current component's height.
+     * @param currentLabel Label containing the current component's label.
+     */
 
     public void setMainComponentParameters(JComponent currentComponent,Font font,Color color, int x, int y, int width, int height, JLabel currentLabel){
         currentComponent.setFont(font);
@@ -1156,6 +1280,12 @@ public class GUI {
         currentLabel.add(currentComponent);
     }
 
+    /**
+     * Changes the screen.
+     * @param currentLabel Label of the current screen.
+     * @param newLabel Label of the new screen.
+     */
+
     public void changeScene(JLabel currentLabel, JLabel newLabel){
         window.remove(currentLabel);
         window.add(newLabel);
@@ -1163,6 +1293,10 @@ public class GUI {
         window.repaint();
         newLabel.requestFocus();
     }
+
+    /**
+     * Opens the main game window.
+     */
 
     public void startGUI() {
         window.setVisible(true);
