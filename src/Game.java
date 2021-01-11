@@ -324,6 +324,12 @@ public class Game {
         }
     }
 
+    /**
+     * Resets questions and essential round types and deletes the players on the current game.
+     * @param questions Holds the directory of the questions folder.
+     * @throws FileNotFoundException if a file is not found.
+     */
+
     public void restartGame(File [] questions) throws FileNotFoundException {
         availableQuestions.clear();
         loadQuestions(questions);
