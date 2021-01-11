@@ -1158,13 +1158,10 @@ public class GUI {
                 super.mouseClicked(e);
                 changeScene(currentLabel,mainLabel);
                 try {
-                    game.getAvailableQuestions().clear();
-                    game.loadQuestions(questions);
+                    game.restartGame(questions);
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
-                game.getRound().addEssentialRoundTypes();
-                game.getPlayers().clear();
             }
         });
     }

@@ -323,4 +323,11 @@ public class Game {
             newWriter.close();
         }
     }
+
+    public void restartGame(File [] questions) throws FileNotFoundException {
+        availableQuestions.clear();
+        loadQuestions(questions);
+        getRound().addEssentialRoundTypes();
+        players.clear();
+    }
 }

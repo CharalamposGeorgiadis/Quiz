@@ -15,7 +15,7 @@ public class Round {
     final String countdownDescription=("You have 5 seconds for each question. Correct answers grant points equal to the time remaining(in milliseconds)x0.2");
     final String fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 500.");
     final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or if there are no more questions left, the game finishes.");
-    int totalAnswered;
+    int totalAnswered; //Integer containing the total amount of players who have answered correctly in FASTEST FINGER.
 
     /**
      * Constructor.
@@ -106,8 +106,8 @@ public class Round {
                     currentPlayer.setPoints(currentPlayer.getPoints()+ (int)(currentRoundParameter*0.2));
                 break;
             case "FASTEST FINGER":
-                totalAnswered++;
                 if (answered){
+                    totalAnswered++;
                     if (totalAnswered == 1)
                         currentPlayer.setPoints(currentPlayer.getPoints()+1000);
                     else if (totalAnswered == 2)
