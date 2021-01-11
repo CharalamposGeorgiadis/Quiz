@@ -479,7 +479,11 @@ public class GUI {
         });
     }
 
-
+    /**
+     * Displays each rounds description and proceeds to play that round.
+     * @param currentLabel JLabel of the previous screen.
+     * @param chosenCategory String containing the chosen category
+     */
 
     public void proceedToRound(JLabel currentLabel, String chosenCategory) {
         //Displays the "Current Round" screen.
@@ -530,9 +534,15 @@ public class GUI {
         }
     }
 
+    /**
+     * Begins every round type.
+     * @param currentRound String containing the name of the current round.
+     * @param currentLabel JLabel of the previous screen.
+     * @param chosenCategory String containing the chosen category.
+     * @param chooseCategoryLabel JLabel containing the choose category screen.
+     */
 
-
-    public void startRound(String currentRound, JLabel currentLabel, String chosenCategory,JLabel chooseCategory){
+    public void startRound(String currentRound, JLabel currentLabel, String chosenCategory,JLabel chooseCategoryLabel){
         //Displays the "Questions" screen.
         JLabel questionsLabel=new JLabel(new ImageIcon("Questions.png"));
         changeScene(currentLabel,questionsLabel);
@@ -621,8 +631,8 @@ public class GUI {
                                     if (currentQuestion[0] == 11) {
                                         game.getRound().getRoundTypes().remove(currentRound);
                                         if (game.getAvailableQuestions().size()!=0 && game.getRound().getRoundTypes().size()!=0) {
-                                            changeScene(questionsLabel, chooseCategory);
-                                            resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
+                                            changeScene(questionsLabel, chooseCategoryLabel);
+                                            resultScreen(chooseCategoryLabel, randomQuestion[0].getCorrectAnswer(), false, false);
                                         }
                                         else
                                             resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true,false);
@@ -696,8 +706,8 @@ public class GUI {
                             ((Timer)t.getSource()).stop();
                             game.getRound().getRoundTypes().remove(currentRound);
                             if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size() != 0) {
-                                changeScene(questionsLabel, chooseCategory);
-                                resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
+                                changeScene(questionsLabel, chooseCategoryLabel);
+                                resultScreen(chooseCategoryLabel, randomQuestion[0].getCorrectAnswer(), false, false);
                             } else
                                 resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
                         }
@@ -738,8 +748,8 @@ public class GUI {
                                 game.getRound().getRoundTypes().remove(currentRound);
                                 timer.stop();
                                 if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size() != 0) {
-                                    changeScene(questionsLabel, chooseCategory);
-                                    resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
+                                    changeScene(questionsLabel, chooseCategoryLabel);
+                                    resultScreen(chooseCategoryLabel, randomQuestion[0].getCorrectAnswer(), false, false);
                                 } else
                                     resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true, false);
 
@@ -832,8 +842,8 @@ public class GUI {
                             } else {
                                 game.getRound().getRoundTypes().remove(currentRound);
                                 if (game.getAvailableQuestions().size()!=0 && game.getRound().getRoundTypes().size()!=0) {
-                                    changeScene(questionsLabel, chooseCategory);
-                                    resultScreen(chooseCategory, randomQuestion[0].getCorrectAnswer(), false, false);
+                                    changeScene(questionsLabel, chooseCategoryLabel);
+                                    resultScreen(chooseCategoryLabel, randomQuestion[0].getCorrectAnswer(), false, false);
                                 }
                                 else if(game.getAvailableQuestions().size()==0 || game.getRound().getRoundTypes().size()==0)
                                     resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(), true,false);
@@ -843,6 +853,11 @@ public class GUI {
                 });
         }
     }
+
+    /**
+     * Displays each players controls.
+     * @param currentLabel JLabel of the previous screen.
+     */
 
     public void viewControls(JLabel currentLabel){
         //Displays the "View Controls" screen.
@@ -858,7 +873,7 @@ public class GUI {
         setAreaParameters(controlsArea,neonFont.deriveFont(50f),Color.cyan,110,150,720,275, viewControlsLabel);
 
         for (int i=1; i<game.getPlayers().size()+1; i++){
-            if (i<game.getPlayers().size()+1)
+            if (i<game.getPlayers().size())
                 controlsArea.append("Player "+i+"    ");
             else
                 controlsArea.append("Player "+i);
@@ -904,18 +919,17 @@ public class GUI {
         setScrollPaneParameters(scroll,110,150,720,280, viewControlsLabel);
 
         //Adds a Back button to the current screen.
-        JButton backButton = new JButton("BACK");
-        setButtonParameters(backButton,neonFont.deriveFont(40f),Color.red,60,78,200,50, viewControlsLabel);
-        backButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    changeScene(viewControlsLabel,currentLabel);
-                }
-            }
-        });
+        backButton(viewControlsLabel,currentLabel,null,neonFont.deriveFont(40f),Color.red,60,78,200,50,"LeaderBoard.png","LeaderBoard.png","");
     }
+
+    /**
+     * Displays the result of the current question.
+     * If the player(s) is/are not playing THERMOMETER their username(s) and points are displayed. Otherwise their username(s), points and THERMOMETER wins are displayed.
+     * @param currentLabel JLabel of the previous screen.
+     * @param correctAnswer String containing a questions correct answer.
+     * @param hasEnded Boolean containing whether the game has ended or not.
+     * @param thermometer Boolean containing whether players are playing THERMOMETER or not.
+     */
 
     public void resultScreen(JLabel currentLabel, String correctAnswer,boolean hasEnded, boolean thermometer){
         //Displays the current question's result screen.
@@ -971,6 +985,13 @@ public class GUI {
         delayResults(resultScreenLabel,currentLabel,hasEnded);
     }
 
+    /**
+     * Four second delay between the screen that displays the questions results and the next screen.
+     * @param currentLabel JLabel of the previous screen.
+     * @param newLabel JLabel of the screen that will displayed after the delay.
+     * @param hasEnded Boolean containing whether the game has ended or not.
+     */
+
     public void delayResults(JLabel currentLabel, JLabel newLabel, boolean hasEnded){
         Timer timer = new Timer(4000, e -> {
             if (!hasEnded)
@@ -990,12 +1011,25 @@ public class GUI {
         timer.start();
     }
 
+    /**
+     * Five second delay between the screen that displays the description of the current round and the screen that displays the question and answers.
+     * @param currentRound String containing the name of the current round.
+     * @param currentLabel Label of the previous screen.
+     * @param chosenCategory String containing the chosen category.
+     * @param chooseCategoryLabel JLabel containing the choose category screen.
+     */
+
     public void delayRoundType(String currentRound, JLabel currentLabel, String chosenCategory, JLabel chooseCategoryLabel){
         int delay = 5000;
         Timer timer = new Timer( delay, e -> startRound(currentRound, currentLabel, chosenCategory, chooseCategoryLabel));
         timer.setRepeats( false );
         timer.start();
     }
+
+    /**
+     * Displays the end game screen.
+     * @param currentLabel Label of the previous screen.
+     */
 
     public void endgameScreen(JLabel currentLabel){
         //Displays the endgame Screen.
@@ -1037,7 +1071,7 @@ public class GUI {
             game.getPlayerStats().getMultiplayerWins().clear();
             game.getPlayerStats().getHighScores().clear();
             game.getPlayerStats().getUsernames().clear();
-            statsExist= game.getPlayerStats().loadPlayerStats();
+            statsExist = game.getPlayerStats().loadPlayerStats();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1047,6 +1081,16 @@ public class GUI {
         exitButton(endScreenLabel,neonFont.deriveFont(40f),Color.green,600,350,250,80,"Endgame.png","Endgame.png");
     }
 
+    /**
+     * Displays a question and its answers.
+     * @param question JTextField displaying a question.
+     * @param answer1 JTextField containing the field where the first answer is displayed.
+     * @param answer2 JTextField containing the field where the second answer is displayed.
+     * @param answer3 JTextField containing the field where the third answer is displayed.
+     * @param answer4 JTextField containing the field where the fourth answer is displayed.
+     * @param currentQuestion Questions Object that contains a random question.
+     */
+
     public void displayQuestionAndAnswers(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4, Questions currentQuestion){
         question.setText(currentQuestion.getQuestion());
         answer1.setText("A: "+currentQuestion.getAnswers().get(0));
@@ -1054,6 +1098,15 @@ public class GUI {
         answer3.setText("C: "+currentQuestion.getAnswers().get(2));
         answer4.setText("D: "+currentQuestion.getAnswers().get(3));
     }
+
+    /**
+     * Displays the betting options.
+     * @param question JTextField displaying BET POINTS FOR THE NEXT QUESTION.
+     * @param answer1 JTextField containing the field where the first betting option is displayed.
+     * @param answer2 JTextField containing the field where the second betting option is displayed
+     * @param answer3 JTextField containing the field where the third betting option is displayed.
+     * @param answer4 JTextField containing the field where the fourth betting option is displayed.
+     */
 
     public void displayBettingOptions(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4){
         question.setText("BET POINTS FOR THE NEXT QUESTION");
@@ -1064,13 +1117,13 @@ public class GUI {
     }
 
     /**
-     *
-     * @param chooseCategoryLabel
-     * @param category1
-     * @param category2
-     * @param category3
-     * @param category4
-     * @param randomCategories
+     * Displays the random categories.
+     * @param chooseCategoryLabel JLabel containing the choose category screen.
+     * @param category1 JTextField containing the field where the first category is displayed.
+     * @param category2 JTextField containing the field where the second category is displayed.
+     * @param category3 JTextField containing the field where the third category is displayed.
+     * @param category4 JTextField containing the field where the fourth category is displayed.
+     * @param randomCategories Arraylist of Strings containing up to 4 categories.
      */
 
     public void displayRandomCategories(JLabel chooseCategoryLabel, JTextField category1, JTextField category2, JTextField category3, JTextField category4, ArrayList<String> randomCategories){
