@@ -226,10 +226,10 @@ public class GUI {
      * Displays the "Enter Username" screen.
      * @param numberOfPlayers Integer containing the total number of players.
      * @param currentLabel Label of the previous screen.
-     * @param chooseNumber TextField of the previous screen so that the back button, if pressed, can restore its focus.
+     * @param chooseNumberField TextField of the previous screen so that the back button, if pressed, can restore its focus.
      */
 
-    public void enterUsername(int numberOfPlayers, JLabel currentLabel,JTextField chooseNumber){
+    public void enterUsername(int numberOfPlayers, JLabel currentLabel,JTextField chooseNumberField){
         final int[] currentPlayer = {1};
         //Displays the "Enter Username" screen.
         JLabel usernameLabel= new JLabel(new ImageIcon("EnterUsername.png"));
@@ -245,7 +245,7 @@ public class GUI {
         enterUsernameText.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
 
         //Adds a Back button to the current screen.
-        backButton(usernameLabel,currentLabel,chooseNumber,null,null,698,75,140,140,"EnterUsernameDark.png","EnterUsername.png","ALL");
+        backButton(usernameLabel,currentLabel,chooseNumberField,null,null,698,75,140,140,"EnterUsernameDark.png","EnterUsername.png","ALL");
 
         //Creates the Area where "(Max characters: 14)" will be displayed.
         JTextArea maxCharactersArea=new JTextArea("(Max characters: 14)");
@@ -481,7 +481,7 @@ public class GUI {
     }
 
     /**
-     * Displays each rounds description and proceeds to play that round.
+     * Displays each round's description and proceeds to play that round.
      * @param currentLabel JLabel of the previous screen.
      * @param chosenCategory String containing the chosen category
      */
@@ -856,7 +856,7 @@ public class GUI {
     }
 
     /**
-     * Displays each players controls.
+     * Displays each player's controls.
      * @param currentLabel JLabel of the previous screen.
      */
 
@@ -987,7 +987,7 @@ public class GUI {
     }
 
     /**
-     * Four second delay between the screen that displays the questions results and the next screen.
+     * Four second delay between the screen that displays the question results and the next screen.
      * @param currentLabel JLabel of the previous screen.
      * @param newLabel JLabel of the screen that will displayed after the delay.
      * @param hasEnded Boolean containing whether the game has ended or not.
@@ -1028,7 +1028,7 @@ public class GUI {
     }
 
     /**
-     * Displays the end game screen.
+     * Displays the Endgame screen.
      * @param currentLabel Label of the previous screen.
      */
 
@@ -1102,7 +1102,7 @@ public class GUI {
 
     /**
      * Displays the betting options.
-     * @param question JTextField displaying BET POINTS FOR THE NEXT QUESTION.
+     * @param question JTextField displaying the BET POINTS FOR THE NEXT QUESTION text.
      * @param answer1 JTextField containing the field where the first betting option is displayed.
      * @param answer2 JTextField containing the field where the second betting option is displayed
      * @param answer3 JTextField containing the field where the third betting option is displayed.
@@ -1124,7 +1124,7 @@ public class GUI {
      * @param category2 JTextField containing the field where the second category is displayed.
      * @param category3 JTextField containing the field where the third category is displayed.
      * @param category4 JTextField containing the field where the fourth category is displayed.
-     * @param randomCategories Arraylist of Strings containing up to 4 categories.
+     * @param randomCategories ArrayList of Strings containing up to 4 categories.
      */
 
     public void displayRandomCategories(JLabel chooseCategoryLabel, JTextField category1, JTextField category2, JTextField category3, JTextField category4, ArrayList<String> randomCategories){
@@ -1199,7 +1199,7 @@ public class GUI {
     }
 
     /**
-     * Creates a exit button at the current label.
+     * Creates an exit button at the current label.
      * @param currentLabel JLabel containing the current button's label.
      * @param font Font containing the current button's font.
      * @param color Color containing the current button's color.
@@ -1303,7 +1303,7 @@ public class GUI {
      * @param y Integer containing the current scroll's y-axis coordinates.
      * @param width Integer containing the current scroll's width.
      * @param height Integer containing the current scroll's height.
-     * @param currentLabel Label containing the current button's label.
+     * @param currentLabel Label containing the current scroll's label.
      */
 
     public void setScrollPaneParameters(JScrollPane scroll,int x, int y, int width,int height,JLabel currentLabel){

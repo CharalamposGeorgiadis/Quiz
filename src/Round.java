@@ -63,10 +63,10 @@ public class Round {
      * Adds the essential rounds to the roundTypes ArrayList.
      */
 
-    public void addEssentialRoundTypes(){ //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
-       // roundTypes.add("COUNTDOWN");
+    public void addEssentialRoundTypes(){ //If a new round type that can be played in single and multiplayer is to be added, add its name in Capital letters.
+        roundTypes.add("COUNTDOWN");
         roundTypes.add("RIGHT ANSWER");
-       // roundTypes.add("BETTING");
+        roundTypes.add("BETTING");
         Collections.shuffle(roundTypes);
     }
 
