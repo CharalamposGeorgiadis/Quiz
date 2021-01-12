@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,7 +42,7 @@ public class GameTest {
     }
 
     @Test
-    public void getRandomQuestion() throws IOException {
+    public void getRandomQuestion() {
         Questions testQuestion = new Questions();
         testQuestion.setCategory("Sports");
         testQuestion.setQuestion("abcd");
@@ -60,7 +62,7 @@ public class GameTest {
 
 
     @Test
-    public void enterUsernames() throws IOException {
+    public void enterUsernames() {
         Player testPlayer = new Player();
         testPlayer.setUsername("HARRIS");
         testGame.getPlayers().add(testPlayer);
@@ -83,10 +85,53 @@ public class GameTest {
 
     @Test
     public void setCurrentControl() {
+        Player testPlayer = new Player();
+        testPlayer.setPlayerControls(0,"A");
+        testPlayer.setPlayerControls(1,"B");
+        testPlayer.setPlayerControls(2,"C");
+        testPlayer.setPlayerControls(3,"");
+        testGame.getPlayers().add(testPlayer);
+        int testResult = testGame.setCurrentControl("A", 0,3);
+        assertEquals(-1,testResult);
+
+        testResult = testGame.setCurrentControl("AAAAAAAAAA", 0,3);
+        assertEquals(0,testResult);
+
+        testResult = testGame.setCurrentControl("D", 0,3);
+        assertEquals(1,testResult);
+
     }
 
     @Test
     public void randomCategories() {
+
+
+
+
+
+        ArrayList<String> randomCategories = new ArrayList<>();
+        boolean flag = false;
+        for (String s : categories) {
+            int questionCount=0;
+            for (Questions q : availableQuestions) {
+                if (q.getCategory().equals(s) && !randomCategories.contains(s)) {
+                    questionCount++;
+                    if(questionCount>4) {
+                        randomCategories.add(s);
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+            if (!flag)
+                categories.remove(s);
+        }
+        Collections.shuffle(randomCategories);
+        if (randomCategories.size()<4){
+            for (int i=randomCategories.size(); i<4;i++)
+                randomCategories.add("");
+        }
+        return randomCategories;
     }
 
     @Test
