@@ -1,11 +1,8 @@
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
-import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Testers for Round class.
@@ -15,7 +12,6 @@ import static org.junit.Assert.*;
  */
 
 public class PlayerStatsTest {
-
 
     /**
      * Tests sortStatsByPoints.

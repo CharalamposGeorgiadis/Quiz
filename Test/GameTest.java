@@ -1,11 +1,11 @@
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
-import java.util.Scanner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Testers for Round class.
@@ -15,23 +15,32 @@ import static org.junit.Assert.*;
  */
 
 public class GameTest {
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
 
-    @Test
-    public void getRandomQuestion() throws IOException {
-        File testFolder = tempFolder.newFolder("testFolder");
-        File file1 = new File(testFolder,"file1.txt");
+    @Rule
+    public TemporaryFolder tempFolder=new TemporaryFolder();
+    private File testFolder;
+    private File file1;
+    private File file2;
+    private File[] testQuestions;
+    private Game testGame;
+
+    @Before
+    public void init() throws IOException {
+        testFolder = tempFolder.newFolder("testFolder");
+        file1 = new File(testFolder,"file1.txt");
         Writer writer= new BufferedWriter(new FileWriter(file1, true));
         writer.write("Sports\nabcd\na\nb\nc\nd\na\nNULL");
         writer.close();
-        File file2 = new File(testFolder,"file2.txt");
+        file2 = new File(testFolder,"file2.txt");
         Writer writer2 = new BufferedWriter(new FileWriter(file2, true));
         writer2.write("Video Games\nabcd\na\nb\nc\nd\na\nNULL");
         writer2.close();
+        testQuestions = testFolder.listFiles();
+        testGame = new Game(testQuestions);
+    }
 
-        File[] testQuestions = testFolder.listFiles();
-        Game testGame = new Game(testQuestions);
+    @Test
+    public void getRandomQuestion() throws IOException {
         Questions testQuestion = new Questions();
         testQuestion.setCategory("Sports");
         testQuestion.setQuestion("abcd");
@@ -52,24 +61,22 @@ public class GameTest {
 
     @Test
     public void enterUsernames() throws IOException {
-
-        File testFolder = tempFolder.newFolder("testFolder");
-        File file1 = new File(testFolder,"file1.txt");
-        Writer writer= new BufferedWriter(new FileWriter(file1, true));
-        writer.write("Sports\nabcd\na\nb\nc\nd\na\nNULL");
-        writer.close();
-        File[] testQuestions = testFolder.listFiles();
-        Game testGame = new Game(testQuestions);
-
         Player testPlayer = new Player();
         testPlayer.setUsername("HARRIS");
         testGame.getPlayers().add(testPlayer);
+        // Tests enterUsername when the chosen username already exists.
         int testResult = testGame.enterUsernames("Harris", 0);
         assertEquals(-1,testResult);
-
+        // Tests enterUsername when the chosen username's length is 0.
         testResult = testGame.enterUsernames("", 0);
         assertEquals(0,testResult);
-
+        // Tests enterUsername when the chosen username consists only of empty space.
+        testResult = testGame.enterUsernames("    ", 0);
+        assertEquals(0,testResult);
+        // Tests enterUsername when the chosen username's length is over 14.
+        testResult = testGame.enterUsernames("qwertyuiopasdfg", 0);
+        assertEquals(0,testResult);
+        // Tests enterUsername when the chosen username is valid and does not already exist.
         testResult = testGame.enterUsernames("Fanis", 1);
         assertEquals(1,testResult);
     }
