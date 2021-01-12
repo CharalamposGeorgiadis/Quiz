@@ -4,13 +4,15 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
 /**
- * Testers for Round class.
+ * Testers for Game class.
  * @author Anastasios Kachrimanis
  * @author Charalampos Georgiadis
  * @version 11/01/2021
@@ -41,6 +43,10 @@ public class GameTest {
         testGame = new Game(testQuestions);
     }
 
+    /**
+     * Tests getRandomQuestion.
+     */
+
     @Test
     public void getRandomQuestion() {
         Questions testQuestion = new Questions();
@@ -60,6 +66,9 @@ public class GameTest {
         assertEquals(testQuestion.getMedia(),returnedQuestion.getMedia());
     }
 
+    /**
+     * Tests enterUsernames.
+     */
 
     @Test
     public void enterUsernames() {
@@ -83,6 +92,10 @@ public class GameTest {
         assertEquals(1,testResult);
     }
 
+    /**
+     * Tests setCurrentControl.
+     */
+
     @Test
     public void setCurrentControl() {
         Player testPlayer = new Player();
@@ -99,8 +112,11 @@ public class GameTest {
 
         testResult = testGame.setCurrentControl("D", 0,3);
         assertEquals(1,testResult);
-
     }
+
+    /**
+     * Tests randomCategories.
+     */
 
     @Test
     public void randomCategories() {
@@ -122,13 +138,11 @@ public class GameTest {
         testGame.getCategories().add("2");
         testGame.getCategories().add("3");
         testGame.getCategories().add("4");
-
         ArrayList<String> correctCategories=new ArrayList<>();
         correctCategories.add("1");
         correctCategories.add("2");
         correctCategories.add("3");
         correctCategories.add("4");
-
         // Tests randomCategories when there are 4 categories with enough questions.
         ArrayList<String> testCategories = testGame.randomCategories();
         Collections.sort(testCategories);
@@ -152,19 +166,137 @@ public class GameTest {
         assertEquals(correctCategories.get(3),testCategories.get(3));
     }
 
+    /**
+     * Tests correctAnswer.
+     */
+
     @Test
     public void correctAnswer() {
+        Player testPlayer = new Player();
+        testPlayer.setPlayerControls(0,"A");
+        testPlayer.setPlayerControls(1,"B");
+        testPlayer.setPlayerControls(2,"C");
+        testPlayer.setPlayerControls(3,"D");
+        testPlayer.setPoints(1000);
+        testGame.getPlayers().add(testPlayer);
+        Questions question1=new Questions();
+        question1.setAnswer("A");
+        question1.setAnswer("B");
+        question1.setAnswer("C");
+        question1.setAnswer("D");
+        question1.setCorrectAnswer("C");
+        int testResult = testGame.correctAnswer('C',question1,"RIGHT ANSWER",0);
+        assertEquals(1,testResult);
+        assertEquals(2000,testPlayer.getPoints());
+        testPlayer.setHasAnswered(false);
+
+        testResult = testGame.correctAnswer('B',question1,"RIGHT ANSWER",0);
+        assertEquals(1,testResult);
+        assertEquals(2000,testPlayer.getPoints());
+
+        testResult = testGame.correctAnswer('C',question1,"RIGHT ANSWER",0);
+        assertEquals(0,testResult);
+        assertEquals(2000,testPlayer.getPoints());
+        testPlayer.setHasAnswered(false);
+
+        testResult = testGame.correctAnswer('T',question1,"RIGHT ANSWER",0);
+        assertEquals(0,testResult);
+        assertEquals(2000,testPlayer.getPoints());
     }
+
+    /**
+     * Tests hasBet.
+     */
 
     @Test
     public void hasBet() {
+
+        Player testPlayer = new Player();
+        testPlayer.setPlayerControls(0,"A");
+        testPlayer.setPlayerControls(1,"B");
+        testPlayer.setPlayerControls(2,"C");
+        testPlayer.setPlayerControls(3,"D");
+        testGame.getPlayers().add(testPlayer);
+
+        int testResult = testGame.hasBet('C');
+        assertEquals(1,testResult);
+        assertEquals(750,testPlayer.getBet());
+
+        testResult = testGame.hasBet('A');
+        assertEquals(0,testResult);
+        assertEquals(750,testPlayer.getBet());
+        testPlayer.setHasAnswered(false);
+        testPlayer.setBet(0);
+
+        testResult = testGame.hasBet('T');
+        assertEquals(0,testResult);
+        assertEquals(0,testPlayer.getBet());
     }
+
+    /**
+     * Tests sortPlayersByPoints.
+     */
 
     @Test
     public void sortPlayersByPoints() {
+        Player testPlayer1 = new Player();
+        testPlayer1.setUsername("winters");
+        testPlayer1.setPoints(2000);
+        testGame.getPlayers().add(testPlayer1);
+
+        Player testPlayer2 = new Player();
+        testPlayer2.setUsername("Sally");
+        testPlayer2.setPoints(6500);
+        testGame.getPlayers().add(testPlayer2);
+
+        Player testPlayer3 = new Player();
+        testPlayer3.setUsername("Darth Maul");
+        testPlayer3.setPoints(4000);
+        testGame.getPlayers().add(testPlayer3);
+
+        ArrayList<String> correctUsernames = new ArrayList<>();
+        correctUsernames.add("Sally");
+        correctUsernames.add("Darth Maul");
+        correctUsernames.add("winters");
+        ArrayList<Integer> correctPoints = new ArrayList<>();
+        correctPoints.add(6500);
+        correctPoints.add(4000);
+        correctPoints.add(2000);
+        testGame.sortPlayersByPoints();
+        for (int i=0; i<3; i++) {
+            assertEquals(correctUsernames.get(i), testGame.getPlayers().get(i).getUsername());
+            assertEquals((int)correctPoints.get(i),testGame.getPlayers().get(i).getPoints());
+
+        }
     }
 
+    /**
+     * Tests addStats.
+     */
+
     @Test
-    public void addStats() {
+    public void addStats() throws IOException {
+        Player testPlayer1 = new Player();
+        testPlayer1.setUsername("aaaaaaaaaaaaaaa");
+        testPlayer1.setPoints(999999999);
+        Player testPlayer2 = new Player();
+        testPlayer2.setUsername("qwertyuiopasdaa");
+        testPlayer2.setPoints(-20000);
+        testGame.getPlayers().add(testPlayer1);
+        testGame.getPlayers().add(testPlayer2);
+        testGame.addStats();
+        testGame.sortPlayersByPoints();
+        testGame.addStats();
+        assertEquals(999999999,testGame.getPlayers().get(0).getPoints());
+        assertEquals(-20000,testGame.getPlayers().get(testGame.getPlayers().size()-1).getPoints());
+        testGame.getPlayers().remove(testPlayer1);
+        testGame.getPlayers().remove(testPlayer2);
+
+        Files.deleteIfExists(Paths.get("Player Stats.txt"));
+        Writer newWriter= new BufferedWriter(new FileWriter("Player Stats.txt", true));
+        for (Player p:testGame.getPlayers()){
+            newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
+        }
+        newWriter.close();
     }
 }
