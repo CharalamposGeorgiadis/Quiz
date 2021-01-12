@@ -5,3 +5,4 @@ Ares
 Zeus
 Hermes
 Hephaestus
+NULL

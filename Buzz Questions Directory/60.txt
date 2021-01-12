@@ -5,3 +5,4 @@ What is the point value of the pink ball in snooker?
 3
 4
 6
+NULL

@@ -10,26 +10,22 @@ import java.util.*;
 public class Round {
 
     protected ArrayList<String> roundTypes; //List of Strings that holds the type of each round type.
+    final String rightAnswerDescription=("Correct answers grant 1000 points, incorrect answers grant 0.");
+    final String bettingDescription=("Bet points for each question. Correct answers grant points equal to the ones you bet. Incorrect answers subtract the same amount.");
+    final String countdownDescription=("You have 5 seconds for each question. Correct answers grant points equal to the time remaining(in milliseconds)x0.2");
+    final String fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 500.");
+    final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or if there are no more questions left, the game finishes.");
+    int totalAnswered; //Integer containing the total amount of players who have answered correctly in FASTEST FINGER.
 
     /**
-     * Constructor
+     * Constructor.
      * Creates a list that holds the names of each round type.
      */
 
     public Round() {
-        roundTypes = new ArrayList<>(); //If a new round type is to be added, add its name in this list in Capital letters.
-        Random rand= new Random();
-        for (int i=0; i<5; i++) {
-            int random=rand.nextInt(2)+1; //Randomizes the order of appearance of each round type.
-            switch (random){
-                case 1:
-                    roundTypes.add("RIGHT ANSWER");
-                    break;
-                case 2:
-                    roundTypes.add("BETTING");
-                    break;
-            }
-        }
+        roundTypes = new ArrayList<>();
+        addEssentialRoundTypes();
+        totalAnswered=0;
     }
 
     /**
@@ -37,107 +33,95 @@ public class Round {
      * @return The name of the current round type.
      */
 
-    public ArrayList<String> getRounds() {
+    public ArrayList<String> getRoundTypes() {
         return roundTypes;
     }
 
     /**
-     * Asks the player(s) a random question based on the chosen category.
-     * After each player has answered it removes that question from the list of available questions.
-     * @param availableQuestions A list holding all the available questions.
-     * @param chosenCategory A String that holds the chosen category for this round.
-     * @param players A list holding the information of each player.
-     * @return If the player has answered correctly it returns true, otherwise it returns false.
+     * Gets the description of the current round type.
+     * @param currentRound String containing the name of the current round.
+     * @return String containing the description of the current round type.
      */
 
-
-    public boolean randomQuestion(ArrayList<Questions> availableQuestions,String chosenCategory, ArrayList<Player> players) {
-            for (Questions q: availableQuestions) {
-                if (chosenCategory.equals(q.getCategory())) {
-                    System.out.println(q.getQuestion());
-                    System.out.println("A. " + q.getAnswers().get(0));
-                    System.out.println("B. " + q.getAnswers().get(1));
-                    System.out.println("C. " + q.getAnswers().get(2));
-                    System.out.println("D. " + q.getAnswers().get(3));
-                    Scanner console = new Scanner(System.in);
-                    while (true) {
-                        String chosenAnswer = console.nextLine();
-                        if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(0)))) {
-                            if (q.getAnswers().get(0).equals(q.correctAnswer)){
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return true;
-                          }
-                            else{
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return false;
-                            }
-                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(1)))) {
-                            if (q.getAnswers().get(1).equals(q.correctAnswer)) {
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return true;
-                            }
-                            else{
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return false;
-                            }
-                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(2)))) {
-                            if (q.getAnswers().get(2).equals(q.correctAnswer)) {
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return true;
-                            }
-                            else{
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return false;
-                            }
-                        } else if (chosenAnswer.equals(String.valueOf(players.get(0).getControl(3)))) {
-                            if (q.getAnswers().get(3).equals(q.correctAnswer)) {
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return true;
-                            }
-                            else {
-                                System.out.println("THE CORRECT ANSWER WAS: "+ q.correctAnswer);
-                                availableQuestions.remove(q);
-                                return false;
-                            }
-                        }
-                        else
-                            System.out.println("Please choose a suitable answer!");
-                    }
-                }
-            }
-        return true;
+    public String getRoundDescription(String currentRound){
+        switch (currentRound){
+            case "RIGHT ANSWER":
+                return rightAnswerDescription;
+            case "BETTING":
+                return bettingDescription;
+            case "COUNTDOWN":
+                return countdownDescription;
+            case "FASTEST FINGER":
+                return fasterFingerDescription;
+            case "THERMOMETER":
+                return thermometerDescription;
+        }
+        return "";
     }
 
     /**
-     * Initiates the start of each round type.
-     * @param currentRound The name of the current round type.
-     * @param availableQuestions A list holding all the available questions.
-     * @param chosenCategory A String that holds the chosen category for this round.
-     * @param players A list holding the information of each player.
-     * @param menu Gives access to menu options.
-     * @param currentRoundNumber Integer that holds the number of the current round type.
-     * (For example: currentRoundNumber=1 if the game is on the first round type and 2 if the game has advanced to the next round type)
-     * @param categories Set of Strings that contains the name of each category.
+     * Adds the essential rounds to the roundTypes ArrayList.
      */
 
-        public void startRound ( String currentRound, ArrayList<Questions > availableQuestions, String chosenCategory, ArrayList <Player> players,
-                                 Menu menu, int currentRoundNumber, HashSet<String> categories) {
-            switch(currentRound){ // If a new round type is added, create a new case for it.
-                case "RIGHT ANSWER":
-                    RightAnswer r = new RightAnswer();
-                    r.rightAnswerPoints(availableQuestions, chosenCategory, players, currentRoundNumber, categories);
-                    break;
-                case "BETTING":
-                    Betting b =new Betting();
-                    b.bettingPoints(availableQuestions, chosenCategory, players, menu, currentRoundNumber, categories);
-                    break;
-            }
-         }
+    public void addEssentialRoundTypes(){ //If a new round type that can be played single and multiplayer is to be added, add its name in Capital letters.
+        roundTypes.add("COUNTDOWN");
+        roundTypes.add("RIGHT ANSWER");
+        roundTypes.add("BETTING");
+        Collections.shuffle(roundTypes);
     }
+
+    /**
+     * Adds the multiplayer rounds to the roundTypes ArrayList.
+     */
+
+    public void addMultiplayerRounds(){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
+        roundTypes.add("FASTEST FINGER");
+        Collections.shuffle(roundTypes);
+        roundTypes.add("THERMOMETER");
+    }
+
+    /**
+     * Calculates the current player's points based on the current round type.
+     * @param answered Boolean containing whether the player has answered correctly or wrongly.
+     * @param currentRound String containing the name of the current round.
+     * @param currentPlayer Player Object containing the player of which the points will be calculated.
+     * @param currentRoundParameter Integer containing  a parameter that may be required by a certain round type.
+     * @param totalPlayers Integer containing the total amount of players.
+     */
+
+    public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){
+        switch (currentRound){
+            case "RIGHT ANSWER":
+                if (answered)
+                    currentPlayer.setPoints(currentPlayer.getPoints()+1000);
+                break;
+            case "BETTING":
+                if (answered)
+                    currentPlayer.setPoints(currentPlayer.getPoints()+currentPlayer.getBet());
+                else
+                    currentPlayer.setPoints(currentPlayer.getPoints()-currentPlayer.getBet());
+                break;
+            case "COUNTDOWN":
+                if (answered)
+                    currentPlayer.setPoints(currentPlayer.getPoints()+ (int)(currentRoundParameter*0.2));
+                break;
+            case "FASTEST FINGER":
+                if (answered){
+                    totalAnswered++;
+                    if (totalAnswered == 1)
+                        currentPlayer.setPoints(currentPlayer.getPoints()+1000);
+                    else if (totalAnswered == 2)
+                        currentPlayer.setPoints(currentPlayer.getPoints()+500);
+                }
+                if (totalAnswered == totalPlayers)
+                    totalAnswered = 0;
+                break;
+            case "THERMOMETER":
+                if (answered)
+                    currentPlayer.setThermometerCorrectAnswers(currentPlayer.getThermometerCorrectAnswers()+1);
+                if (currentPlayer.getThermometerCorrectAnswers()==5)
+                    currentPlayer.setPoints(currentPlayer.getPoints()+5000);
+                break;
+        }
+    }
+}

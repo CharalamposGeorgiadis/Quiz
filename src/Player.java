@@ -9,32 +9,29 @@
 public class Player {
     private String username; // String that holds the username of a player.
     private int points; // Integer that holds the points of a player.
-    private char[] controls; // Char Array that holds the controls of a player.
+    private String[] controls; // String Array that holds the controls of a player.
+    private boolean hasAnswered; // Boolean containing if the player has answered or not.
+    private int bet; // Integer containing the player's current bet.
+    private int thermometerCorrectAnswers; //Integer containing the player's wins in THERMOMETER.
+    private int multiplayerWins; // Integer containing the player's wins in multiplayer mode.
 
     /**
-     * Constructor
-     * @param username The player's username.
+     * Constructor.
      */
 
-    Player(String username){
-        this.username=username;
+    public Player() {
+        username="";
         points=0;
-        controls= new char[4];
-    }
-
-    /**
-     * Sets the player's controls.
-     * @param currentAnswer The answer of which we want to set the control (A, B, C or D)
-     * @param chosenControl A String containing the control chosen by the player.
-     */
-
-    public void setPlayerControls(int currentAnswer, char chosenControl){
-        controls[currentAnswer]=chosenControl;
+        controls= new String[4];
+        hasAnswered=false;
+        bet=0;
+        thermometerCorrectAnswers=0;
+        multiplayerWins=0;
     }
 
     /**
      * Gets the player's username.
-     * @return A String containing the player's username.
+     * @return String containing the player's username.
      */
 
     public String getUsername(){
@@ -42,8 +39,17 @@ public class Player {
     }
 
     /**
+     * Sets the player's username.
+     * @param username String containing the player's points.
+     */
+
+    public void setUsername(String username){
+        this.username=username;
+    }
+
+    /**
      * Gets the player's points.
-     * @return An Integer containing the player's points.
+     * @return Integer containing the player's points.
      */
 
     public int getPoints(){
@@ -51,18 +57,8 @@ public class Player {
     }
 
     /**
-     * Gets one of the player's controls.
-     * @param currentControl One of the player's controls.
-     * @return A char containing one of the player's controls.
-     */
-
-    public char getControl(int currentControl){
-        return controls[currentControl];
-    }
-
-    /**
      * Sets the player's points.
-     * @param points  A String containing the player's points.
+     * @param points Integer containing the player's points.
      */
 
     public void setPoints(int points){
@@ -70,11 +66,100 @@ public class Player {
     }
 
     /**
-     * Adds points to the player.
-     * @param points An Integer containing the points that will be added.
+     * Gets one of the player's controls.
+     * @param currentControl One of the player's controls.
+     * @return String containing one of the player's controls.
      */
 
-    public void addPoints(int points) {
-        this.points+=points;
+    public String getControl(int currentControl){
+        return controls[currentControl];
+    }
+
+    /**
+     * Sets the player's controls.
+     * @param currentAnswer The answer of which we want to set the control (A, B, C or D)
+     * @param chosenControl String containing the control chosen by the player.
+     */
+
+    public void setPlayerControls(int currentAnswer, String chosenControl){
+        controls[currentAnswer]=chosenControl.toUpperCase();
+    }
+
+    /**
+     * Gets a boolean containing if the player has answered or not.
+     * @return Boolean containing if the player has answered or not.
+     */
+
+    public boolean getHasAnswered(){
+        return hasAnswered;
+    }
+
+    /**
+     * Sets whether the player has answered or not.
+     * @param answered Boolean containing if the player has answered or not.
+     */
+
+    public void setHasAnswered(Boolean answered){
+        hasAnswered=answered;
+    }
+
+    /**
+     * Gets the player's current bet.
+     * @return Integer containing the player's current bet.
+     */
+
+    public int getBet(){
+        return bet;
+    }
+
+    /**
+     * Sets the player's current bet.
+     * @param bet Integer containing the player's current bet.
+     */
+
+    public void setBet(int bet){
+        this.bet=bet;
+    }
+
+    /**
+     * Gets the player's wins in THERMOMETER.
+     * @return Integer containing the player's wins in THERMOMETER
+     */
+
+    public int getThermometerCorrectAnswers(){
+        return thermometerCorrectAnswers;
+    }
+
+    /**
+     * Sets the player's wins in THERMOMETER
+     * @param thermometerCorrectAnswers Integer containing the player's wins in THERMOMETER.
+     */
+    public void setThermometerCorrectAnswers(int thermometerCorrectAnswers){this.thermometerCorrectAnswers=thermometerCorrectAnswers;}
+
+    /**
+     * Gets the player's wins in multiplayer mode.
+     * @return Integer containing the player's wins in multiplayer mode.
+     */
+
+    public int getMultiplayerWins(){
+        return multiplayerWins;
+    }
+
+    /**
+     * Sets the player's wins in multiplayer mode.
+     * @param multiplayerWins Integer containing the player's wins in multiplayer mode.
+     */
+
+    public void setMultiplayerWins(int multiplayerWins) {
+        this.multiplayerWins = multiplayerWins;
+    }
+
+    /**
+     * Clears the player's controls.
+     */
+
+    public void clearControls(){
+        for (int i=0; i<4; i++)
+            setPlayerControls(i,"");
     }
 }

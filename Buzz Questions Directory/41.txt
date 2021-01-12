@@ -1,7 +1,8 @@
 Music
-In a 2011 single, Maroon 5 claimed to have 'moves like' which member of the Rolling Stones?
+In 2011, Maroon 5 claimed to have 'moves like' which member of the Rolling Stones?
 Mick Jagger
 Mick Taylor
 Charlie Watts
 Keith Richards
 Mick Jagger
+NULL

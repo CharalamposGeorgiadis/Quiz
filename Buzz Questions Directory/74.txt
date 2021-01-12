@@ -5,3 +5,4 @@ How many computer languages are approximately in use ?
 20
 2000
 2000
+NULL

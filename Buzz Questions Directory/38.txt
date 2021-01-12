@@ -5,3 +5,4 @@ How old was Mozart when he wrote his first piece?
 9
 12
 5
+NULL
