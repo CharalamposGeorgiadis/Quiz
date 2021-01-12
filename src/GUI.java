@@ -136,7 +136,7 @@ public class GUI {
         JLabel currentLeaderboardLabel = new JLabel(new ImageIcon("Leaderboard.png"));
         changeScene(mainLeaderboardLabel,currentLeaderboardLabel);
 
-        //Displays the "HIGHSCORES" title.
+        //Displays the current Leaderboards title title.
         JTextArea currentLeaderboardTitle = new JTextArea();
         setAreaParameters(currentLeaderboardTitle, neonFont.deriveFont(50f), Color.ORANGE, 320, 90, 360, 50, currentLeaderboardLabel);
 
@@ -156,6 +156,7 @@ public class GUI {
                 break;
             case "MULTIPLAYER WINS":
                 currentLeaderboardTitle.setText("MULTIPLAYER WINS");
+                currentLeaderboardTitle.setBounds(260, 90, 440, 50);
                 game.getPlayerStats().sortStatsByMultiplayerWins();
                 for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
                     currentLeaderboardArea.setText(currentLeaderboardArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getMultiplayerWins().get(i));
