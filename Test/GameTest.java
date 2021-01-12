@@ -46,10 +46,10 @@ public class GameTest {
         Questions testQuestion = new Questions();
         testQuestion.setCategory("Sports");
         testQuestion.setQuestion("abcd");
-        testQuestion.getAnswers().add("a");
-        testQuestion.getAnswers().add("b");
-        testQuestion.getAnswers().add("c");
-        testQuestion.getAnswers().add("d");
+        testQuestion.setAnswer("a");
+        testQuestion.setAnswer("b");
+        testQuestion.setAnswer("c");
+        testQuestion.setAnswer("d");
         testQuestion.setCorrectAnswer("a");
         testQuestion.setMedia("NULL");
 
@@ -104,34 +104,52 @@ public class GameTest {
 
     @Test
     public void randomCategories() {
-
-
-
-
-
-        ArrayList<String> randomCategories = new ArrayList<>();
-        boolean flag = false;
-        for (String s : categories) {
-            int questionCount=0;
-            for (Questions q : availableQuestions) {
-                if (q.getCategory().equals(s) && !randomCategories.contains(s)) {
-                    questionCount++;
-                    if(questionCount>4) {
-                        randomCategories.add(s);
-                        flag = true;
-                        break;
-                    }
-                }
-            }
-            if (!flag)
-                categories.remove(s);
+        Questions question1=new Questions();
+        question1.setCategory("1");
+        Questions question2=new Questions();
+        question2.setCategory("2");
+        Questions question3=new Questions();
+        question3.setCategory("3");
+        Questions question4=new Questions();
+        question4.setCategory("4");
+        for (int i=0;i<5;i++){
+            testGame.getAvailableQuestions().add(question1);
+            testGame.getAvailableQuestions().add(question2);
+            testGame.getAvailableQuestions().add(question3);
+            testGame.getAvailableQuestions().add(question4);
         }
-        Collections.shuffle(randomCategories);
-        if (randomCategories.size()<4){
-            for (int i=randomCategories.size(); i<4;i++)
-                randomCategories.add("");
-        }
-        return randomCategories;
+        testGame.getCategories().add("1");
+        testGame.getCategories().add("2");
+        testGame.getCategories().add("3");
+        testGame.getCategories().add("4");
+
+        ArrayList<String> correctCategories=new ArrayList<>();
+        correctCategories.add("1");
+        correctCategories.add("2");
+        correctCategories.add("3");
+        correctCategories.add("4");
+
+        // Tests randomCategories when there are 4 categories with enough questions.
+        ArrayList<String> testCategories = testGame.randomCategories();
+        Collections.sort(testCategories);
+        assertEquals(correctCategories.get(0),testCategories.get(0));
+        assertEquals(correctCategories.get(1),testCategories.get(1));
+        assertEquals(correctCategories.get(2),testCategories.get(2));
+        assertEquals(correctCategories.get(3),testCategories.get(3));
+        // Tests randomCategories when there are 3 categories with enough questions and one category with not enough questions.
+        correctCategories.set(0,"");
+        correctCategories.set(1,"1");
+        correctCategories.set(2,"2");
+        correctCategories.set(3,"3");
+        for (int i=0;i<5;i++)
+            testGame.getAvailableQuestions().remove(question4);
+        testCategories.clear();
+        testCategories = testGame.randomCategories();
+        Collections.sort(testCategories);
+        assertEquals(correctCategories.get(0),testCategories.get(0));
+        assertEquals(correctCategories.get(1),testCategories.get(1));
+        assertEquals(correctCategories.get(2),testCategories.get(2));
+        assertEquals(correctCategories.get(3),testCategories.get(3));
     }
 
     @Test
