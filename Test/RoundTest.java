@@ -55,12 +55,12 @@ public class RoundTest {
         testPoints = testPlayer.getPoints();
         assertEquals(6000 ,testPoints);
 
-        // Testing for correct answer in Betting.
+        // Testing for correct answer in BETTING.
         testPlayer.setBet(1000);
         testRound.calculatePoints(true,"BETTING",testPlayer,0,0);
         testPoints = testPlayer.getPoints();
         assertEquals(7000 ,testPoints);
-        // Testing for wrong answer in Betting.
+        // Testing for wrong answer in BETTING.
         testRound.calculatePoints(false,"BETTING",testPlayer,0,0);
         testPoints = testPlayer.getPoints();
         assertEquals(6000 ,testPoints);
@@ -74,7 +74,7 @@ public class RoundTest {
         testPoints = testPlayer.getPoints();
         assertEquals(6800 ,testPoints);
 
-        //Testing for correct answer for both players. Player 2 answered first, while player 1 answered second.
+        // Testing for correct answer for both players. Player 2 answered first, while player 1 answered second.
         testPlayer2.setPoints(2000);
         testRound.calculatePoints(true,"FASTEST FINGER",testPlayer2,0,2);
         testPoints = testPlayer2.getPoints();
@@ -82,14 +82,14 @@ public class RoundTest {
         testRound.calculatePoints(true,"FASTEST FINGER",testPlayer,0,2);
         testPoints = testPlayer.getPoints();
         assertEquals(7300 ,testPoints);
-        //Testing for wrong answer for player 1 who answered first and correct answer for player 2 who answered second.
+        // Testing for wrong answer for player 1 who answered first and correct answer for player 2 who answered second.
         testRound.calculatePoints(false,"FASTEST FINGER",testPlayer,0,2);
         testPoints = testPlayer.getPoints();
         assertEquals(7300 ,testPoints);
         testRound.calculatePoints(true,"FASTEST FINGER",testPlayer2,0,2);
         testPoints = testPlayer2.getPoints();
         assertEquals(4000 ,testPoints);
-        //Testing for wrong answer for both players. Player 1 answered first player 2 answered second.
+        // Testing for wrong answer for both players. Player 1 answered first player 2 answered second.
         testRound.calculatePoints(false,"FASTEST FINGER",testPlayer,0,2);
         testPoints = testPlayer.getPoints();
         assertEquals(7300 ,testPoints);
@@ -97,7 +97,7 @@ public class RoundTest {
         testPoints = testPlayer2.getPoints();
         assertEquals(4000 ,testPoints);
 
-        //Testing for correct answer in THERMOMETER when the player has already answered 3 questions correctly.
+        // Testing for correct answer in THERMOMETER when the player has already answered 3 questions correctly.
         testPlayer.setThermometerCorrectAnswers(3);
         testRound.calculatePoints(true,"THERMOMETER",testPlayer,0,0);
         testPoints = testPlayer.getPoints();
@@ -105,12 +105,12 @@ public class RoundTest {
         testThermometer = testPlayer.getThermometerCorrectAnswers();
         assertEquals(4,testThermometer);
 
-        //Testing for correct answer in THERMOMETER when the player has already answered 4 questions correctly.
+        // Testing for correct answer in THERMOMETER when the player has already answered 4 questions correctly.
         testRound.calculatePoints(true,"THERMOMETER",testPlayer,0,0);
         testPoints = testPlayer.getPoints();
         assertEquals(12300 ,testPoints);
 
-        //Testing for false answer in THERMOMETER when the player has already answered 2 questions correctly.
+        // Testing for wrong answer in THERMOMETER when the player has already answered 2 questions correctly.
         testPlayer.setThermometerCorrectAnswers(2);
         testRound.calculatePoints(false,"THERMOMETER",testPlayer,0,0);
         testPoints = testPlayer.getPoints();

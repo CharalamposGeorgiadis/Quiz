@@ -2,13 +2,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -21,25 +19,28 @@ import static org.junit.Assert.assertEquals;
 public class GameTest {
 
     @Rule
-    public TemporaryFolder tempFolder=new TemporaryFolder();
-    private File testFolder;
-    private File file1;
-    private File file2;
-    private File[] testQuestions;
-    private Game testGame;
+    public TemporaryFolder tempFolder=new TemporaryFolder(); // Temporary folder where test question files will be stored.
+    private Game testGame; // Test Game Object.
 
+    /**
+     * @throws IOException if stream to file cannot be written to or closed.
+     */
     @Before
     public void init() throws IOException {
-        testFolder = tempFolder.newFolder("testFolder");
-        file1 = new File(testFolder,"file1.txt");
+        // Folder path.
+        File testPath = tempFolder.newFolder("testFolder");
+        // Test question 1.
+        File file1 = new File(testPath, "file1.txt");
         Writer writer= new BufferedWriter(new FileWriter(file1, true));
-        writer.write("Sports\nabcd\na\nb\nc\nd\na\nNULL");
+        writer.write("Sports\nHello World\na\nb\nc\nd\na\nNULL");
         writer.close();
-        file2 = new File(testFolder,"file2.txt");
+        //Test question 2.
+        File file2 = new File(testPath, "file2.txt");
         Writer writer2 = new BufferedWriter(new FileWriter(file2, true));
-        writer2.write("Video Games\nabcd\na\nb\nc\nd\na\nNULL");
+        writer2.write("Video Games\nHello World\na\nb\nc\nd\na\nNULL");
         writer2.close();
-        testQuestions = testFolder.listFiles();
+        // Holds the directory of the test questions folder
+        File[] testQuestions = testPath.listFiles();
         testGame = new Game(testQuestions);
     }
 
@@ -51,7 +52,7 @@ public class GameTest {
     public void getRandomQuestion() {
         Questions testQuestion = new Questions();
         testQuestion.setCategory("Sports");
-        testQuestion.setQuestion("abcd");
+        testQuestion.setQuestion("Hello World");
         testQuestion.setAnswer("a");
         testQuestion.setAnswer("b");
         testQuestion.setAnswer("c");
@@ -85,7 +86,7 @@ public class GameTest {
         testResult = testGame.enterUsernames("    ", 0);
         assertEquals(0,testResult);
         // Tests enterUsername when the chosen username's length is over 14.
-        testResult = testGame.enterUsernames("qwertyuiopasdfg", 0);
+        testResult = testGame.enterUsernames("123456789012345", 0);
         assertEquals(0,testResult);
         // Tests enterUsername when the chosen username is valid and does not already exist.
         testResult = testGame.enterUsernames("Fanis", 1);
@@ -104,12 +105,13 @@ public class GameTest {
         testPlayer.setPlayerControls(2,"C");
         testPlayer.setPlayerControls(3,"");
         testGame.getPlayers().add(testPlayer);
+        // Tests setCurrentControl when the chosen control is already bound.
         int testResult = testGame.setCurrentControl("A", 0,3);
         assertEquals(-1,testResult);
-
-        testResult = testGame.setCurrentControl("AAAAAAAAAA", 0,3);
+        // Tests setCurrentControl when the chosen control's length is more that 1.
+        testResult = testGame.setCurrentControl("AA", 0,3);
         assertEquals(0,testResult);
-
+        // Tests setCurrentControl when the chosen control is valid.
         testResult = testGame.setCurrentControl("D", 0,3);
         assertEquals(1,testResult);
     }
@@ -150,7 +152,7 @@ public class GameTest {
         assertEquals(correctCategories.get(1),testCategories.get(1));
         assertEquals(correctCategories.get(2),testCategories.get(2));
         assertEquals(correctCategories.get(3),testCategories.get(3));
-        // Tests randomCategories when there are 3 categories with enough questions and one category with not enough questions.
+        // Tests randomCategories when there are less than 4 categories with enough questions and one category with not enough questions.
         correctCategories.set(0,"");
         correctCategories.set(1,"1");
         correctCategories.set(2,"2");
@@ -185,20 +187,21 @@ public class GameTest {
         question1.setAnswer("C");
         question1.setAnswer("D");
         question1.setCorrectAnswer("C");
+        // Tests correctAnswer when the player chose the correct answer.
         int testResult = testGame.correctAnswer('C',question1,"RIGHT ANSWER",0);
         assertEquals(1,testResult);
         assertEquals(2000,testPlayer.getPoints());
         testPlayer.setHasAnswered(false);
-
+        // Tests correctAnswer when the player chose the wrong answer.
         testResult = testGame.correctAnswer('B',question1,"RIGHT ANSWER",0);
         assertEquals(1,testResult);
         assertEquals(2000,testPlayer.getPoints());
-
+        // Tests correctAnswer when the player has already answered this question, but pressed a valid control again before the second player has answered.
         testResult = testGame.correctAnswer('C',question1,"RIGHT ANSWER",0);
         assertEquals(0,testResult);
         assertEquals(2000,testPlayer.getPoints());
         testPlayer.setHasAnswered(false);
-
+        // Tests correctAnswer when the player pressed a control that is not among their 4 chosen controls.
         testResult = testGame.correctAnswer('T',question1,"RIGHT ANSWER",0);
         assertEquals(0,testResult);
         assertEquals(2000,testPlayer.getPoints());
@@ -217,17 +220,17 @@ public class GameTest {
         testPlayer.setPlayerControls(2,"C");
         testPlayer.setPlayerControls(3,"D");
         testGame.getPlayers().add(testPlayer);
-
+        // Tests hasBet when the player has chosen the 3rd betting option.
         int testResult = testGame.hasBet('C');
         assertEquals(1,testResult);
         assertEquals(750,testPlayer.getBet());
-
+        // Tests hasBet when the player has chosen the 1st betting option, while he has already chosen another option before the second player has chosen.
         testResult = testGame.hasBet('A');
         assertEquals(0,testResult);
         assertEquals(750,testPlayer.getBet());
         testPlayer.setHasAnswered(false);
         testPlayer.setBet(0);
-
+        // Tests hasBet when the player pressed a control that is not among their 4 chosen controls.
         testResult = testGame.hasBet('T');
         assertEquals(0,testResult);
         assertEquals(0,testPlayer.getBet());
@@ -272,31 +275,39 @@ public class GameTest {
 
     /**
      * Tests addStats.
+     * @throws IOException if stream to file cannot be written to or closed
      */
 
     @Test
     public void addStats() throws IOException {
+        // Creates 2 player whose usernames cannot exist in the Player Stats file.
+        // The first player's points are higher than any possible highscore, while the second one's are lower than any possible lowscore.
+        // When all the players from the Player Stats file are added, all players are sorted by points,
+        // so that the first player is definitely on top, while the second one is definitely on the bottom.
+        // Finally they are removed from the players ArrayList, which then is saved on the Player Stats file, thus reverting it to its previous state.
         Player testPlayer1 = new Player();
-        testPlayer1.setUsername("aaaaaaaaaaaaaaa");
+        testPlayer1.setUsername("123456789012345");
         testPlayer1.setPoints(999999999);
         Player testPlayer2 = new Player();
-        testPlayer2.setUsername("qwertyuiopasdaa");
-        testPlayer2.setPoints(-20000);
+        testPlayer2.setUsername("12345678901234567890");
+        testPlayer2.setPoints(-999999999);
         testGame.getPlayers().add(testPlayer1);
         testGame.getPlayers().add(testPlayer2);
         testGame.addStats();
         testGame.sortPlayersByPoints();
         testGame.addStats();
         assertEquals(999999999,testGame.getPlayers().get(0).getPoints());
-        assertEquals(-20000,testGame.getPlayers().get(testGame.getPlayers().size()-1).getPoints());
+        assertEquals(-999999999,testGame.getPlayers().get(testGame.getPlayers().size()-1).getPoints());
         testGame.getPlayers().remove(testPlayer1);
         testGame.getPlayers().remove(testPlayer2);
 
         Files.deleteIfExists(Paths.get("Player Stats.txt"));
-        Writer newWriter= new BufferedWriter(new FileWriter("Player Stats.txt", true));
-        for (Player p:testGame.getPlayers()){
-            newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
+        if (testGame.getPlayers().size()!=0){
+            Writer newWriter = new BufferedWriter(new FileWriter("Player Stats.txt", true));
+            for (Player p : testGame.getPlayers()) {
+                newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
+            }
+            newWriter.close();
         }
-        newWriter.close();
     }
 }

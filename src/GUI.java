@@ -867,7 +867,7 @@ public class GUI {
 
         //Displays the "CONTROLS" title.
         JTextArea viewControlsTitle = new JTextArea("CONTROLS");
-        setAreaParameters(viewControlsTitle,neonFont.deriveFont(50f),Color.ORANGE,310,90,360,50, viewControlsLabel);
+        setAreaParameters(viewControlsTitle,neonFont.deriveFont(50f),Color.ORANGE,350,90,360,50, viewControlsLabel);
 
         //Adds the Area where the controls will be displayed.
         JTextArea controlsArea = new JTextArea("    ");

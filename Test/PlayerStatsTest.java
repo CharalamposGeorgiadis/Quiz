@@ -1,7 +1,5 @@
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -21,7 +19,7 @@ public class PlayerStatsTest {
     public void sortStatsByPoints() {
         PlayerStats testPlayerStats = new PlayerStats();
         testPlayerStats.getUsernames().add("winters");
-        testPlayerStats.getUsernames().add("Sally");
+        testPlayerStats.getUsernames().add("Fawlty");
         testPlayerStats.getUsernames().add("Darth Maul");
         testPlayerStats.getHighScores().add(2000);
         testPlayerStats.getHighScores().add(6500);
@@ -30,7 +28,7 @@ public class PlayerStatsTest {
         testPlayerStats.getMultiplayerWins().add(0);
         testPlayerStats.getMultiplayerWins().add(3);
         ArrayList<String> correctUsernames = new ArrayList<>();
-        correctUsernames.add("Sally");
+        correctUsernames.add("Fawlty");
         correctUsernames.add("Darth Maul");
         correctUsernames.add("winters");
         ArrayList<Integer> correctPoints = new ArrayList<>();
@@ -55,7 +53,7 @@ public class PlayerStatsTest {
     public void sortStatsByMultiplayerWins() {
         PlayerStats testPlayerStats = new PlayerStats();
         testPlayerStats.getUsernames().add("winters");
-        testPlayerStats.getUsernames().add("Sally");
+        testPlayerStats.getUsernames().add("Fawlty");
         testPlayerStats.getUsernames().add("Darth Maul");
         testPlayerStats.getHighScores().add(2000);
         testPlayerStats.getHighScores().add(6500);
@@ -66,7 +64,7 @@ public class PlayerStatsTest {
         ArrayList<String> correctUsernames = new ArrayList<>();
         correctUsernames.add("Darth Maul");
         correctUsernames.add("winters");
-        correctUsernames.add("Sally");
+        correctUsernames.add("Fawlty");
         ArrayList<Integer> correctPoints = new ArrayList<>();
         correctPoints.add(4000);
         correctPoints.add(2000);
@@ -80,5 +78,4 @@ public class PlayerStatsTest {
         assertEquals(correctPoints,testPlayerStats.getHighScores());
         assertEquals(correctMultiplayerWins,testPlayerStats.getMultiplayerWins());
     }
-
 }

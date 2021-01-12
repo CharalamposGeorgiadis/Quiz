@@ -266,17 +266,18 @@ public class Game {
 
     /**
      * Adds/updates the current game's player stats to the Player Stats.txt.
-     * @throws IOException If file is not found.
+     * @throws IOException if stream to file cannot be written to or closed.
      */
 
     public void addStats() throws IOException {
         File oldFile=new File("Player Stats.txt");
         Writer writer= new BufferedWriter(new FileWriter(oldFile, true));
-        Scanner scannerMain=new Scanner(oldFile);
-        if (!scannerMain.hasNextLine()) {
+        Scanner scanner=new Scanner(oldFile);
+        if (!scanner.hasNextLine()) {
             for (Player p : players) {
                 writer.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
             }
+            scanner.close();
             writer.close();
         }
         else {
@@ -285,12 +286,12 @@ public class Game {
             // Otherwise, the player's current game stats are swapped with their stats from the txt file, after their multiplayer wins have been updated.
             ArrayList<Player> toRemove=new ArrayList<>(); //Contains the Player Objects that will be removed from the players ArrayList.
             ArrayList<Player> toAdd=new ArrayList<>(); //Contains the Player Objects that will be added to the players ArrayList.
-            while (scannerMain.hasNextLine()) {
+            while (scanner.hasNextLine()) {
                 boolean flag=false;
                 Player tempPlayer=new Player(); //Temporary Player Object created from the current line of the txt file.
-                tempPlayer.setUsername(scannerMain.next());
-                tempPlayer.setPoints(scannerMain.nextInt());
-                tempPlayer.setMultiplayerWins(scannerMain.nextInt());
+                tempPlayer.setUsername(scanner.next());
+                tempPlayer.setPoints(scanner.nextInt());
+                tempPlayer.setMultiplayerWins(scanner.nextInt());
                 for (Player p: players){
                     if (tempPlayer.getUsername().equals(p.getUsername())) {
                         if (tempPlayer.getPoints() > p.getPoints()) {
@@ -305,17 +306,16 @@ public class Game {
                 }
                 if (!flag)
                     players.add(tempPlayer);
-                if (scannerMain.hasNextLine())
-                    scannerMain.nextLine();
+                if (scanner.hasNextLine())
+                    scanner.nextLine();
                 else
                     break;
             }
             players.removeAll(toRemove);
             players.addAll(toAdd);
-            scannerMain.close();
+            scanner.close();
             writer.close();
             Files.deleteIfExists(Paths.get("Player Stats.txt"));
-           // File newFile=new File("Player Stats.txt");
             Writer newWriter= new BufferedWriter(new FileWriter("Player Stats.txt", true));
             for (Player p:players){
                 newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
