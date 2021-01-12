@@ -2,7 +2,7 @@ import  org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * This class represents the testers of the Round class.
+ * Testers for Round class.
  * @author Anastasios Kachrimanis
  * @author Charalampos Georgiadis
  * @version 11/01/2021
@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class RoundTest {
 
     /**
-     * Tests getRoundDescription for every possible valid String inout.
+     * Tests getRoundDescription for every possible valid String input.
      */
 
     @Test
