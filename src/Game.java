@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Game {
     private ArrayList<Player> players; // ArrayList of Players that holds the information of every player.
-    private ArrayList<Questions> availableQuestions; // ArrayList of Questions that holds every available question.
+    private ArrayList<Question> availableQuestions; // ArrayList of Questions that holds every available question.
     private HashSet<String> categories; // HashSet of Strings that holds the name of each category once.
     private Round round; // Round Object tha grants access to Round methods.
     private PlayerStats playerStats; // PlayerStats Object that grants access to Player Stats.
@@ -42,8 +42,8 @@ public class Game {
         for (File question : questions) {
             if (question.isFile()) {
                 Scanner scan = new Scanner(question);
-                Questions tempQuestion;
-                tempQuestion = new Questions();
+                Question tempQuestion;
+                tempQuestion = new Question();
                 //Scans each line of the txt files in the Directory and stores them in a appropriate variable.
                 while (scan.hasNextLine()) {
                     tempQuestion.setCategory(scan.nextLine());
@@ -68,7 +68,7 @@ public class Game {
      * @return ArrayList of Questions that holds the available questions.
      */
 
-    public ArrayList<Questions> getAvailableQuestions() {return availableQuestions;}
+    public ArrayList<Question> getAvailableQuestions() {return availableQuestions;}
 
     /**
      * Gets the available categories.
@@ -113,16 +113,16 @@ public class Game {
      * @return Questions Object that contains the chosen question.
      */
 
-    public Questions getRandomQuestion(String chosenCategory) {
+    public Question getRandomQuestion(String chosenCategory) {
         if(chosenCategory!=null)
-            for (Questions q : availableQuestions) {
+            for (Question q : availableQuestions) {
                 if (q.getCategory().equals(chosenCategory)) {
                     availableQuestions.remove(q);
                     return q;
                 }
             }
         else {
-            Questions q=getAvailableQuestions().get(0);
+            Question q=getAvailableQuestions().get(0);
             availableQuestions.remove(q);
             return q;
         }
@@ -184,7 +184,7 @@ public class Game {
         boolean flag = false;
         for (String s : categories) {
             int questionCount=0;
-            for (Questions q : availableQuestions) {
+            for (Question q : availableQuestions) {
                 if (q.getCategory().equals(s) && !randomCategories.contains(s)) {
                     questionCount++;
                     if(questionCount>4) {
@@ -214,7 +214,7 @@ public class Game {
      * @return 1 if the key belongs to a player's controls, otherwise 0.
      */
 
-    public int correctAnswer(char answer, Questions question, String currentRound, int currentRoundTypeParameter) {
+    public int correctAnswer(char answer, Question question, String currentRound, int currentRoundTypeParameter) {
         for (Player p : players) {
             for (int i = 0; i < 4; i++)
                 if (Character.toUpperCase(answer) == p.getControl(i).charAt(0) && !p.getHasAnswered()) {

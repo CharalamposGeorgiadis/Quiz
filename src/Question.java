@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @version 24/11/2020
  */
 
-public class Questions {
+public class Question {
     private String question; // String that holds a question.
     private String category; // String that holds the category of the question.
     private ArrayList<String> answers; // ArrayList of Strings that holds the possible answers of the question.
@@ -18,7 +18,7 @@ public class Questions {
      * Constructor.
      */
 
-    public Questions() {
+    public Question() {
         question = "";
         category="";
         answers=new ArrayList<>();

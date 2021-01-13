@@ -608,7 +608,7 @@ public class GUI {
         final int[] playersAnswered = {0};
         switch (currentRound) {
             case "BETTING":
-                Questions[] randomQuestion = {game.getRandomQuestion(chosenCategory)};
+                Question[] randomQuestion = {game.getRandomQuestion(chosenCategory)};
                 displayBettingOptions(questionText,answer1,answer2,answer3,answer4);
                 questionsLabel.addKeyListener(new KeyAdapter() {
                     @Override
@@ -670,7 +670,7 @@ public class GUI {
                 });
                 break;
             case "COUNTDOWN":
-                randomQuestion = new Questions[]{game.getRandomQuestion(chosenCategory)};
+                randomQuestion = new Question[]{game.getRandomQuestion(chosenCategory)};
                 //Displays the timer.
                 JTextField timerField= new JTextField();
                 setFieldParameters(timerField,questionFont.deriveFont(60f),Color.red,860,80,100,100, questionsLabel);
@@ -761,7 +761,7 @@ public class GUI {
                 break;
             case "THERMOMETER":
                 game.getRound().getRoundTypes().remove(currentRound);
-                randomQuestion = new Questions[]{game.getRandomQuestion(null)};
+                randomQuestion = new Question[]{game.getRandomQuestion(null)};
                 chosenCategoryField.setText(randomQuestion[0].getCategory());
                 displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
                 //If a questions is accompanied by an image, it is displayed.
@@ -814,7 +814,7 @@ public class GUI {
                 });
                 break;
             default://"RIGHT ANSWER" OR "FASTEST FINGER".
-                randomQuestion = new Questions[]{game.getRandomQuestion(chosenCategory)};
+                randomQuestion = new Question[]{game.getRandomQuestion(chosenCategory)};
                 displayQuestionAndAnswers(questionText,answer1,answer2,answer3,answer4, randomQuestion[0]);
                 //If a questions is accompanied by an image, it is displayed.
                 imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\"+randomQuestion[0].getMedia()));
@@ -1092,7 +1092,7 @@ public class GUI {
      * @param currentQuestion Questions Object that contains a random question.
      */
 
-    public void displayQuestionAndAnswers(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4, Questions currentQuestion){
+    public void displayQuestionAndAnswers(JTextField question, JTextField answer1, JTextField answer2, JTextField answer3, JTextField answer4, Question currentQuestion){
         question.setText(currentQuestion.getQuestion());
         answer1.setText("A: "+currentQuestion.getAnswers().get(0));
         answer2.setText("B: "+currentQuestion.getAnswers().get(1));

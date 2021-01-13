@@ -51,7 +51,7 @@ public class GameTest {
 
     @Test
     public void getRandomQuestion() {
-        Questions testQuestion = new Questions();
+        Question testQuestion = new Question();
         testQuestion.setCategory("Sports");
         testQuestion.setQuestion("Hello World");
         testQuestion.setAnswer("a");
@@ -61,7 +61,7 @@ public class GameTest {
         testQuestion.setCorrectAnswer("a");
         testQuestion.setMedia("NULL");
 
-        Questions returnedQuestion = testGame.getRandomQuestion("Sports");
+        Question returnedQuestion = testGame.getRandomQuestion("Sports");
         assertEquals(testQuestion.getCategory(),returnedQuestion.getCategory());
         assertEquals(testQuestion.getQuestion(),returnedQuestion.getQuestion());
         assertEquals(testQuestion.getCorrectAnswer(),returnedQuestion.getCorrectAnswer());
@@ -123,13 +123,13 @@ public class GameTest {
 
     @Test
     public void randomCategories() {
-        Questions question1 = new Questions();
+        Question question1 = new Question();
         question1.setCategory("1");
-        Questions question2 = new Questions();
+        Question question2 = new Question();
         question2.setCategory("2");
-        Questions question3 = new Questions();
+        Question question3 = new Question();
         question3.setCategory("3");
-        Questions question4 = new Questions();
+        Question question4 = new Question();
         question4.setCategory("4");
         for (int i = 0; i < 5; i++){
             testGame.getAvailableQuestions().add(question1);
@@ -182,7 +182,7 @@ public class GameTest {
         testPlayer.setPlayerControls(3,"D");
         testPlayer.setPoints(1000);
         testGame.getPlayers().add(testPlayer);
-        Questions question1=new Questions();
+        Question question1=new Question();
         question1.setAnswer("A");
         question1.setAnswer("B");
         question1.setAnswer("C");
