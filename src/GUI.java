@@ -1076,10 +1076,8 @@ public class GUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //Creates a "Return to Main Menu" button.
-        returnToMainMenuButton(endScreenLabel,neonFont.deriveFont(40f),Color.green,105,350,250,80);
         //Creates a "EXIT" button.
-        exitButton(endScreenLabel,neonFont.deriveFont(40f),Color.green,600,350,250,80,"Endgame.png","Endgame.png");
+        exitButton(endScreenLabel,neonFont.deriveFont(50f),Color.green,650,100,250,100,"Endgame.png","Endgame.png");
     }
 
     /**
@@ -1137,34 +1135,6 @@ public class GUI {
             category3.setText("C: " + randomCategories.get(2));
             category4.setText("D: " + randomCategories.get(3));
         }
-    }
-
-    /**
-     * Creates a main menu button at the current label.
-     * @param currentLabel JLabel containing the current button's label.
-     * @param font Font containing the current button's font.
-     * @param color Color containing the current button's color.
-     * @param x Integer containing the current button's x-axis coordinates.
-     * @param y Integer containing the current button's y-axis coordinates.
-     * @param width Integer containing the current scroll's width.
-     * @param height Integer containing the current button's height.
-     */
-
-    public void returnToMainMenuButton(JLabel currentLabel,Font font,Color color,int x,int y,int width, int height){
-        JButton returnToMainMenuButton=new JButton("MAIN MENU");
-        setButtonParameters(returnToMainMenuButton,font,color,x,y,width,height,currentLabel);
-        returnToMainMenuButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                changeScene(currentLabel,mainLabel);
-                try {
-                    game.restartGame(questions);
-                } catch (FileNotFoundException fileNotFoundException) {
-                    fileNotFoundException.printStackTrace();
-                }
-            }
-        });
     }
 
     /**
