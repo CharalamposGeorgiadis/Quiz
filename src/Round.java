@@ -9,13 +9,13 @@ import java.util.*;
 
 public class Round {
 
-    protected ArrayList<String> roundTypes; //List of Strings that holds the type of each round type.
+    protected ArrayList<String> roundTypes; // List of Strings that holds the type of each round type.
     final String rightAnswerDescription=("Correct answers grant 1000 points, incorrect answers grant 0.");
     final String bettingDescription=("Bet points for each question. Correct answers grant points equal to the ones you bet. Incorrect answers subtract the same amount.");
     final String countdownDescription=("You have 5 seconds for each question. Correct answers grant points equal to the time remaining(in milliseconds)x0.2");
     final String fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 500.");
     final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or if there are no more questions left, the game finishes.");
-    int totalAnswered; //Integer containing the total amount of players who have answered correctly in FASTEST FINGER.
+    int totalAnswered; // Integer containing the total amount of players who have answered correctly in FASTEST FINGER.
 
     /**
      * Constructor.

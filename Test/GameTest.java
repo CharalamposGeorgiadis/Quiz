@@ -25,6 +25,7 @@ public class GameTest {
     /**
      * @throws IOException if stream to file cannot be written to or closed.
      */
+
     @Before
     public void init() throws IOException {
         // Folder path.
@@ -107,13 +108,13 @@ public class GameTest {
         testGame.getPlayers().add(testPlayer);
         // Tests setCurrentControl when the chosen control is already bound.
         int testResult = testGame.setCurrentControl("A", 0,3);
-        assertEquals(-1,testResult);
+        assertEquals(-1, testResult);
         // Tests setCurrentControl when the chosen control's length is more that 1.
         testResult = testGame.setCurrentControl("AA", 0,3);
-        assertEquals(0,testResult);
+        assertEquals(0, testResult);
         // Tests setCurrentControl when the chosen control is valid.
         testResult = testGame.setCurrentControl("D", 0,3);
-        assertEquals(1,testResult);
+        assertEquals(1, testResult);
     }
 
     /**
@@ -122,15 +123,15 @@ public class GameTest {
 
     @Test
     public void randomCategories() {
-        Questions question1=new Questions();
+        Questions question1 = new Questions();
         question1.setCategory("1");
-        Questions question2=new Questions();
+        Questions question2 = new Questions();
         question2.setCategory("2");
-        Questions question3=new Questions();
+        Questions question3 = new Questions();
         question3.setCategory("3");
-        Questions question4=new Questions();
+        Questions question4 = new Questions();
         question4.setCategory("4");
-        for (int i=0;i<5;i++){
+        for (int i = 0; i < 5; i++){
             testGame.getAvailableQuestions().add(question1);
             testGame.getAvailableQuestions().add(question2);
             testGame.getAvailableQuestions().add(question3);
@@ -140,7 +141,7 @@ public class GameTest {
         testGame.getCategories().add("2");
         testGame.getCategories().add("3");
         testGame.getCategories().add("4");
-        ArrayList<String> correctCategories=new ArrayList<>();
+        ArrayList<String> correctCategories = new ArrayList<>();
         correctCategories.add("1");
         correctCategories.add("2");
         correctCategories.add("3");
@@ -157,7 +158,7 @@ public class GameTest {
         correctCategories.set(1,"1");
         correctCategories.set(2,"2");
         correctCategories.set(3,"3");
-        for (int i=0;i<5;i++)
+        for (int i = 0; i < 5; i++)
             testGame.getAvailableQuestions().remove(question4);
         testCategories.clear();
         testCategories = testGame.randomCategories();

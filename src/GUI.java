@@ -13,10 +13,10 @@ import java.util.Random;
  */
 
 public class GUI {
-    private JFrame window; // Main Frame of the game.
-    private JLabel mainLabel; // Main Menu screen.
-    private Font neonFont; // Custom font.
-    private Game game; // Grants access to the game functions.
+    private JFrame window; // JFrame that holds the main window of the game.
+    private JLabel mainLabel; // JLabel that holds the Main Menu screen.
+    private Font neonFont; // Font containing a custom font.
+    private Game game; // Game Object that grants access to the game functions.
     private File[] questions; // Directory of the questions folder.
     private boolean statsExist; // Boolean containing whether the stats file exists or not.
 
@@ -63,7 +63,7 @@ public class GUI {
             });
             //Creates the Leaderboards button.
             JButton leaderboardButton = new JButton("LEADERBOARDS");
-            setButtonParameters(leaderboardButton,neonFont.deriveFont(60f),Color.orange,225,295,500,60, mainLabel);
+            setButtonParameters(leaderboardButton, neonFont.deriveFont(60f), Color.orange,225,295,500,60, mainLabel);
             leaderboardButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -75,7 +75,7 @@ public class GUI {
         else{
             //Displays the "QUESTION FILE NOT FOUND" text.
             JTextArea noFileFound=new JTextArea("BUZZ QUESTIONS FILE\n   WAS NOT FOUND");
-            setAreaParameters(noFileFound,neonFont.deriveFont(50f),Color.ORANGE,200,250,600,200, mainLabel);
+            setAreaParameters(noFileFound, neonFont.deriveFont(50f), Color.ORANGE,200,250,600,200, mainLabel);
         }
     }
 
@@ -122,7 +122,7 @@ public class GUI {
             leaderboardTitle.setText("NO STATS FILE\n     FOUND");
         }
         //Adds a Back button to the current screen.
-        backButton(mainLeaderboardLabel,mainLabel,null,neonFont.deriveFont(40f),Color.red,90,78,140,50,"LeaderBoard.png","LeaderBoard.png","");
+        backButton(mainLeaderboardLabel, mainLabel,null, neonFont.deriveFont(40f), Color.red,90,78,140,50,"LeaderBoard.png","LeaderBoard.png","");
     }
 
     /**
@@ -148,20 +148,20 @@ public class GUI {
             case "HIGHSCORES":
                 currentLeaderboardTitle.setText("HIGHSCORES");
                 game.getPlayerStats().sortStatsByPoints();
-                for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
-                    currentLeaderboardArea.setText(currentLeaderboardArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getHighScores().get(i));
-                    if (i!=game.getPlayerStats().getHighScores().size()-1)
-                        currentLeaderboardArea.setText(currentLeaderboardArea.getText()+"\n");
+                for (int i = 0; i < game.getPlayerStats().getUsernames().size(); i++){
+                    currentLeaderboardArea.setText(currentLeaderboardArea.getText() + " "+game.getPlayerStats().getUsernames().get(i) + "  "+game.getPlayerStats().getHighScores().get(i));
+                    if (i != game.getPlayerStats().getHighScores().size()-1)
+                        currentLeaderboardArea.setText(currentLeaderboardArea.getText() + "\n");
                 }
                 break;
             case "MULTIPLAYER WINS":
                 currentLeaderboardTitle.setText("MULTIPLAYER WINS");
                 currentLeaderboardTitle.setBounds(260, 90, 440, 50);
                 game.getPlayerStats().sortStatsByMultiplayerWins();
-                for (int i=0;i<game.getPlayerStats().getUsernames().size();i++){
-                    currentLeaderboardArea.setText(currentLeaderboardArea.getText()+" "+game.getPlayerStats().getUsernames().get(i)+"  "+game.getPlayerStats().getMultiplayerWins().get(i));
-                    if (i!=game.getPlayerStats().getHighScores().size()-1)
-                        currentLeaderboardArea.setText(currentLeaderboardArea.getText()+"\n");
+                for (int i = 0; i < game.getPlayerStats().getUsernames().size(); i++){
+                    currentLeaderboardArea.setText(currentLeaderboardArea.getText() + " " + game.getPlayerStats().getUsernames().get(i) + "  " + game.getPlayerStats().getMultiplayerWins().get(i));
+                    if (i != game.getPlayerStats().getHighScores().size()-1)
+                        currentLeaderboardArea.setText(currentLeaderboardArea.getText() + "\n");
                 }
                 break;
         }
@@ -225,7 +225,7 @@ public class GUI {
     /**
      * Displays the "Enter Username" screen.
      * @param numberOfPlayers Integer containing the total number of players.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      * @param chooseNumberField TextField of the previous screen so that the back button, if pressed, can restore its focus.
      */
 
@@ -282,7 +282,7 @@ public class GUI {
 
     /**
      * Displays the "Set Controls" screen.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      * @param enterUsernameText TextField of the previous screen so that the back button, if pressed, can restore its focus.
      */
 
@@ -360,7 +360,7 @@ public class GUI {
 
     /**
      * Displays the "You can view each player's controls by clicking:.." screen.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      * @param setControlField TextField of the previous screen so that the back button, if pressed, can restore its focus.
      */
 
@@ -397,7 +397,7 @@ public class GUI {
 
     /**
      * Displays the "Choose Category" screen.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      */
 
     public void chooseCategory(JLabel currentLabel) {
@@ -538,7 +538,7 @@ public class GUI {
     /**
      * Begins every round type.
      * @param currentRound String containing the name of the current round.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      * @param chosenCategory String containing the chosen category.
      * @param chooseCategoryLabel JLabel containing the choose category screen.
      */
@@ -857,7 +857,7 @@ public class GUI {
 
     /**
      * Displays each player's controls.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      */
 
     public void viewControls(JLabel currentLabel){
@@ -926,7 +926,7 @@ public class GUI {
     /**
      * Displays the result of the current question.
      * If the player(s) is/are not playing THERMOMETER their username(s) and points are displayed. Otherwise their username(s), points and THERMOMETER wins are displayed.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      * @param correctAnswer String containing a questions correct answer.
      * @param hasEnded Boolean containing whether the game has ended or not.
      * @param thermometer Boolean containing whether players are playing THERMOMETER or not.
@@ -988,7 +988,7 @@ public class GUI {
 
     /**
      * Four second delay between the screen that displays the question results and the next screen.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      * @param newLabel JLabel of the screen that will displayed after the delay.
      * @param hasEnded Boolean containing whether the game has ended or not.
      */
@@ -1015,7 +1015,7 @@ public class GUI {
     /**
      * Five second delay between the screen that displays the description of the current round and the screen that displays the question and answers.
      * @param currentRound String containing the name of the current round.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      * @param chosenCategory String containing the chosen category.
      * @param chooseCategoryLabel JLabel containing the choose category screen.
      */
@@ -1029,7 +1029,7 @@ public class GUI {
 
     /**
      * Displays the Endgame screen.
-     * @param currentLabel Label of the previous screen.
+     * @param currentLabel JLabel of the previous screen.
      */
 
     public void endgameScreen(JLabel currentLabel){
@@ -1392,8 +1392,8 @@ public class GUI {
 
     /**
      * Changes the screen.
-     * @param currentLabel Label of the current screen.
-     * @param newLabel Label of the new screen.
+     * @param currentLabel JLabel of the current screen.
+     * @param newLabel JLabel of the new screen.
      */
 
     public void changeScene(JLabel currentLabel, JLabel newLabel){

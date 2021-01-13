@@ -12,9 +12,9 @@ import java.util.Scanner;
 
 public class PlayerStats {
 
-    private ArrayList<String> usernames; // List that holds the username of every player.
-    private ArrayList<Integer> highScores; // List that holds the highscore of every player.
-    private ArrayList<Integer> multiplayerWins; // List that holds the multiplayer wins of every player.
+    private ArrayList<String> usernames; // ArrayList of Strings that holds the username of every player.
+    private ArrayList<Integer> highScores; // ArrayList of Integers that holds the highscore of every player.
+    private ArrayList<Integer> multiplayerWins; // ArrayList of Integers that holds the multiplayer wins of every player.
 
     /**
      * Constructor.

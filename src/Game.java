@@ -318,8 +318,11 @@ public class Game {
             writer.close();
             Files.deleteIfExists(Paths.get("Player Stats.txt"));
             Writer newWriter= new BufferedWriter(new FileWriter("Player Stats.txt", true));
-            for (Player p:players){
-                newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
+            for (Player p : players){
+                if (!p.getUsername().equals(players.get(players.size()-1).getUsername()))
+                    newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
+                else
+                    newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins()));
             }
             newWriter.close();
         }
