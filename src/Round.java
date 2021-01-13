@@ -19,7 +19,6 @@ public class Round {
 
     /**
      * Constructor.
-     * Creates a list that holds the names of each round type.
      */
 
     public Round() {
@@ -29,8 +28,8 @@ public class Round {
     }
 
     /**
-     * Gets the name of the current round type.
-     * @return The name of the current round type.
+     * Gets the name of every round type.
+     * @return ArrayList of Strings containing the name of every round type.
      */
 
     public ArrayList<String> getRoundTypes() {
@@ -39,7 +38,7 @@ public class Round {
 
     /**
      * Gets the description of the current round type.
-     * @param currentRound String containing the name of the current round.
+     * @param currentRound String containing the name of the current round type.
      * @return String containing the description of the current round type.
      */
 
@@ -83,7 +82,7 @@ public class Round {
     /**
      * Calculates the current player's points based on the current round type.
      * @param answered Boolean containing whether the player has answered correctly or wrongly.
-     * @param currentRound String containing the name of the current round.
+     * @param currentRound String containing the name of the current round type.
      * @param currentPlayer Player Object containing the player of which the points will be calculated.
      * @param currentRoundParameter Integer containing  a parameter that may be required by a certain round type.
      * @param totalPlayers Integer containing the total amount of players.

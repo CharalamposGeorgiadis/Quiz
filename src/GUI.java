@@ -483,7 +483,7 @@ public class GUI {
     /**
      * Displays each round's description and proceeds to play that round.
      * @param currentLabel JLabel of the previous screen.
-     * @param chosenCategory String containing the chosen category
+     * @param chosenCategory String containing the chosen category.
      */
 
     public void proceedToRound(JLabel currentLabel, String chosenCategory) {
@@ -538,7 +538,7 @@ public class GUI {
     /**
      * Begins every round type.
      * @param currentRound String containing the name of the current round.
-     * @param currentLabel JLabel of the previous screen.
+     * @param currentLabel Label of the previous screen.
      * @param chosenCategory String containing the chosen category.
      * @param chooseCategoryLabel JLabel containing the choose category screen.
      */
@@ -857,7 +857,7 @@ public class GUI {
 
     /**
      * Displays each player's controls.
-     * @param currentLabel JLabel of the previous screen.
+     * @param currentLabel Label of the previous screen.
      */
 
     public void viewControls(JLabel currentLabel){
@@ -926,7 +926,7 @@ public class GUI {
     /**
      * Displays the result of the current question.
      * If the player(s) is/are not playing THERMOMETER their username(s) and points are displayed. Otherwise their username(s), points and THERMOMETER wins are displayed.
-     * @param currentLabel JLabel of the previous screen.
+     * @param currentLabel Label of the previous screen.
      * @param correctAnswer String containing a questions correct answer.
      * @param hasEnded Boolean containing whether the game has ended or not.
      * @param thermometer Boolean containing whether players are playing THERMOMETER or not.
@@ -988,7 +988,7 @@ public class GUI {
 
     /**
      * Four second delay between the screen that displays the question results and the next screen.
-     * @param currentLabel JLabel of the previous screen.
+     * @param currentLabel Label of the previous screen.
      * @param newLabel JLabel of the screen that will displayed after the delay.
      * @param hasEnded Boolean containing whether the game has ended or not.
      */

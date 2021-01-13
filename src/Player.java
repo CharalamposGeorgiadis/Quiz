@@ -40,7 +40,7 @@ public class Player {
 
     /**
      * Sets the player's username.
-     * @param username String containing the player's points.
+     * @param username String containing the player's username.
      */
 
     public void setUsername(String username){
@@ -77,7 +77,7 @@ public class Player {
 
     /**
      * Sets the player's controls.
-     * @param currentAnswer The answer of which we want to set the control (A, B, C or D)
+     * @param currentAnswer The answer of which we want to set the control (1 = A, 2 = B, 3 = C or 4 = D)
      * @param chosenControl String containing the control chosen by the player.
      */
 
@@ -123,7 +123,7 @@ public class Player {
 
     /**
      * Gets the player's wins in THERMOMETER.
-     * @return Integer containing the player's wins in THERMOMETER
+     * @return Integer containing the player's wins in THERMOMETER.
      */
 
     public int getThermometerCorrectAnswers(){
@@ -131,7 +131,7 @@ public class Player {
     }
 
     /**
-     * Sets the player's wins in THERMOMETER
+     * Sets the player's wins in THERMOMETER.
      * @param thermometerCorrectAnswers Integer containing the player's wins in THERMOMETER.
      */
     public void setThermometerCorrectAnswers(int thermometerCorrectAnswers){this.thermometerCorrectAnswers=thermometerCorrectAnswers;}

@@ -34,8 +34,8 @@ public class PlayerStats {
     public ArrayList<String> getUsernames(){return usernames;}
 
     /**
-     * Gets the player's high scores.
-     * @return ArrayList of Integers containing the player's high scores.
+     * Gets the player's highscores.
+     * @return ArrayList of Integers containing the player's highscores.
      */
 
     public ArrayList<Integer> getHighScores(){return highScores;}

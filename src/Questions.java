@@ -15,7 +15,7 @@ public class Questions {
     private String media; // String containing the question's accompanying media.
 
     /**
-     * Constructor
+     * Constructor.
      */
 
     public Questions() {
@@ -28,7 +28,7 @@ public class Questions {
 
     /**
      * Gets a question.
-     * @return String representing a question.
+     * @return String containing a question.
      */
 
     public String getQuestion(){
@@ -46,7 +46,7 @@ public class Questions {
 
     /**
      * Gets the question's category.
-     * @return String representing the question's category.
+     * @return String containing the question's category.
      */
 
     public String getCategory(){
@@ -64,7 +64,7 @@ public class Questions {
 
     /**
      * Gets the question's possible answers.
-     * @return ArrayList of Strings representing the question's possible answers.
+     * @return ArrayList of Strings containing the question's possible answers.
      */
 
     public ArrayList<String> getAnswers(){
@@ -82,7 +82,7 @@ public class Questions {
 
     /**
      * Gets the question's correct answer.
-     * @return ArrayList of Strings representing the question's possible answers.
+     * @return String containing the question's correct answer.
      */
 
     public String getCorrectAnswer(){
@@ -99,7 +99,7 @@ public class Questions {
     }
 
     /**
-     * Gets the question's accompanying image.
+     * Gets the question's accompanying media.
      * @return String containing the question's accompanying media.
      */
 
@@ -108,8 +108,8 @@ public class Questions {
     }
 
     /**
-     * Sets the question's accompanying image.
-     * @param media String containing the question's accompanying media. Media is NULL if the question is not accompanied by an image.
+     * Sets the question's accompanying media.
+     * @param media String containing the question's accompanying media. Media is NULL if the question is not accompanied by a media.
      */
 
     public void setMedia(String media) {

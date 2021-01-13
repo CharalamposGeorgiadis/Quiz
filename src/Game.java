@@ -11,8 +11,8 @@ import java.util.*;
  */
 
 public class Game {
-    private ArrayList<Player> players; // ArrayList that holds the information of every player.
-    private ArrayList<Questions> availableQuestions; // ArrayList that holds every available question.
+    private ArrayList<Player> players; // ArrayList of Players that holds the information of every player.
+    private ArrayList<Questions> availableQuestions; // ArrayList of Questions that holds every available question.
     private HashSet<String> categories; // HashSet of Strings that holds the name of each category once.
     private Round round; // Round Object tha grants access to Round methods.
     private PlayerStats playerStats; // PlayerStats Object that grants access to Player Stats.
@@ -109,7 +109,7 @@ public class Game {
 
     /**
      * Picks a question based on the chosen category from the shuffled Arraylist of available questions.
-     * @param chosenCategory String containing the chosen category.It is NULL if THERMOMETER is about to be played.
+     * @param chosenCategory String containing the chosen category. It is NULL if THERMOMETER is about to be played.
      * @return Questions Object that contains the chosen question.
      */
 
@@ -146,6 +146,7 @@ public class Game {
         else
             return 0;
         players.add(new Player());
+        chosenUsername = chosenUsername.replace(' ','_');
         players.get(currentPlayer).setUsername(chosenUsername.toUpperCase());
         return 1;
     }
@@ -325,7 +326,7 @@ public class Game {
     }
 
     /**
-     * Resets questions and essential round types and deletes the players on the current game.
+     * Resets questions and essential round types and deletes the players of the current game.
      * @param questions Holds the directory of the questions folder.
      * @throws FileNotFoundException if a file is not found.
      */
