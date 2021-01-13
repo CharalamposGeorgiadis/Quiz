@@ -17,7 +17,6 @@ public class GUI {
     private JLabel mainLabel; // JLabel that holds the Main Menu screen.
     private Font neonFont; // Font containing a custom font.
     private Game game; // Game Object that grants access to the game functions.
-    private File[] questions; // Directory of the questions folder.
     private boolean statsExist; // Boolean containing whether the stats file exists or not.
 
     /**
@@ -28,7 +27,6 @@ public class GUI {
      */
 
     public GUI(File[] questions) throws IOException, FontFormatException {
-        this.questions=questions;
         //Creates the Main frame of the game.
         window = new JFrame("Buzz");
         window.setSize(970, 550);
@@ -47,7 +45,7 @@ public class GUI {
         neonFont = Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")).deriveFont(60f);
 
         if (questions != null) {
-            game = new Game(this.questions);//Loads the questions into the game.
+            game = new Game(questions);//Loads the questions into the game.
             statsExist= game.getPlayerStats().loadPlayerStats();
 
             //Creates the Start Game button.

@@ -19,6 +19,7 @@ public class Game {
 
     /**
      * Constructor.
+     *
      * @param questions Holds the directory of the questions folder.
      * @throws IOException if a file is not found.
      */
@@ -28,12 +29,13 @@ public class Game {
         categories = new HashSet<>();
         round = new Round();
         players = new ArrayList<>();
-        playerStats=new PlayerStats();
+        playerStats = new PlayerStats();
         loadQuestions(questions);
     }
 
     /**
      * Loads questions from the directory folder.
+     *
      * @param questions Holds the directory of the questions folder.
      * @throws FileNotFoundException if a file is not found.
      */
@@ -65,38 +67,53 @@ public class Game {
 
     /**
      * Gets the available questions.
+     *
      * @return ArrayList of Questions that holds the available questions.
      */
 
-    public ArrayList<Question> getAvailableQuestions() {return availableQuestions;}
+    public ArrayList<Question> getAvailableQuestions() {
+        return availableQuestions;
+    }
 
     /**
      * Gets the available categories.
+     *
      * @return HashSet of Strings that holds the available categories.
      */
 
-    public HashSet<String> getCategories() {return categories;}
+    public HashSet<String> getCategories() {
+        return categories;
+    }
 
     /**
      * Gets the players of the current game.
+     *
      * @return ArrayList of Players that holds the players of the current game.
      */
 
-    public ArrayList<Player> getPlayers() {return players;}
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 
     /**
      * Gets the round Object of the current game.
+     *
      * @return Round Object of the current game.
      */
 
-    public Round getRound(){return round;}
+    public Round getRound() {
+        return round;
+    }
 
     /**
      * Gets the playerStats Object.
+     *
      * @return PlayerStats Object.
      */
 
-    public PlayerStats getPlayerStats(){return playerStats;}
+    public PlayerStats getPlayerStats() {
+        return playerStats;
+    }
 
     /**
      * Resets the hasAnswered variable of every player to false.
@@ -109,12 +126,13 @@ public class Game {
 
     /**
      * Picks a question based on the chosen category from the shuffled Arraylist of available questions.
+     *
      * @param chosenCategory String containing the chosen category. It is NULL if THERMOMETER is about to be played.
      * @return Questions Object that contains the chosen question.
      */
 
     public Question getRandomQuestion(String chosenCategory) {
-        if(chosenCategory!=null)
+        if (chosenCategory != null)
             for (Question q : availableQuestions) {
                 if (q.getCategory().equals(chosenCategory)) {
                     availableQuestions.remove(q);
@@ -122,7 +140,7 @@ public class Game {
                 }
             }
         else {
-            Question q=getAvailableQuestions().get(0);
+            Question q = getAvailableQuestions().get(0);
             availableQuestions.remove(q);
             return q;
         }
@@ -131,8 +149,9 @@ public class Game {
 
     /**
      * Sets the current players username, if it is valid.
+     *
      * @param chosenUsername String containing the current player's chosen username.
-     * @param currentPlayer Integer containing the current player's position in the players ArrayList.
+     * @param currentPlayer  Integer containing the current player's position in the players ArrayList.
      * @return -1 if the chosen username already exists in the current game. 0 if the chosen username's length is 0 or greater than 14,
      * or consists only of empty spaces. 1 if the chosen username is valid.
      */
@@ -146,21 +165,22 @@ public class Game {
         else
             return 0;
         players.add(new Player());
-        chosenUsername = chosenUsername.replace(' ','_');
+        chosenUsername = chosenUsername.replace(' ', '_');
         players.get(currentPlayer).setUsername(chosenUsername.toUpperCase());
         return 1;
     }
 
     /**
      * Sets the current control of the current player.
-     * @param currentControl String containing the current chosen control of the current player.
-     * @param currentPlayer Integer containing the current player's position in the players ArrayList.
+     *
+     * @param currentControl       String containing the current chosen control of the current player.
+     * @param currentPlayer        Integer containing the current player's position in the players ArrayList.
      * @param currentControlNumber Integer containing the current position in the control Array.
      * @return -1 if the chosen control is already bound. 0 if the chosen control's length is not 1. 1 if the chosen control is valid.
      */
 
     public int setCurrentControl(String currentControl, int currentPlayer, int currentControlNumber) {
-        currentControl =  currentControl.trim();
+        currentControl = currentControl.trim();
         for (Player player : players) {
             for (int j = 0; j < 4; j++) {
                 if (currentControl.equals(player.getControl(j)))
@@ -176,18 +196,19 @@ public class Game {
     /**
      * Chooses up to four random categories with enough remaining questions for the current round.
      * If there are not enough questions for 4 categories, the unfilled positions of the ArrayList are set to "".
+     *
      * @return Arraylist of Strings containing up to 4 categories.
      */
 
-    public  ArrayList<String> randomCategories() {
+    public ArrayList<String> randomCategories() {
         ArrayList<String> randomCategories = new ArrayList<>();
         boolean flag = false;
         for (String s : categories) {
-            int questionCount=0;
+            int questionCount = 0;
             for (Question q : availableQuestions) {
                 if (q.getCategory().equals(s) && !randomCategories.contains(s)) {
                     questionCount++;
-                    if(questionCount>4) {
+                    if (questionCount > 4) {
                         randomCategories.add(s);
                         flag = true;
                         break;
@@ -198,8 +219,8 @@ public class Game {
                 categories.remove(s);
         }
         Collections.shuffle(randomCategories);
-        if (randomCategories.size()<4){
-            for (int i=randomCategories.size(); i<4;i++)
+        if (randomCategories.size() < 4) {
+            for (int i = randomCategories.size(); i < 4; i++)
                 randomCategories.add("");
         }
         return randomCategories;
@@ -207,9 +228,10 @@ public class Game {
 
     /**
      * If the key that was pressed belongs to the controls of a player, it checks if the answer corresponding to that key is correct.
-     * @param answer Char containing the player's answer.
-     * @param question Questions Object containing the current question.
-     * @param currentRound String containing the name of the current round.
+     *
+     * @param answer                    Char containing the player's answer.
+     * @param question                  Questions Object containing the current question.
+     * @param currentRound              String containing the name of the current round.
      * @param currentRoundTypeParameter Integer containing  a parameter that may be required by a certain round type.
      * @return 1 if the key belongs to a player's controls, otherwise 0.
      */
@@ -231,6 +253,7 @@ public class Game {
 
     /**
      * If the key that was pressed belongs to the controls of a player, it sets the players bet equal to the bet corresponding to that key.
+     *
      * @param answer Char containing the player's answer.
      * @return 1 if the key belongs to a player's controls, otherwise 0.
      */
@@ -240,7 +263,7 @@ public class Game {
             for (int i = 0; i < 4; i++)
                 if (Character.toUpperCase(answer) == p.getControl(i).charAt(0) && !p.getHasAnswered()) {
                     p.setHasAnswered(true);
-                    p.setBet((i+1) * 250);
+                    p.setBet((i + 1) * 250);
                     return 1;
                 }
         }
@@ -251,15 +274,15 @@ public class Game {
      * Sorts players by points.
      */
 
-    public void sortPlayersByPoints(){
-        for (int i=1; i<=players.size()-1;i++){
-            for (int j=1;j<=players.size()-i;j++){
-                Player first=players.get(j-1);
-                Player second=players.get(j);
-                if (first.getPoints()<second.getPoints()){
-                    Player temp=players.get(j-1);
-                    players.set(j-1,players.get(j));
-                    players.set(j,temp);
+    public void sortPlayersByPoints() {
+        for (int i = 1; i <= players.size() - 1; i++) {
+            for (int j = 1; j <= players.size() - i; j++) {
+                Player first = players.get(j - 1);
+                Player second = players.get(j);
+                if (first.getPoints() < second.getPoints()) {
+                    Player temp = players.get(j - 1);
+                    players.set(j - 1, players.get(j));
+                    players.set(j, temp);
                 }
             }
         }
@@ -267,33 +290,33 @@ public class Game {
 
     /**
      * Adds/updates the current game's player stats to the Player Stats.txt.
+     *
      * @throws IOException if stream to file cannot be written to or closed.
      */
 
     public void addStats() throws IOException {
-        File oldFile=new File("Player Stats.txt");
-        Writer writer= new BufferedWriter(new FileWriter(oldFile, true));
-        Scanner scanner=new Scanner(oldFile);
+        File oldFile = new File("Player Stats.txt");
+        Writer writer = new BufferedWriter(new FileWriter(oldFile, true));
+        Scanner scanner = new Scanner(oldFile);
         if (!scanner.hasNextLine()) {
             for (Player p : players) {
                 writer.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
             }
             scanner.close();
             writer.close();
-        }
-        else {
+        } else {
             // For every player saved in the txt file, checks if they have played on the current game.
             // If their score on the current game is higher than their score on the txt, their multiplayer wins on the txt file are added to their current wins.
             // Otherwise, the player's current game stats are swapped with their stats from the txt file, after their multiplayer wins have been updated.
-            ArrayList<Player> toRemove=new ArrayList<>(); //Contains the Player Objects that will be removed from the players ArrayList.
-            ArrayList<Player> toAdd=new ArrayList<>(); //Contains the Player Objects that will be added to the players ArrayList.
+            ArrayList<Player> toRemove = new ArrayList<>(); //Contains the Player Objects that will be removed from the players ArrayList.
+            ArrayList<Player> toAdd = new ArrayList<>(); //Contains the Player Objects that will be added to the players ArrayList.
             while (scanner.hasNextLine()) {
-                boolean flag=false;
-                Player tempPlayer=new Player(); //Temporary Player Object created from the current line of the txt file.
+                boolean flag = false;
+                Player tempPlayer = new Player(); //Temporary Player Object created from the current line of the txt file.
                 tempPlayer.setUsername(scanner.next());
                 tempPlayer.setPoints(scanner.nextInt());
                 tempPlayer.setMultiplayerWins(scanner.nextInt());
-                for (Player p: players){
+                for (Player p : players) {
                     if (tempPlayer.getUsername().equals(p.getUsername())) {
                         if (tempPlayer.getPoints() > p.getPoints()) {
                             tempPlayer.setMultiplayerWins(tempPlayer.getMultiplayerWins() + p.getMultiplayerWins());
@@ -317,27 +340,14 @@ public class Game {
             scanner.close();
             writer.close();
             Files.deleteIfExists(Paths.get("Player Stats.txt"));
-            Writer newWriter= new BufferedWriter(new FileWriter("Player Stats.txt", true));
-            for (Player p : players){
-                if (!p.getUsername().equals(players.get(players.size()-1).getUsername()))
+            Writer newWriter = new BufferedWriter(new FileWriter("Player Stats.txt", true));
+            for (Player p : players) {
+                if (!p.getUsername().equals(players.get(players.size() - 1).getUsername()))
                     newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
                 else
                     newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins()));
             }
             newWriter.close();
         }
-    }
-
-    /**
-     * Resets questions and essential round types and deletes the players of the current game.
-     * @param questions Holds the directory of the questions folder.
-     * @throws FileNotFoundException if a file is not found.
-     */
-
-    public void restartGame(File [] questions) throws FileNotFoundException {
-        availableQuestions.clear();
-        loadQuestions(questions);
-        getRound().addEssentialRoundTypes();
-        players.clear();
     }
 }
