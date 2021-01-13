@@ -2,11 +2,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -269,45 +269,6 @@ public class GameTest {
         for (int i=0; i<3; i++) {
             assertEquals(correctUsernames.get(i), testGame.getPlayers().get(i).getUsername());
             assertEquals((int)correctPoints.get(i),testGame.getPlayers().get(i).getPoints());
-
-        }
-    }
-
-    /**
-     * Tests addStats.
-     * @throws IOException if stream to file cannot be written to or closed
-     */
-
-    @Test
-    public void addStats() throws IOException {
-        // Creates 2 player whose usernames cannot exist in the Player Stats file.
-        // The first player's points are higher than any possible highscore, while the second one's are lower than any possible lowscore.
-        // When all the players from the Player Stats file are added, all players are sorted by points,
-        // so that the first player is definitely on top, while the second one is definitely on the bottom.
-        // Finally they are removed from the players ArrayList, which then is saved on the Player Stats file, thus reverting it to its previous state.
-        Player testPlayer1 = new Player();
-        testPlayer1.setUsername("123456789012345");
-        testPlayer1.setPoints(999999999);
-        Player testPlayer2 = new Player();
-        testPlayer2.setUsername("12345678901234567890");
-        testPlayer2.setPoints(-999999999);
-        testGame.getPlayers().add(testPlayer1);
-        testGame.getPlayers().add(testPlayer2);
-        testGame.addStats();
-        testGame.sortPlayersByPoints();
-        testGame.addStats();
-        assertEquals(999999999,testGame.getPlayers().get(0).getPoints());
-        assertEquals(-999999999,testGame.getPlayers().get(testGame.getPlayers().size()-1).getPoints());
-        testGame.getPlayers().remove(testPlayer1);
-        testGame.getPlayers().remove(testPlayer2);
-
-        Files.deleteIfExists(Paths.get("Player Stats.txt"));
-        if (testGame.getPlayers().size()!=0){
-            Writer newWriter = new BufferedWriter(new FileWriter("Player Stats.txt", true));
-            for (Player p : testGame.getPlayers()) {
-                newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
-            }
-            newWriter.close();
         }
     }
 }
