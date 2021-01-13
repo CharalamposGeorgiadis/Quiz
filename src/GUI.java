@@ -1069,10 +1069,6 @@ public class GUI {
         }
         try {
             game.addStats();
-            game.getPlayerStats().getMultiplayerWins().clear();
-            game.getPlayerStats().getHighScores().clear();
-            game.getPlayerStats().getUsernames().clear();
-            statsExist = game.getPlayerStats().loadPlayerStats();
         } catch (IOException e) {
             e.printStackTrace();
         }
