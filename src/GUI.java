@@ -32,14 +32,21 @@ public class GUI {
         window.setSize(970, 550);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
+        window.setLayout(new GridLayout());
         window.setLocationRelativeTo(null);
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        window.setUndecorated(true);
+
+        Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+        window.setSize(screenSize.width,screenSize.height);
 
         //Displays the Main Menu screen.
-        mainLabel = new JLabel(new ImageIcon("MainMenu.png"));
+        mainLabel = new JLabel();
         window.add(mainLabel);
+        setFullscreenImage(mainLabel,"Backgrounds/MainMenu.png");
 
         //Adds an exit button to the current screen.
-        exitButton(mainLabel,null,null, 698, 75, 140, 140, "MainMenuDark.png", "MainMenu.png");
+        exitButton(mainLabel,null,null, 698, 75, 140, 140, "Backgrounds/MainMenuDark.png", "Backgrounds/MainMenu.png");
 
         //Creates custom font from file.
         neonFont = Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")).deriveFont(60f);
@@ -84,7 +91,8 @@ public class GUI {
 
     public void leaderboards(boolean statsExist) {
         //Displays the Leaderboard screen.
-        JLabel mainLeaderboardLabel = new JLabel((new ImageIcon("LeaderBoard.png")));
+        JLabel mainLeaderboardLabel = new JLabel();
+        setFullscreenImage(mainLeaderboardLabel,"Backgrounds/LeaderBoard.png");
         changeScene(mainLabel, mainLeaderboardLabel);
         //Adds a "LEADERBOARDS" title to the label.
         JTextArea leaderboardTitle = new JTextArea("LEADERBOARDS");
@@ -120,7 +128,7 @@ public class GUI {
             leaderboardTitle.setText("NO STATS FILE\n     FOUND");
         }
         //Adds a Back button to the current screen.
-        backButton(mainLeaderboardLabel, mainLabel,null, neonFont.deriveFont(40f), Color.red,90,78,140,50,"LeaderBoard.png","LeaderBoard.png","");
+        backButton(mainLeaderboardLabel, mainLabel,null, neonFont.deriveFont(40f), Color.red,90,78,140,50,"Backgrounds/LeaderBoard.png","Backgrounds/LeaderBoard.png","");
     }
 
     /**
@@ -131,7 +139,8 @@ public class GUI {
 
     public void viewSelectedLeaderboards(JLabel mainLeaderboardLabel, String chosenSorting){
         //Displays the highscore leaderboard screen.
-        JLabel currentLeaderboardLabel = new JLabel(new ImageIcon("Leaderboard.png"));
+        JLabel currentLeaderboardLabel = new JLabel();
+        setFullscreenImage(currentLeaderboardLabel,"Backgrounds/LeaderBoard.png");
         changeScene(mainLeaderboardLabel,currentLeaderboardLabel);
 
         //Displays the current Leaderboards title title.
@@ -170,7 +179,7 @@ public class GUI {
         SwingUtilities.invokeLater(() -> scroll.getViewport().setViewPosition(new Point(0, 0)));
 
         //Adds a Back button to the current screen.
-        backButton(currentLeaderboardLabel,mainLeaderboardLabel,null,neonFont.deriveFont(40f),Color.red,90,78,140,50,"LeaderBoard.png","LeaderBoard.png","");
+        backButton(currentLeaderboardLabel,mainLeaderboardLabel,null,neonFont.deriveFont(40f),Color.red,90,78,140,50,"Backgrounds/LeaderBoard.png","Backgrounds/LeaderBoard.png","");
     }
 
     /**
@@ -179,7 +188,8 @@ public class GUI {
 
     public void enterNumberOfPlayers(){
         //Displays the "ENTER NUMBER OF PLAYERS" screen.
-        JLabel choosePlayersLabel = new JLabel((new ImageIcon("SetControls.png")));
+        JLabel choosePlayersLabel = new JLabel();
+        setFullscreenImage(choosePlayersLabel,"Backgrounds/SetControls.png");
         changeScene(mainLabel,choosePlayersLabel);
 
         //Displays the "ENTER NUMBER OF PLAYERS" title text.
@@ -191,7 +201,7 @@ public class GUI {
         setAreaParameters(maxPlayersArea,neonFont.deriveFont(30f),Color.ORANGE,310,220,350,80, choosePlayersLabel);
 
         //Adds a Back button to the current screen.
-        backButton(choosePlayersLabel,mainLabel,null,null,null,698,75,140,140,"SetControlsDark.png","SetControls.png","ALL");
+        backButton(choosePlayersLabel,mainLabel,null,null,null,698,75,140,140,"Backgrounds/SetControlsDark.png","Backgrounds/SetControls.png","ALL");
 
         //Creates the TextField where the player(s) enter their chosen number of players.
         JTextField chooseNumberField= new JTextField();
@@ -230,7 +240,8 @@ public class GUI {
     public void enterUsername(int numberOfPlayers, JLabel currentLabel,JTextField chooseNumberField){
         final int[] currentPlayer = {1};
         //Displays the "Enter Username" screen.
-        JLabel usernameLabel= new JLabel(new ImageIcon("EnterUsername.png"));
+        JLabel usernameLabel= new JLabel();
+        setFullscreenImage(usernameLabel,"Backgrounds/EnterUsername.png");
         changeScene(currentLabel,usernameLabel);
 
         //Creates the "Enter Username For.." title text.
@@ -243,7 +254,7 @@ public class GUI {
         enterUsernameText.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
 
         //Adds a Back button to the current screen.
-        backButton(usernameLabel,currentLabel,chooseNumberField,null,null,698,75,140,140,"EnterUsernameDark.png","EnterUsername.png","ALL");
+        backButton(usernameLabel,currentLabel,chooseNumberField,null,null,698,75,140,140,"Backgrounds/EnterUsernameDark.png","Backgrounds/EnterUsername.png","ALL");
 
         //Creates the Area where "(Max characters: 14)" will be displayed.
         JTextArea maxCharactersArea=new JTextArea("(Max characters: 14)");
@@ -286,7 +297,8 @@ public class GUI {
 
     public void setControls(JLabel currentLabel,JTextField enterUsernameText){
         //Displays the "Set Controls" screen.
-        JLabel setControlsLabel=new JLabel(new ImageIcon("SetControls.png"));
+        JLabel setControlsLabel=new JLabel();
+        setFullscreenImage(setControlsLabel,"Backgrounds/SetControls.png");
         changeScene(currentLabel,setControlsLabel);
 
         //Creates the "Set Controls For" title text.
@@ -304,7 +316,7 @@ public class GUI {
         setControlField.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
 
         //Adds a Back button to the current screen.
-        backButton(setControlsLabel,currentLabel,enterUsernameText,null,null,698,75,140,140,"SetControlsDark.png","SetControls.png","ALL");
+        backButton(setControlsLabel,currentLabel,enterUsernameText,null,null,698,75,140,140,"Backgrounds/SetControlsDark.png","Backgrounds/SetControls.png","ALL");
 
         //Displays the control that is currently set by the player
         JTextArea currentControlArea=new JTextArea("ANSWER A:");
@@ -364,7 +376,8 @@ public class GUI {
 
     public void youCanView(JLabel currentLabel,JTextField setControlField){
         //Displays the "You can view each player's controls by clicking:.." screen.
-        JLabel youCanViewLabel= new JLabel(new ImageIcon("YouCanView.png"));
+        JLabel youCanViewLabel= new JLabel();
+        setFullscreenImage(youCanViewLabel,"Backgrounds/YouCanView.png");
         changeScene(currentLabel, youCanViewLabel);
         requestFocusIfClicked(youCanViewLabel,youCanViewLabel);
 
@@ -387,10 +400,10 @@ public class GUI {
         });
 
         //Adds a Back button to the current screen.
-        backButton(youCanViewLabel,currentLabel,setControlField,null,null,0,0,100,100,"YouCanViewDarkBack.png","YouCanView.png","CONTROLS");
+        backButton(youCanViewLabel,currentLabel,setControlField,null,null,0,0,100,100,"Backgrounds/YouCanViewDarkBack.png","Backgrounds/YouCanView.png","CONTROLS");
 
         //Adds an exit button to the current screen.
-        exitButton(youCanViewLabel,null,null,855,0,100,100, "YouCanViewDarkX.png","YouCanView.png" );
+        exitButton(youCanViewLabel,null,null,855,0,100,100, "Backgrounds/YouCanViewDarkX.png","Backgrounds/YouCanView.png" );
     }
 
     /**
@@ -402,15 +415,16 @@ public class GUI {
         if (game.getPlayers().size()>1)
             game.getRound().addMultiplayerRounds();
         //Displays the "Choose Category" screen.
-        JLabel chooseCategoryLabel = new JLabel(new ImageIcon("ChooseCategory.png"));
+        JLabel chooseCategoryLabel = new JLabel();
+        setFullscreenImage(chooseCategoryLabel,"Backgrounds/ChooseCategory.png");
         changeScene(currentLabel, chooseCategoryLabel);
         requestFocusIfClicked(chooseCategoryLabel,chooseCategoryLabel);
 
         //Add a CONTROLS button.
-        controlsButton(chooseCategoryLabel,null,null,0,0,100,100,"ChooseCategoryDarkC.png","ChooseCategory.png");
+        controlsButton(chooseCategoryLabel,null,null,0,0,100,100,"Backgrounds/ChooseCategoryDarkC.png","Backgrounds/ChooseCategory.png");
 
         //Adds an exit button to the current screen.
-        exitButton(chooseCategoryLabel, null,null,855, 0, 100, 100, "ChooseCategoryDarkX.png", "ChooseCategory.png");
+        exitButton(chooseCategoryLabel, null,null,855, 0, 100, 100, "Backgrounds/ChooseCategoryDarkX.png", "Backgrounds/ChooseCategory.png");
         //final String[][] randomCategories = {game.randomCategories()};
         final ArrayList<String>[] randomCategories = new ArrayList[]{game.randomCategories()};
 
@@ -486,7 +500,8 @@ public class GUI {
 
     public void proceedToRound(JLabel currentLabel, String chosenCategory) {
         //Displays the "Current Round" screen.
-        JLabel currentRoundLabel = new JLabel(new ImageIcon("CurrentRound.png"));
+        JLabel currentRoundLabel = new JLabel();
+        setFullscreenImage(currentRoundLabel,"Backgrounds/CurrentRound.png");
         changeScene(currentLabel, currentRoundLabel);
 
         //Displays the "Current Round" title.
@@ -502,7 +517,7 @@ public class GUI {
         descriptionArea.setWrapStyleWord(true);
 
         //Adds an exit button to the current screen.
-        exitButton(currentRoundLabel, null,null,855, 0, 100, 100, "CurrentRoundDarkX.png", "CurrentRound.png");
+        exitButton(currentRoundLabel, null,null,855, 0, 100, 100, "Backgrounds/CurrentRoundDarkX.png", "Backgrounds/CurrentRound.png");
 
         switch (game.getRound().getRoundTypes().get(0)) {
             case "RIGHT ANSWER":
@@ -543,12 +558,13 @@ public class GUI {
 
     public void startRound(String currentRound, JLabel currentLabel, String chosenCategory,JLabel chooseCategoryLabel){
         //Displays the "Questions" screen.
-        JLabel questionsLabel=new JLabel(new ImageIcon("Questions.png"));
+        JLabel questionsLabel=new JLabel();
+        setFullscreenImage(questionsLabel,"Backgrounds/Questions.png");
         changeScene(currentLabel,questionsLabel);
         requestFocusIfClicked(questionsLabel,questionsLabel);
 
         //Adds an exit button to the current screen.
-        exitButton(questionsLabel,null,null,855,0,100,100, "QuestionsDark.png","Questions.png" );
+        exitButton(questionsLabel,null,null,855,0,100,100, "Backgrounds/QuestionsDark.png","Backgrounds/Questions.png" );
 
         Font questionFont=new Font("Arial",Font.PLAIN, 20);
         //Displays the questions
@@ -860,7 +876,8 @@ public class GUI {
 
     public void viewControls(JLabel currentLabel){
         //Displays the "View Controls" screen.
-        JLabel viewControlsLabel=new JLabel(new ImageIcon("LeaderBoard.png"));
+        JLabel viewControlsLabel=new JLabel();
+        setFullscreenImage(viewControlsLabel,"Backgrounds/LeaderBoard.png");
         changeScene(currentLabel, viewControlsLabel);
 
         //Displays the "CONTROLS" title.
@@ -918,7 +935,7 @@ public class GUI {
         setScrollPaneParameters(scroll,110,150,720,280, viewControlsLabel);
 
         //Adds a Back button to the current screen.
-        backButton(viewControlsLabel,currentLabel,null,neonFont.deriveFont(40f),Color.red,60,78,200,50,"LeaderBoard.png","LeaderBoard.png","");
+        backButton(viewControlsLabel,currentLabel,null,neonFont.deriveFont(40f),Color.red,60,78,200,50,"Backgrounds/LeaderBoard.png","Backgrounds/LeaderBoard.png","");
     }
 
     /**
@@ -932,7 +949,8 @@ public class GUI {
 
     public void resultScreen(JLabel currentLabel, String correctAnswer,boolean hasEnded, boolean thermometer){
         //Displays the current question's result screen.
-        JLabel resultScreenLabel=new JLabel(new ImageIcon("CurrentRound.png"));
+        JLabel resultScreenLabel=new JLabel();
+        setFullscreenImage(resultScreenLabel,"Backgrounds/CurrentRound.png");
         changeScene(currentLabel,resultScreenLabel);
 
         //Displays the "The Correct Answer is:" title.
@@ -945,7 +963,7 @@ public class GUI {
         correctAnswerField.setEditable(false);
 
         //Adds an exit button to the current screen.
-        exitButton(resultScreenLabel,null,null,855,0,100,100, "CurrentRoundDarkX.png","CurrentRound.png" );
+        exitButton(resultScreenLabel,null,null,855,0,100,100, "Backgrounds/CurrentRoundDarkX.png","Backgrounds/CurrentRound.png" );
 
         //Displays Player Username and Points.
         switch(game.getPlayers().size()){
@@ -1032,7 +1050,8 @@ public class GUI {
 
     public void endgameScreen(JLabel currentLabel){
         //Displays the endgame Screen.
-        JLabel endScreenLabel=new JLabel (new ImageIcon("Endgame.png"));
+        JLabel endScreenLabel=new JLabel();
+        setFullscreenImage(endScreenLabel,"Backgrounds/Endgame.png");
         changeScene(currentLabel,endScreenLabel);
 
         //Displays "Game Finished" title.
@@ -1071,7 +1090,7 @@ public class GUI {
             e.printStackTrace();
         }
         //Creates a "EXIT" button.
-        exitButton(endScreenLabel,neonFont.deriveFont(50f),Color.green,650,100,250,100,"Endgame.png","Endgame.png");
+        exitButton(endScreenLabel,neonFont.deriveFont(50f),Color.green,650,100,250,100,"Backgrounds/Endgame.png","Backgrounds/Endgame.png");
     }
 
     /**
@@ -1189,10 +1208,10 @@ public class GUI {
             }
             //Adds hovering effect to the Exit button.
             public void mouseEntered(MouseEvent e){
-                currentLabel.setIcon(new ImageIcon(buttonDark));
+                setFullscreenImage(currentLabel,buttonDark);
             }
             public void mouseExited(MouseEvent e){
-                currentLabel.setIcon(new ImageIcon(buttonNotDark));
+                setFullscreenImage(currentLabel,buttonNotDark);
             }
         });
     }
@@ -1239,8 +1258,8 @@ public class GUI {
                 }
             }
             //Adds hovering effect to the Back button.
-            public void mouseEntered (MouseEvent e){ currentLabel.setIcon(new ImageIcon(buttonDark)); }
-            public void mouseExited (MouseEvent e){ currentLabel.setIcon(new ImageIcon(buttonNotDark)); }
+            public void mouseEntered (MouseEvent e){ setFullscreenImage(currentLabel,buttonDark);}
+            public void mouseExited (MouseEvent e){ setFullscreenImage(currentLabel,buttonNotDark);}
         });
     }
 
@@ -1258,6 +1277,20 @@ public class GUI {
                 currentLabel.requestFocus();
             }
         });
+    }
+
+    /**
+     * Sets the size of the background image equal to the screen size.
+     * @param currentLabel JLabel containing the current label.
+     * @param imageName String containing the name of the current image file.
+     */
+
+    public void setFullscreenImage(JLabel currentLabel, String imageName){
+        ImageIcon a=new ImageIcon(imageName);
+        Image image=a.getImage();
+        Image mainImage=image.getScaledInstance(window.getWidth(),window.getHeight(),image.SCALE_SMOOTH);
+        ImageIcon finalImage=new ImageIcon(mainImage);
+        currentLabel.setIcon(finalImage);
     }
 
     /**
