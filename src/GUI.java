@@ -45,7 +45,7 @@ public class GUI {
 
 
         //Displays the Main Menu screen.
-        mainLabel = new JLabel("Backgrounds/MainMenu.png");
+        mainLabel = new JLabel();
         window.add(mainLabel);
         setFullscreenImage(mainLabel,"Backgrounds/MainMenu.png");
 
