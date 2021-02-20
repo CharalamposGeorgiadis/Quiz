@@ -43,6 +43,7 @@ public class GUI {
         device.setFullScreenWindow(window);
         Dimension screenSize=new Dimension(window.getWidth(),window.getHeight());
 
+
         //Displays the Main Menu screen.
         mainLabel = new JLabel("Backgrounds/MainMenu.png");
         window.add(mainLabel);
