@@ -19,6 +19,8 @@ public class GUI {
     private Game game; // Game Object that grants access to the game functions.
     private boolean statsExist; // Boolean containing whether the stats file exists or not.
 
+    private GraphicsDevice device;
+
     /**
      * Constructor.
      * @param questions Holds the directory of the questions folder.
@@ -27,26 +29,27 @@ public class GUI {
      */
 
     public GUI(File[] questions) throws IOException, FontFormatException {
+
+        GraphicsEnvironment environment=GraphicsEnvironment.getLocalGraphicsEnvironment();
+        device=environment.getDefaultScreenDevice();
+
         //Creates the Main frame of the game.
         window = new JFrame("Buzz");
-        window.setSize(970, 550);
+        //window.setSize(970, 550);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setLayout(new GridLayout());
         window.setLocationRelativeTo(null);
-        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        window.setUndecorated(true);
-
-        Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        window.setSize(screenSize.width,screenSize.height);
+        device.setFullScreenWindow(window);
+        Dimension screenSize=new Dimension(window.getWidth(),window.getHeight());
 
         //Displays the Main Menu screen.
-        mainLabel = new JLabel();
+        mainLabel = new JLabel("Backgrounds/MainMenu.png");
         window.add(mainLabel);
         setFullscreenImage(mainLabel,"Backgrounds/MainMenu.png");
 
         //Adds an exit button to the current screen.
-        exitButton(mainLabel,null,null, 698, 75, 140, 140, "Backgrounds/MainMenuDark.png", "Backgrounds/MainMenu.png");
+        exitButton(mainLabel,null,null, screenSize.width*698/970, screenSize.height*75/550, screenSize.width*140/970, screenSize.height*140/550, "Backgrounds/MainMenuDark.png", "Backgrounds/MainMenu.png");
 
         //Creates custom font from file.
         neonFont = Font.createFont(Font.TRUETYPE_FONT, new File("neon2.ttf")).deriveFont(60f);
@@ -57,7 +60,7 @@ public class GUI {
 
             //Creates the Start Game button.
             JButton startButton = new JButton("START GAME");
-            setButtonParameters(startButton,neonFont.deriveFont(60f),Color.orange,225,205,500,60, mainLabel);
+            setButtonParameters(startButton,neonFont.deriveFont(screenSize.width*60/970f),Color.orange,screenSize.width*225/970,screenSize.height*205/550,screenSize.width*500/970,screenSize.height*60/550, mainLabel);
             startButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -68,7 +71,7 @@ public class GUI {
             });
             //Creates the Leaderboards button.
             JButton leaderboardButton = new JButton("LEADERBOARDS");
-            setButtonParameters(leaderboardButton, neonFont.deriveFont(60f), Color.orange,225,295,500,60, mainLabel);
+            setButtonParameters(leaderboardButton, neonFont.deriveFont(screenSize.width*60/970f), Color.orange,screenSize.width*225/970,screenSize.height*295/550,screenSize.width*500/970,screenSize.height*60/550, mainLabel);
             leaderboardButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -1328,7 +1331,7 @@ public class GUI {
     public void setButtonParameters(JButton currentButton,Font font, Color color,int x,int y,int width,int height, JLabel currentLabel){
         setMainComponentParameters(currentButton,font,color,x,y,width,height,currentLabel);
         currentButton.setContentAreaFilled(false);
-        currentButton.setBorderPainted(false);
+        //currentButton.setBorderPainted(false);
         currentButton.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
