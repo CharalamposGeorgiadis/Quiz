@@ -1,6 +1,6 @@
+import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-
 /**
  * Main class of the application.
  * @author Anastasios Kachrimanis
@@ -17,7 +17,7 @@ public class Main {
      * @throws FontFormatException if a specified font is bad.
      */
 
-    public static void main(String[] args) throws IOException, FontFormatException {
+    public static void main(String[] args) throws IOException, FontFormatException, ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         File path = new File("Buzz Questions Directory");
         File[] questions = path.listFiles();
         GUI gui = new GUI(questions);

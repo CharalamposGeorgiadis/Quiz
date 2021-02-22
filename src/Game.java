@@ -16,6 +16,7 @@ public class Game {
     private HashSet<String> categories; // HashSet of Strings that holds the name of each category once.
     private Round round; // Round Object tha grants access to Round methods.
     private PlayerStats playerStats; // PlayerStats Object that grants access to Player Stats.
+    private String[] teams; // ArrayList of Strings that holds the name of each team.
 
     /**
      * Constructor.
@@ -115,6 +116,14 @@ public class Game {
         return playerStats;
     }
 
+    public String[] getTeams(){return teams;}
+
+    public void createTeams(int numberOfTeams){
+        teams=new String[numberOfTeams];
+        teams[0]="TEAM_1";
+        teams[1]="TEAM_2";
+    }
+
     /**
      * Resets the hasAnswered variable of every player to false.
      */
@@ -145,6 +154,18 @@ public class Game {
             return q;
         }
         return null;
+    }
+
+
+    public boolean checkIfTeamIsFilled(int teamNumber){
+        int count=0;
+        for (Player p:getPlayers())
+            if (p.getTeam() != 0)
+                if (p.getTeam()==teamNumber)
+                    count++;
+        if (count==getPlayers().size()/2)
+            return true;
+        return false;
     }
 
     /**

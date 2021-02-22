@@ -105,12 +105,9 @@ public class Round {
                     currentPlayer.setPoints(currentPlayer.getPoints()+ (int)(currentRoundParameter*0.2));
                 break;
             case "FASTEST FINGER":
-                if (answered){
+                if (answered) {
                     totalAnswered++;
-                    if (totalAnswered == 1)
-                        currentPlayer.setPoints(currentPlayer.getPoints()+1000);
-                    else if (totalAnswered == 2)
-                        currentPlayer.setPoints(currentPlayer.getPoints()+500);
+                    currentPlayer.setPoints(currentPlayer.getPoints() + 1000-250*(totalAnswered-1));
                 }
                 if (totalAnswered == totalPlayers)
                     totalAnswered = 0;
