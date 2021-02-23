@@ -366,10 +366,116 @@ public class GUI {
                     else
                         tempString=tempString.trim();
                     game.getTeams()[finalI] = tempString;
+                    teamFields[finalI].setText(tempString);
                 }
             });
         }
+        //Displays the usernames of each player. Can be upgraded for more players.
+        int [] usernamePosition=new int[game.getPlayers().size()];
+        for (int i=0;i<usernamePosition.length;i++){
+            usernamePosition[i]=0;
+        }
+        //Displays arrow buttons for each player.
+        JButton [][] arrowButtons=new JButton[4][2];
+        for (int i=0;i<game.getPlayers().size();i++){
+            arrowButtons[i][0]=new JButton();
+            arrowButtons[i][0].setIcon(new ImageIcon("Backgrounds/Arrow_Left.png"));
+            setButtonParameters(arrowButtons[i][0],null,null,381,420+50*i,40,40,setUpTeamsLabel);
+            arrowButtons[i][1]=new JButton();
+            arrowButtons[i][1].setIcon(new ImageIcon("Backgrounds/Arrow_Right.png"));
+            setButtonParameters(arrowButtons[i][1],null,null,939,420+50*i,40,40,setUpTeamsLabel);
+        }
+        //Displays each players usernames.
+        JTextField [] usernames=new JTextField[4];
+        for (int i=0;i<4;i++){
+            usernames[i]=new JTextField();
+            usernames[i].setText(game.getPlayers().get(i).getUsername());
+            setFieldParameters(usernames[i],neonFont.deriveFont(40f),Color.CYAN,420,420+50*i,520,40,setUpTeamsLabel);
+            usernames[i].setEditable(false);
+        }
 
+        for (int i=0;i<game.getPlayers().size();i++){
+            final int position=i;
+            arrowButtons[i][0].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    usernamePosition[position]--;
+                    if (usernamePosition[position] == -1) {
+                        game.getPlayers().get(position).setTeam(1);
+                        if (game.checkIfTeamIsFilled(1) && game.checkIfTeamIsFilled(2))
+                            nextButton.setVisible(true);
+                        game.getTeams()[0]=teamFields[0].getText().toUpperCase();
+                        arrowButtons[position][0].setVisible(false);
+                        arrowButtons[position][1].setVisible(true);
+                        arrowButtons[position][1].setBounds(719, 420 + 50 * position, 40, 40);
+                        usernames[position].setBounds(200, 420 + 50 * position, 520, 40);
+                        if (game.checkIfTeamIsFilled(1)) {
+                            for (int j = 0; j < 4; j++) {
+                                if (arrowButtons[j][0].getBounds().x == 381)
+                                    arrowButtons[j][0].setVisible(false);
+                            }
+                        }
+                    } else if (usernamePosition[position] == 0) {
+                        game.getPlayers().get(position).setTeam(0);
+                        nextButton.setVisible(false);
+                        arrowButtons[position][1].setBounds(939, 420 + 50 * position, 40, 40);
+                        usernames[position].setBounds(420, 420 + 50 * position, 520, 40);
+                        arrowButtons[position][0].setBounds(381, 420 + 50 * position, 40, 40);
+                        for (int j=0;j<4;j++) {
+                            if (arrowButtons[j][0].getBounds().x == 381)
+                                arrowButtons[j][1].setVisible(true);
+                        }
+                        if (game.checkIfTeamIsFilled(1)) {
+                            for (int j = 0; j < 4; j++) {
+                                if (arrowButtons[j][0].getBounds().x == 381)
+                                    arrowButtons[j][0].setVisible(false);
+                            }
+                        }
+                    }
+                }
+            });
+            arrowButtons[i][1].addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    usernamePosition[position]++;
+                    if (usernamePosition[position] == 1) {
+                        game.getPlayers().get(position).setTeam(2);
+                        if (game.checkIfTeamIsFilled(1) && game.checkIfTeamIsFilled(2))
+                            nextButton.setVisible(true);
+                        arrowButtons[position][1].setVisible(false);
+                        arrowButtons[position][0].setVisible(true);
+                        arrowButtons[position][0].setBounds(581,420+50*position,40,40);
+                        usernames[position].setBounds(620, 420+50*position, 520, 40);
+                        if (game.checkIfTeamIsFilled(2)){
+                            for (int j=0;j<4;j++) {
+                                if (arrowButtons[j][1].getBounds().x == 939)
+                                    arrowButtons[j][1].setVisible(false);
+                            }
+                        }
+                    }
+                    else if (usernamePosition[position] == 0) {
+                        game.getPlayers().get(position).setTeam(0);
+                        nextButton.setVisible(false);
+                        game.getTeams()[1]=teamFields[1].getText().toUpperCase();
+                        arrowButtons[position][0].setBounds(381,420+50*position,40,40);
+                        arrowButtons[position][1].setBounds(939,420+50*position,40,40);
+                        usernames[position].setBounds(420, 420+50*position, 520, 40);
+                        for (int j=0;j<4;j++) {
+                            if (arrowButtons[j][1].getBounds().x == 939)
+                                arrowButtons[j][0].setVisible(true);
+                        }
+                        if (game.checkIfTeamIsFilled(2)) {
+                            for (int j = 0; j < 4; j++) {
+                                if (arrowButtons[j][1].getBounds().x == 939)
+                                    arrowButtons[j][1].setVisible(false);
+                            }
+                        }
+                    }
+                }
+            });
+        }
         nextButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -391,120 +497,19 @@ public class GUI {
                 }
                 else {
                     invalidTeamName.setVisible(false);
-                    System.out.println(game.getTeams()[0]);
-                    System.out.println(game.getTeams()[1]);
+                    nextButton.setVisible(false);
+                    for (int i=0;i<game.getPlayers().size();i++){
+                        usernames[i].setBounds(420,420+50*i,520,40);
+                        arrowButtons[i][0].setBounds(381,420+50*i,40,40);
+                        arrowButtons[i][1].setBounds(939,420+50*i,40,40);
+                        arrowButtons[i][0].setVisible(true);
+                        arrowButtons[i][1].setVisible(true);
+                        usernamePosition[i]=0;
+                    }
+                    setControls(setUpTeamsLabel,null);
                 }
             }
         });
-
-        //Displays the usernames of each player. Can be upgraded for more players.
-        switch (game.getPlayers().size()){
-            case 4:
-                int [] usernamePosition=new int[4];
-                for (int i=0;i<usernamePosition.length;i++){
-                    usernamePosition[i]=0;
-                }
-                //Displays arrow buttons for each player.
-                JButton [][] arrowButtons=new JButton[4][2];
-                for (int i=0;i<4;i++){
-                    arrowButtons[i][0]=new JButton();
-                    arrowButtons[i][0].setIcon(new ImageIcon("Backgrounds/Arrow_Left.png"));
-                    setButtonParameters(arrowButtons[i][0],null,null,381,420+50*i,40,40,setUpTeamsLabel);
-                    arrowButtons[i][1]=new JButton();
-                    arrowButtons[i][1].setIcon(new ImageIcon("Backgrounds/Arrow_Right.png"));
-                    setButtonParameters(arrowButtons[i][1],null,null,939,420+50*i,40,40,setUpTeamsLabel);
-                }
-                //Displays each players usernames.
-                JTextField [] usernames=new JTextField[4];
-                for (int i=0;i<4;i++){
-                    usernames[i]=new JTextField();
-                    usernames[i].setText(game.getPlayers().get(i).getUsername());
-                    setFieldParameters(usernames[i],neonFont.deriveFont(40f),Color.CYAN,420,420+50*i,520,40,setUpTeamsLabel);
-                    usernames[i].setEditable(false);
-                }
-                for (int i=0;i<4;i++){
-                    int position=i;
-                    arrowButtons[i][0].addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            super.mouseClicked(e);
-                            usernamePosition[position]--;
-                            if (usernamePosition[position] == -1) {
-                                game.getPlayers().get(position).setTeam(1);
-                                if (game.checkIfTeamIsFilled(1) && game.checkIfTeamIsFilled(2))
-                                    nextButton.setVisible(true);
-                                game.getTeams()[0]=teamFields[0].getText().toUpperCase();
-                                arrowButtons[position][0].setVisible(false);
-                                arrowButtons[position][1].setVisible(true);
-                                arrowButtons[position][1].setBounds(719, 420 + 50 * position, 40, 40);
-                                usernames[position].setBounds(200, 420 + 50 * position, 520, 40);
-                                if (game.checkIfTeamIsFilled(1)) {
-                                    for (int j = 0; j < 4; j++) {
-                                        if (arrowButtons[j][0].getBounds().x == 381)
-                                            arrowButtons[j][0].setVisible(false);
-                                    }
-                                }
-                            } else if (usernamePosition[position] == 0) {
-                                game.getPlayers().get(position).setTeam(0);
-                                nextButton.setVisible(false);
-                                arrowButtons[position][1].setBounds(939, 420 + 50 * position, 40, 40);
-                                usernames[position].setBounds(420, 420 + 50 * position, 520, 40);
-                                arrowButtons[position][0].setBounds(381, 420 + 50 * position, 40, 40);
-                                for (int j=0;j<4;j++) {
-                                    if (arrowButtons[j][0].getBounds().x == 381)
-                                        arrowButtons[j][1].setVisible(true);
-                                }
-                                if (game.checkIfTeamIsFilled(1)) {
-                                    for (int j = 0; j < 4; j++) {
-                                        if (arrowButtons[j][0].getBounds().x == 381)
-                                            arrowButtons[j][0].setVisible(false);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                    arrowButtons[i][1].addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            super.mouseClicked(e);
-                                usernamePosition[position]++;
-                                if (usernamePosition[position] == 1) {
-                                    game.getPlayers().get(position).setTeam(2);
-                                    if (game.checkIfTeamIsFilled(1) && game.checkIfTeamIsFilled(2))
-                                        nextButton.setVisible(true);
-                                    arrowButtons[position][1].setVisible(false);
-                                    arrowButtons[position][0].setVisible(true);
-                                    arrowButtons[position][0].setBounds(581,420+50*position,40,40);
-                                    usernames[position].setBounds(620, 420+50*position, 520, 40);
-                                    if (game.checkIfTeamIsFilled(2)){
-                                        for (int j=0;j<4;j++) {
-                                            if (arrowButtons[j][1].getBounds().x == 939)
-                                                arrowButtons[j][1].setVisible(false);
-                                        }
-                                    }
-                                } else if (usernamePosition[position] == 0) {
-                                    game.getPlayers().get(position).setTeam(0);
-                                    nextButton.setVisible(false);
-                                    game.getTeams()[1]=teamFields[1].getText().toUpperCase();
-                                    arrowButtons[position][0].setBounds(381,420+50*position,40,40);
-                                    arrowButtons[position][1].setBounds(939,420+50*position,40,40);
-                                    usernames[position].setBounds(420, 420+50*position, 520, 40);
-                                    for (int j=0;j<4;j++) {
-                                        if (arrowButtons[j][1].getBounds().x == 939)
-                                            arrowButtons[j][0].setVisible(true);
-                                    }
-                                    if (game.checkIfTeamIsFilled(2)) {
-                                        for (int j = 0; j < 4; j++) {
-                                            if (arrowButtons[j][1].getBounds().x == 939)
-                                                arrowButtons[j][1].setVisible(false);
-                                        }
-                                    }
-                            }
-                        }
-                    });
-                }
-                break;
-        }
         //Adds a Back button to the current screen.
         backButton(setUpTeamsLabel,currentLabel,enterUsernameField,null,null,970, 80, 256 , 260,"Backgrounds/SecondaryMenuDark.png","Backgrounds/SecondaryMenu.png","ALL");
     }
@@ -534,9 +539,6 @@ public class GUI {
         JTextField setControlField= new JTextField();
         setFieldParameters(setControlField,neonFont.deriveFont(50f),Color.cyan,400,300,110,80, setControlsLabel);
         setControlField.requestFocusInWindow(); // Makes the cursor appear instantly at the textField.
-
-        //Adds a Back button to the current screen.
-        backButton(setControlsLabel,currentLabel,enterUsernameText,null,null,698,75,140,140,"Backgrounds/SetControlsDark.png","Backgrounds/SetControls.png","ALL");
 
         //Displays the control that is currently set by the player
         JTextArea currentControlArea=new JTextArea("ANSWER A:");
@@ -586,6 +588,11 @@ public class GUI {
                     }
             }
         });
+        //Adds a Back button to the current screen.
+        if (game.getTeams()[0]==null)
+            backButton(setControlsLabel,currentLabel,enterUsernameText,null,null,698,75,140,140,"Backgrounds/SetControlsDark.png","Backgrounds/SetControls.png","ALL");
+        else
+            backButton(setControlsLabel, currentLabel, enterUsernameText, null, null, 698, 75, 140, 140, "Backgrounds/SetControlsDark.png", "Backgrounds/SetControls.png", "TEAMS");
     }
 
     /**
@@ -1473,6 +1480,10 @@ public class GUI {
                         case "CONTROLS":
                             for (Player p:game.getPlayers())
                                 p.clearControls();
+                            break;
+                        case "TEAMS":
+                            for (Player p:game.getPlayers())
+                                p.setTeam(0);
                             break;
                     }
                 {
