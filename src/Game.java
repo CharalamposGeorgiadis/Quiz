@@ -173,12 +173,12 @@ public class Game {
      *
      * @param chosenUsername String containing the current player's chosen username.
      * @param currentPlayer  Integer containing the current player's position in the players ArrayList.
-     * @return -1 if the chosen username already exists in the current game. 0 if the chosen username's length is 0 or greater than 14,
+     * @return -1 if the chosen username already exists in the current game. 0 if the chosen username's length is 0 or greater than 12,
      * or consists only of empty spaces. 1 if the chosen username is valid.
      */
 
     public int enterUsernames(String chosenUsername, int currentPlayer) {
-        if (chosenUsername.length() != 0 && chosenUsername.length() < 15 && !chosenUsername.trim().isEmpty())
+        if (chosenUsername.length() != 0 && chosenUsername.length() < 13 && !chosenUsername.trim().isEmpty())
             for (Player p : players) {
                 if (chosenUsername.toUpperCase().equals(p.getUsername()))
                     return -1;
