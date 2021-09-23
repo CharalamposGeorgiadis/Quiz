@@ -99,8 +99,8 @@ public class Question {
     }
 
     /**
-     * Gets the question's accompanying media.
-     * @return String containing the question's accompanying media.
+     * Gets the question's accompanying media file.
+     * @return String containing the question's accompanying media file.
      */
 
     public String getMedia(){
@@ -108,8 +108,9 @@ public class Question {
     }
 
     /**
-     * Sets the question's accompanying media.
-     * @param media String containing the question's accompanying media. Media is NULL if the question is not accompanied by a media.
+     * Sets the question's accompanying media file.
+     * @param media String containing the question's accompanying media. Media is NULL if the question is not
+     *              accompanied by a media file.
      */
 
     public void setMedia(String media) {

@@ -11,11 +11,16 @@ public class Round {
 
     protected ArrayList<String> roundTypes; // List of Strings that holds the type of each round type.
     final String rightAnswerDescription=("Correct answers grant 1000 points, incorrect answers grant 0.");
-    final String bettingDescription=("Bet points for each question. Correct answers grant points equal to the ones you bet. Incorrect answers subtract the same amount.");
-    final String countdownDescription=("You have 6 seconds for each question. Correct answers grant points equal to the remaining time (in milliseconds)x0.2");
+    final String bettingDescription=("Bet points for each question. Correct answers grant points equal to the ones " +
+            "you bet. Incorrect answers subtract the same amount.");
+    final String countdownDescription=("You have 6 seconds for each question. Correct answers grant points equal to " +
+            "the remaining time (in milliseconds)x0.2");
     String fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 500.");
-    final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or if there are no more questions left, the game finishes.");
-    int totalAnswered; // Integer containing the total amount of players who have answered correctly in FASTEST FINGER.
+    final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or " +
+            "if there are no more questions left, the game finishes.");
+    int totalAnswered; // Integer containing the total amount of players who have answered in FASTEST FINGER.
+    int totalCorrect; // Integer containing the total amount of players who have answered correctly in FASTEST FINGER.
+
 
     /**
      * Constructor.
@@ -24,7 +29,8 @@ public class Round {
     public Round() {
         roundTypes = new ArrayList<>();
         addEssentialRoundTypes();
-        totalAnswered=0;
+        totalAnswered = 0;
+        totalCorrect = 0;
     }
 
     /**
@@ -61,11 +67,11 @@ public class Round {
     /**
      * Adds the essential rounds to the roundTypes ArrayList.
      */
-
-    public void addEssentialRoundTypes(){ //If a new round type that can be played in single and multiplayer is to be added, add its name in Capital letters.
+    //If a new round type that can be played in single and multiplayer is to be added, add its name in Capital letters.
+    public void addEssentialRoundTypes(){
         roundTypes.add("RIGHT ANSWER");
-        //roundTypes.add("BETTING");
-       // roundTypes.add("COUNTDOWN");
+        roundTypes.add("BETTING");
+        roundTypes.add("COUNTDOWN");
         Collections.shuffle(roundTypes);
     }
 
@@ -73,17 +79,17 @@ public class Round {
      * Adds the multiplayer rounds to the roundTypes ArrayList.
      * @param numberOfPlayers Integer containing the number of players for the current game.
      */
-
-    public void addMultiplayerRounds(int numberOfPlayers){ //If a new Multiplayer-only round is to be added, add its name in Capital letters.
-       // roundTypes.add("FASTEST FINGER");
-       // if (numberOfPlayers == 3)
-          //  fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 750, " +
-               //     "while the third one gains 500.");
-      //  else if (numberOfPlayers == 4)
-          //  fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 750, " +
-                 //   "the third one gains 500 and the fourth one gains 250.");
-        Collections.shuffle(roundTypes);
-        //roundTypes.add("THERMOMETER");
+    //If a new Multiplayer-only round is to be added, add its name in Capital letters.
+    public void addMultiplayerRounds(int numberOfPlayers){
+       roundTypes.add("FASTEST FINGER");
+       if (numberOfPlayers == 3)
+           fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 750, " +
+                    "while the third one gains 500.");
+       else if (numberOfPlayers == 4)
+           fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 750, " +
+                   "the third one gains 500 and the fourth one gains 250.");
+       Collections.shuffle(roundTypes);
+       roundTypes.add("THERMOMETER");
     }
 
     /**
@@ -95,7 +101,8 @@ public class Round {
      * @param totalPlayers Integer containing the total amount of players.
      */
 
-    public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,int totalPlayers){
+    public void calculatePoints(Boolean answered, String currentRound, Player currentPlayer, int currentRoundParameter,
+                                int totalPlayers){
         switch (currentRound){
             case "RIGHT ANSWER":
                 if (answered)
@@ -112,15 +119,18 @@ public class Round {
                     currentPlayer.setPoints(currentPlayer.getPoints()+ (int)(currentRoundParameter*0.2));
                 break;
             case "FASTEST FINGER":
+                totalAnswered++;
                 if (answered) {
-                    totalAnswered++;
+                    totalCorrect++;
                     if (totalPlayers == 2)
-                        currentPlayer.setPoints(currentPlayer.getPoints() + 1000-500*(totalAnswered-1));
+                        currentPlayer.setPoints(currentPlayer.getPoints() + 1000-500*(totalCorrect-1));
                     else
-                        currentPlayer.setPoints(currentPlayer.getPoints() + 1000-250*(totalAnswered-1));
+                        currentPlayer.setPoints(currentPlayer.getPoints() + 1000-250*(totalCorrect-1));
                 }
-                if (totalAnswered == totalPlayers)
+                if (totalAnswered == totalPlayers) {
                     totalAnswered = 0;
+                    totalCorrect = 0;
+                }
                 break;
             case "THERMOMETER":
                 if (answered)

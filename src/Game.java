@@ -56,11 +56,13 @@ public class Game {
                     tempQuestion.setCorrectAnswer(scan.nextLine());
                     tempQuestion.setMedia(scan.nextLine());
                     categories.add(tempQuestion.getCategory());
-                    //Shuffles the list that holds the answers of each question, so that they appear at a different order in every game.
+                    //Shuffles the list that holds the answers of each question, so that they appear at a different
+                    // order in every game.
                     Collections.shuffle(tempQuestion.getAnswers());
                     availableQuestions.add(tempQuestion);
                 }
-                //Shuffles the list that holds all the questions, so that they appear at a different order in every game.
+                //Shuffles the list that holds all the questions, so that they appear at a different order in every
+                // game.
                 Collections.shuffle(availableQuestions);
             }
         }
@@ -108,7 +110,6 @@ public class Game {
 
     /**
      * Gets the playerStats Object.
-     *
      * @return PlayerStats Object.
      */
 
@@ -116,12 +117,20 @@ public class Game {
         return playerStats;
     }
 
+    /**
+     * Gets the names of the teams of the current game.
+     * @return String array containing the names of the teams of the current game.
+     */
     public String[] getTeams(){return teams;}
 
+    /**
+     * Creates the necessary amount of teams for the selected game mode.
+     * @param numberOfTeams Integer containing the number of teams.
+     */
     public void createTeams(int numberOfTeams){
         teams=new String[numberOfTeams];
-        teams[0]="TEAM_1";
-        teams[1]="TEAM_2";
+        for (int i = 0; i < numberOfTeams; i ++)
+            teams[i] = "TEAM_" + i;
     }
 
     /**
@@ -135,7 +144,6 @@ public class Game {
 
     /**
      * Picks a question based on the chosen category from the shuffled Arraylist of available questions.
-     *
      * @param chosenCategory String containing the chosen category. It is NULL if THERMOMETER is about to be played.
      * @return Questions Object that contains the chosen question.
      */
@@ -156,6 +164,11 @@ public class Game {
         return null;
     }
 
+    /**
+     * Checks whether a team has already been filled or not
+     * @param teamNumber Integer containing the number of the current team.
+     * @return True if a team has been filled and false if it has not been filled.
+     */
 
     public boolean checkIfTeamIsFilled(int teamNumber){
         int count=0;
@@ -163,17 +176,15 @@ public class Game {
             if (p.getTeam() != 0)
                 if (p.getTeam()==teamNumber)
                     count++;
-        if (count==getPlayers().size()/2)
-            return true;
-        return false;
+        return count == getPlayers().size() / 2;
     }
 
     /**
      * Sets the current players username, if it is valid.
-     *
      * @param chosenUsername String containing the current player's chosen username.
      * @param currentPlayer  Integer containing the current player's position in the players ArrayList.
-     * @return -1 if the chosen username already exists in the current game. 0 if the chosen username's length is 0 or greater than 12,
+     * @return -1 if the chosen username already exists in the current game. 0 if the chosen username's length is 0 or
+     * greater than 12,
      * or consists only of empty spaces. 1 if the chosen username is valid.
      */
 
@@ -193,11 +204,11 @@ public class Game {
 
     /**
      * Sets the current control of the current player.
-     *
      * @param currentControl       String containing the current chosen control of the current player.
      * @param currentPlayer        Integer containing the current player's position in the players ArrayList.
      * @param currentControlNumber Integer containing the current position in the control Array.
-     * @return -1 if the chosen control is already bound. 0 if the chosen control's length is not 1. 1 if the chosen control is valid.
+     * @return -1 if the chosen control is already bound. 0 if the chosen control's length is not 1. 1 if the chosen
+     * control is valid.
      */
 
     public int setCurrentControl(String currentControl, int currentPlayer, int currentControlNumber) {
@@ -217,7 +228,6 @@ public class Game {
     /**
      * Chooses up to four random categories with enough remaining questions for the current round.
      * If there are not enough questions for 4 categories, the unfilled positions of the ArrayList are set to "".
-     *
      * @return Arraylist of Strings containing up to 4 categories.
      */
 
@@ -248,8 +258,8 @@ public class Game {
     }
 
     /**
-     * If the key that was pressed belongs to the controls of a player, it checks if the answer corresponding to that key is correct.
-     *
+     * If the key that was pressed belongs to the controls of a player, it checks if the answer corresponding to that
+     * key is correct.
      * @param answer                    Char containing the player's answer.
      * @param question                  Questions Object containing the current question.
      * @param currentRound              String containing the name of the current round.
@@ -273,8 +283,8 @@ public class Game {
     }
 
     /**
-     * If the key that was pressed belongs to the controls of a player, it sets the players bet equal to the bet corresponding to that key.
-     *
+     * If the key that was pressed belongs to the controls of a player, it sets the players bet equal to the bet
+     * corresponding to that key.
      * @param answer Char containing the player's answer.
      * @return 1 if the key belongs to a player's controls, otherwise 0.
      */
@@ -311,7 +321,6 @@ public class Game {
 
     /**
      * Adds/updates the current game's player stats to the Player Stats.txt.
-     *
      * @throws IOException if stream to file cannot be written to or closed.
      */
 
@@ -321,19 +330,24 @@ public class Game {
         Scanner scanner = new Scanner(oldFile);
         if (!scanner.hasNextLine()) {
             for (Player p : players) {
-                writer.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
+                writer.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").
+                        append(String.valueOf(p.getMultiplayerWins())).append("\n");
             }
             scanner.close();
             writer.close();
         } else {
             // For every player saved in the txt file, checks if they have played on the current game.
-            // If their score on the current game is higher than their score on the txt, their multiplayer wins on the txt file are added to their current wins.
-            // Otherwise, the player's current game stats are swapped with their stats from the txt file, after their multiplayer wins have been updated.
-            ArrayList<Player> toRemove = new ArrayList<>(); //Contains the Player Objects that will be removed from the players ArrayList.
-            ArrayList<Player> toAdd = new ArrayList<>(); //Contains the Player Objects that will be added to the players ArrayList.
+            // If their score on the current game is higher than their score on the txt, their multiplayer wins on the
+            // txt file are added to their current wins. Otherwise, the player's current game stats are swapped with
+            // their stats from the txt file, after their multiplayer wins have been updated.
+            ArrayList<Player> toRemove = new ArrayList<>(); //Contains the Player Objects that will be removed from the
+            // players ArrayList.
+            ArrayList<Player> toAdd = new ArrayList<>(); //Contains the Player Objects that will be added to the players
+            // ArrayList.
             while (scanner.hasNextLine()) {
                 boolean flag = false;
-                Player tempPlayer = new Player(); //Temporary Player Object created from the current line of the txt file.
+                Player tempPlayer = new Player(); //Temporary Player Object created from the current line of the txt
+                // file.
                 tempPlayer.setUsername(scanner.next());
                 tempPlayer.setPoints(scanner.nextInt());
                 tempPlayer.setMultiplayerWins(scanner.nextInt());
@@ -364,9 +378,11 @@ public class Game {
             Writer newWriter = new BufferedWriter(new FileWriter("Player Stats.txt", true));
             for (Player p : players) {
                 if (!p.getUsername().equals(players.get(players.size() - 1).getUsername()))
-                    newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins())).append("\n");
+                    newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").
+                            append(String.valueOf(p.getMultiplayerWins())).append("\n");
                 else
-                    newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").append(String.valueOf(p.getMultiplayerWins()));
+                    newWriter.append(p.getUsername()).append(" ").append(String.valueOf(p.getPoints())).append(" ").
+                            append(String.valueOf(p.getMultiplayerWins()));
             }
             newWriter.close();
         }

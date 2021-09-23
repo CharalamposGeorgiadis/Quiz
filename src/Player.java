@@ -135,7 +135,9 @@ public class Player {
      * Sets the player's wins in THERMOMETER.
      * @param thermometerCorrectAnswers Integer containing the player's wins in THERMOMETER.
      */
-    public void setThermometerCorrectAnswers(int thermometerCorrectAnswers){this.thermometerCorrectAnswers=thermometerCorrectAnswers;}
+    public void setThermometerCorrectAnswers(int thermometerCorrectAnswers){
+        this.thermometerCorrectAnswers=thermometerCorrectAnswers;
+    }
 
     /**
      * Gets the player's wins in multiplayer mode.
