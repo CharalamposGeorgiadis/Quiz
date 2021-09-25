@@ -157,7 +157,17 @@ public class Player {
         this.multiplayerWins = multiplayerWins;
     }
 
+    /**
+     * Gets the number of a team.
+     * @return Integer containing the number of a team.
+     */
+
     public int getTeam(){return teamNumber;}
+
+    /**
+     * Sets the number of a team.
+     * @param teamNumber Integer containing the number of a team.
+     */
 
     public void setTeam(int teamNumber){this.teamNumber=teamNumber;}
 

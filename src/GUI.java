@@ -16,9 +16,9 @@ import java.util.Random;
  */
 
 public class GUI {
-    private JFrame window; // JFrame that holds the main window of the game.
-    private JLabel mainLabel; // JLabel that holds the Main Menu screen.
-    private Font neonFont; // Font containing a custom font.
+    final JFrame window; // JFrame that holds the main window of the game.
+    final JLabel mainLabel; // JLabel that holds the Main Menu screen.
+    final Font neonFont; // Font containing a custom font.
     private Game game; // Game Object that grants access to the game functions.
     private boolean statsExist; // Boolean containing whether the stats file exists or not.
 
@@ -1545,7 +1545,7 @@ public class GUI {
             }
         }
         try {
-            game.addStats();
+            game.getPlayerStats().addStats(game.getPlayers());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1687,7 +1687,7 @@ public class GUI {
      * Creates a back button at the current label.
      * @param currentLabel JLabel containing the current button's label.
      * @param previousLabel JLabel containing the previous label.
-     * @param previousField JTextField of the previous screen so that the back button, if pressed, can restore its
+     * @param previousField JTextField of the previous scene so that the back button, if pressed, can restore its
      *                      focus.
      * @param font Font containing the current button's font.
      * @param color Color containing the current button's color.
@@ -1866,9 +1866,9 @@ public class GUI {
     }
 
     /**
-     * Changes the screen.
-     * @param currentLabel JLabel of the current screen.
-     * @param newLabel JLabel of the new screen.
+     * Changes from one scene into another.
+     * @param currentLabel JLabel of the current scene.
+     * @param newLabel JLabel of the new scene.
      */
 
     public void changeScene(JLabel currentLabel, JLabel newLabel){
