@@ -17,9 +17,9 @@ public class Round {
             "the remaining time (in milliseconds)x0.2");
     String fasterFingerDescription=("First player to answer correctly gains 1000 points. The second one gains 500.");
     final String thermometerDescription=("First player to answer 5 questions correctly gains 5000 points. Then, or " +
-            "if there are no more questions left, the game finishes.");
-    int totalAnswered; // Integer containing the total amount of players who have answered in FASTEST FINGER.
-    int totalCorrect; // Integer containing the total amount of players who have answered correctly in FASTEST FINGER.
+            "if there are no more questions left, the game ends.");
+    int totalAnswered; // Integer containing the total amount of players who have answered in "FASTEST FINGER".
+    int totalCorrect; // Integer containing the total amount of players who have answered correctly in "FASTEST FINGER".
 
 
     /**

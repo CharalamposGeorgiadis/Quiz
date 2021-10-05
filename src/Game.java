@@ -19,7 +19,7 @@ public class Game {
     /**
      * Constructor.
      *
-     * @param questions Holds the directory of the questions folder.
+     * @param questions Holds the directory of the questions' folder.
      * @throws IOException if a file is not found.
      */
 
@@ -35,7 +35,7 @@ public class Game {
     /**
      * Loads questions from the directory folder.
      *
-     * @param questions Holds the directory of the questions folder.
+     * @param questions Holds the directory of the questions' folder.
      * @throws FileNotFoundException if a file is not found.
      */
 
@@ -45,7 +45,7 @@ public class Game {
                 Scanner scan = new Scanner(question);
                 Question tempQuestion;
                 tempQuestion = new Question();
-                //Scans each line of the txt files in the Directory and stores them in a appropriate variable.
+                //Scans each line of the txt files in the Directory and stores them in an appropriate variable.
                 while (scan.hasNextLine()) {
                     tempQuestion.setCategory(scan.nextLine());
                     tempQuestion.setQuestion(scan.nextLine());
@@ -128,7 +128,7 @@ public class Game {
     public void createTeams(int numberOfTeams){
         teams=new String[numberOfTeams];
         for (int i = 0; i < numberOfTeams; i ++)
-            teams[i] = "TEAM_" + i;
+            teams[i] = "TEAM_" + (i + 1);
     }
 
     /**
@@ -178,7 +178,7 @@ public class Game {
     }
 
     /**
-     * Sets the current players username, if it is valid.
+     * Sets the current player's username, if it is valid.
      * @param chosenUsername String containing the current player's chosen username.
      * @param currentPlayer  Integer containing the current player's position in the players ArrayList.
      * @return -1 if the chosen username already exists in the current game. 0 if the chosen username's length is 0 or

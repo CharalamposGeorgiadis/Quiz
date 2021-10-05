@@ -24,7 +24,7 @@ public class GUI {
 
     /**
      * Constructor.
-     * @param questions Holds the directory of the questions folder.
+     * @param questions Holds the directory of the questions' folder.
      * @throws IOException if a file is not found.
      * @throws FontFormatException if a specified font is bad.
      */
@@ -208,7 +208,7 @@ public class GUI {
      * Choose the game mode.
      */
     public void chooseGameMode(){
-        //Displays the Choose game mode screen.
+        //Displays the "Choose game mode" screen.
         JLabel chooseGameModeLabel=new JLabel();
         resizeImage(chooseGameModeLabel,"Backgrounds/SecondaryMenu.png");
         changeScene(mainLabel,chooseGameModeLabel);
@@ -259,7 +259,7 @@ public class GUI {
             }
         });
         //4-Player mode button.
-        JButton fourPlayerButton=new JButton("FREE 4 ALL");
+        JButton fourPlayerButton = new JButton("FREE 4 ALL");
         fourPlayerButton.setToolTipText("Crown the ultimate victor in a fierce free-for-all battle of 4 players.");
         setButtonParameters(fourPlayerButton,neonFont.deriveFont(60f),Color.RED,660,420,350,80,
                 chooseGameModeLabel);
@@ -303,7 +303,7 @@ public class GUI {
         resizeImage(usernameLabel,"Backgrounds/EnterUsername.png");
         changeScene(currentLabel,usernameLabel);
 
-        //Creates the "Enter Username For.." title text.
+        //Creates the "Enter Username For..." title text.
         JTextArea enterUsernameTitle=new JTextArea(" ENTER USERNAME" +"\n          FOR:"+"\n       PLAYER " +
                 currentPlayer[0]+"\n");
         setAreaParameters(enterUsernameTitle,neonFont.deriveFont(70f),Color.ORANGE,330,180,600,300,
@@ -416,6 +416,18 @@ public class GUI {
                     teamFields[finalI].setText(tempString);
                 }
             });
+            teamFields[i].addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (teamFields[finalI].getText().equals("TEAM_" + (finalI + 1)))
+                            teamFields[finalI].setText("");
+                }
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (teamFields[finalI].getText().isEmpty())
+                        teamFields[finalI].setText("TEAM_" + (finalI + 1));
+                }
+            });
         }
         //Displays the usernames of each player.
         int [] usernamePosition=new int[game.getPlayers().size()];
@@ -431,7 +443,7 @@ public class GUI {
             setButtonParameters(arrowButtons[i][1],null,null,939,420+50*i,40,40,
                     setUpTeamsLabel);
         }
-        //Displays each players usernames.
+        //Displays each player's usernames.
         JTextField [] usernames=new JTextField[4];
         for (int i=0;i<4;i++){
             usernames[i]=new JTextField();
@@ -658,20 +670,20 @@ public class GUI {
     }
 
     /**
-     * Displays the "You can view each player's controls by clicking:.." screen.
+     * Displays the "You can view each player's controls by clicking:..." screen.
      * @param currentLabel JLabel of the previous screen.
      * @param setControlField TextField of the previous screen so that the back button, if pressed, can restore its
      *                        focus.
      */
 
     public void youCanView(JLabel currentLabel,JTextField setControlField){
-        //Displays the "You can view each player's controls by clicking:.." screen.
+        //Displays the "You can view each player's controls by clicking:..." screen.
         JLabel youCanViewLabel= new JLabel();
         resizeImage(youCanViewLabel,"Backgrounds/YouCanView.png");
         changeScene(currentLabel, youCanViewLabel);
         requestFocusIfClicked(youCanViewLabel,youCanViewLabel);
 
-        //Displays the area where "You can view each player's controls by clicking:.." is displayed.
+        //Displays the area where "You can view each player's controls by clicking:..." is displayed.
         JTextArea youCanViewArea=new JTextArea("         You can view\n each player's controls" +
                 "\n           by clicking:");
         setAreaParameters(youCanViewArea,neonFont.deriveFont(80f),Color.ORANGE,150,100,1200,250,
@@ -865,7 +877,7 @@ public class GUI {
      * @param currentRound String containing the name of the current round.
      * @param currentLabel JLabel of the previous screen.
      * @param chosenCategory String containing the chosen category.
-     * @param chooseCategoryLabel JLabel containing the choose category screen.
+     * @param chooseCategoryLabel JLabel containing the "Choose Category" screen.
      */
 
     public void startRound(String currentRound, JLabel currentLabel, String chosenCategory,JLabel chooseCategoryLabel){
@@ -1237,6 +1249,7 @@ public class GUI {
      */
 
     public void viewControls(JLabel currentLabel){
+        resizeImage(currentLabel,"Backgrounds/ChooseCategory.png");
         //Displays the "View Controls" screen.
         JLabel viewControlsLabel=new JLabel();
         resizeImage(viewControlsLabel,"Backgrounds/LeaderBoard.png");
@@ -1307,7 +1320,7 @@ public class GUI {
 
     /**
      * Displays the result of the current question.
-     * If the player(s) is/are not playing THERMOMETER their username(s) and points are displayed. Otherwise their
+     * If the player(s) is/are not playing THERMOMETER their username(s) and points are displayed. Otherwise, their
      * username(s), points and THERMOMETER wins are displayed.
      * @param currentLabel JLabel of the previous screen.
      * @param correctAnswer String containing a questions correct answer.
@@ -1457,9 +1470,9 @@ public class GUI {
     }
 
     /**
-     * Four second delay between the screen that displays the question results and the next screen.
+     * Four-second delay between the screen that displays the question results and the next screen.
      * @param currentLabel JLabel of the previous screen.
-     * @param newLabel JLabel of the screen that will displayed after the delay.
+     * @param newLabel JLabel of the screen that will be displayed after the delay.
      * @param hasEnded Boolean containing whether the game has ended or not.
      */
 
@@ -1483,12 +1496,12 @@ public class GUI {
     }
 
     /**
-     * Five second delay between the screen that displays the description of the current round and the screen that
+     * Five-second delay between the screen that displays the description of the current round and the screen that
      * displays the question and answers.
      * @param currentRound String containing the name of the current round.
      * @param currentLabel JLabel of the previous screen.
      * @param chosenCategory String containing the chosen category.
-     * @param chooseCategoryLabel JLabel containing the choose category screen.
+     * @param chooseCategoryLabel JLabel containing the "Choose Category" screen.
      */
 
     public void delayRoundType(String currentRound, JLabel currentLabel, String chosenCategory,
@@ -1593,7 +1606,7 @@ public class GUI {
 
     /**
      * Displays the random categories.
-     * @param chooseCategoryLabel JLabel containing the choose category screen.
+     * @param chooseCategoryLabel JLabel containing the "Choose Category" screen.
      * @param category1 JTextField containing the field where the first category is displayed.
      * @param category2 JTextField containing the field where the second category is displayed.
      * @param category3 JTextField containing the field where the third category is displayed.
