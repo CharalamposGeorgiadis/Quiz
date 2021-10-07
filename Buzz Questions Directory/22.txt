@@ -1,8 +1,8 @@
 Mythology
 Legend says that the Greek philosopher Diogenes slept in a strange bed. What was it?
-A barrel
-A table
-A haystack
-A bed of nails
-A barrel
+A Barrel
+A Table
+A Haystack
+A Bed of Nails
+A Barrel
 NULL

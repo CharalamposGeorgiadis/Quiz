@@ -14,7 +14,7 @@ public class Game {
     private HashSet<String> categories; // HashSet of Strings that holds the name of each category once.
     private Round round; // Round Object tha grants access to Round methods.
     private PlayerStats playerStats; // PlayerStats Object that grants access to Player Stats.
-    private String[] teams; // ArrayList of Strings that holds the name of each team.
+    private ArrayList<Team> teams; // ArrayList of Teams that hold the information of every team,
 
     /**
      * Constructor.
@@ -30,6 +30,7 @@ public class Game {
         players = new ArrayList<>();
         playerStats = new PlayerStats();
         loadQuestions(questions);
+        teams = new ArrayList<>();
     }
 
     /**
@@ -68,7 +69,6 @@ public class Game {
 
     /**
      * Gets the available questions.
-     *
      * @return ArrayList of Questions that holds the available questions.
      */
 
@@ -78,7 +78,6 @@ public class Game {
 
     /**
      * Gets the available categories.
-     *
      * @return HashSet of Strings that holds the available categories.
      */
 
@@ -88,8 +87,7 @@ public class Game {
 
     /**
      * Gets the players of the current game.
-     *
-     * @return ArrayList of Players that holds the players of the current game.
+     * @return ArrayList of Player Objects that holds the players of the current game.
      */
 
     public ArrayList<Player> getPlayers() {
@@ -98,7 +96,6 @@ public class Game {
 
     /**
      * Gets the round Object of the current game.
-     *
      * @return Round Object of the current game.
      */
 
@@ -116,20 +113,10 @@ public class Game {
     }
 
     /**
-     * Gets the names of the teams of the current game.
-     * @return String array containing the names of the teams of the current game.
+     * Gets the teams of the current game.
+     * @return ArrayList of Team Objects that holds the teams of the current game.
      */
-    public String[] getTeams(){return teams;}
-
-    /**
-     * Creates the necessary amount of teams for the selected game mode.
-     * @param numberOfTeams Integer containing the number of teams.
-     */
-    public void createTeams(int numberOfTeams){
-        teams=new String[numberOfTeams];
-        for (int i = 0; i < numberOfTeams; i ++)
-            teams[i] = "TEAM_" + (i + 1);
-    }
+    public ArrayList<Team> getTeams(){return teams;}
 
     /**
      * Resets the hasAnswered variable of every player to false.
@@ -163,18 +150,14 @@ public class Game {
     }
 
     /**
-     * Checks whether a team has already been filled or not
-     * @param teamNumber Integer containing the number of the current team.
-     * @return True if a team has been filled and false if it has not been filled.
+     * Creates the teams of the current game.
+     * @param numberOfTeams Integer containing the number of teams that will participate in the current game.
      */
-
-    public boolean checkIfTeamIsFilled(int teamNumber){
-        int count=0;
-        for (Player p:getPlayers())
-            if (p.getTeam() != 0)
-                if (p.getTeam()==teamNumber)
-                    count++;
-        return count == getPlayers().size() / 2;
+    public void createTeams(int numberOfTeams){
+        for (int i = 0; i < numberOfTeams; i ++) {
+            teams.add(new Team());
+            teams.get(i).setName("TEAM_" + (i + 1));
+        }
     }
 
     /**
@@ -312,6 +295,24 @@ public class Game {
                     Player temp = players.get(j - 1);
                     players.set(j - 1, players.get(j));
                     players.set(j, temp);
+                }
+            }
+        }
+    }
+
+    /**
+     * Sorts teams by points.
+     */
+
+    public void sortTeamsByPoints() {
+        for (int i = 1; i <= teams.size() - 1; i++) {
+            for (int j = 1; j <= teams.size() - i; j++) {
+                Team first = teams.get(j - 1);
+                Team second = teams.get(j);
+                if (first.getPoints() < second.getPoints()) {
+                    Team temp = teams.get(j - 1);
+                    teams.set(j - 1, teams.get(j));
+                    teams.set(j, temp);
                 }
             }
         }

@@ -14,7 +14,6 @@ public class Player {
     private int bet; // Integer containing the player's current bet.
     private int thermometerCorrectAnswers; //Integer containing the player's wins in THERMOMETER.
     private int multiplayerWins; // Integer containing the player's wins in multiplayer mode.
-    private int teamNumber; // Integer containing the number of the player's team;
 
     /**
      * Constructor.
@@ -156,20 +155,6 @@ public class Player {
     public void setMultiplayerWins(int multiplayerWins) {
         this.multiplayerWins = multiplayerWins;
     }
-
-    /**
-     * Gets the number of a team.
-     * @return Integer containing the number of a team.
-     */
-
-    public int getTeam(){return teamNumber;}
-
-    /**
-     * Sets the number of a team.
-     * @param teamNumber Integer containing the number of a team.
-     */
-
-    public void setTeam(int teamNumber){this.teamNumber=teamNumber;}
 
     /**
      * Clears the player's controls.
