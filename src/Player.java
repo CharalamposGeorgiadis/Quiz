@@ -20,13 +20,13 @@ public class Player {
      */
 
     public Player() {
-        username="";
-        points=0;
-        controls= new String[4];
-        hasAnswered=false;
-        bet=0;
-        thermometerCorrectAnswers=0;
-        multiplayerWins=0;
+        username = "";
+        points = 0;
+        controls = new String[4];
+        hasAnswered = false;
+        bet = 0;
+        thermometerCorrectAnswers = 0;
+        multiplayerWins = 0;
     }
 
     /**
@@ -43,27 +43,21 @@ public class Player {
      * @param username String containing the player's username.
      */
 
-    public void setUsername(String username){
-        this.username=username;
-    }
+    public void setUsername(String username){this.username = username;}
 
     /**
      * Gets the player's points.
      * @return Integer containing the player's points.
      */
 
-    public int getPoints(){
-        return points;
-    }
+    public int getPoints(){return points;}
 
     /**
      * Sets the player's points.
      * @param points Integer containing the player's points.
      */
 
-    public void setPoints(int points){
-        this.points=points;
-    }
+    public void setPoints(int points){this.points = points;}
 
     /**
      * Gets one of the player's controls.
@@ -71,9 +65,7 @@ public class Player {
      * @return String containing one of the player's controls.
      */
 
-    public String getControl(int currentControl){
-        return controls[currentControl];
-    }
+    public String getControl(int currentControl){return controls[currentControl];}
 
     /**
      * Sets the player's controls.
@@ -90,52 +82,42 @@ public class Player {
      * @return Boolean containing if the player has answered or not.
      */
 
-    public boolean getHasAnswered(){
-        return hasAnswered;
-    }
+    public boolean getHasAnswered(){return hasAnswered;}
 
     /**
      * Sets whether the player has answered or not.
      * @param answered Boolean containing if the player has answered or not.
      */
 
-    public void setHasAnswered(Boolean answered){
-        hasAnswered=answered;
-    }
+    public void setHasAnswered(Boolean answered){hasAnswered = answered;}
 
     /**
      * Gets the player's current bet.
      * @return Integer containing the player's current bet.
      */
 
-    public int getBet(){
-        return bet;
-    }
+    public int getBet(){return bet;}
 
     /**
      * Sets the player's current bet.
      * @param bet Integer containing the player's current bet.
      */
 
-    public void setBet(int bet){
-        this.bet=bet;
-    }
+    public void setBet(int bet){this.bet = bet;}
 
     /**
      * Gets the player's wins in THERMOMETER.
      * @return Integer containing the player's wins in THERMOMETER.
      */
 
-    public int getThermometerCorrectAnswers(){
-        return thermometerCorrectAnswers;
-    }
+    public int getThermometerCorrectAnswers(){return thermometerCorrectAnswers;}
 
     /**
      * Sets the player's wins in THERMOMETER.
      * @param thermometerCorrectAnswers Integer containing the player's wins in THERMOMETER.
      */
     public void setThermometerCorrectAnswers(int thermometerCorrectAnswers){
-        this.thermometerCorrectAnswers=thermometerCorrectAnswers;
+        this.thermometerCorrectAnswers = thermometerCorrectAnswers;
     }
 
     /**
@@ -143,25 +125,21 @@ public class Player {
      * @return Integer containing the player's wins in multiplayer mode.
      */
 
-    public int getMultiplayerWins(){
-        return multiplayerWins;
-    }
+    public int getMultiplayerWins(){return multiplayerWins;}
 
     /**
      * Sets the player's wins in multiplayer mode.
      * @param multiplayerWins Integer containing the player's wins in multiplayer mode.
      */
 
-    public void setMultiplayerWins(int multiplayerWins) {
-        this.multiplayerWins = multiplayerWins;
-    }
+    public void setMultiplayerWins(int multiplayerWins) {this.multiplayerWins = multiplayerWins;}
 
     /**
      * Clears the player's controls.
      */
 
     public void clearControls(){
-        for (int i=0; i<4; i++)
+        for (int i = 0; i < 4; i++)
             setPlayerControls(i,"");
     }
 }

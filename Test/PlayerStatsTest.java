@@ -17,16 +17,16 @@ public class PlayerStatsTest {
 
     @Test
     public void sortStatsByPoints() {
-        PlayerStats testPlayerStats = new PlayerStats();
-        testPlayerStats.getUsernames().add("winters");
-        testPlayerStats.getUsernames().add("Fawlty");
-        testPlayerStats.getUsernames().add("Darth Maul");
-        testPlayerStats.getHighScores().add(2000);
-        testPlayerStats.getHighScores().add(6500);
-        testPlayerStats.getHighScores().add(4000);
-        testPlayerStats.getMultiplayerWins().add(1);
-        testPlayerStats.getMultiplayerWins().add(0);
-        testPlayerStats.getMultiplayerWins().add(3);
+        Stats testStats = new Stats();
+        testStats.getUsernames().add("winters");
+        testStats.getUsernames().add("Fawlty");
+        testStats.getUsernames().add("Darth Maul");
+        testStats.getPlayerHighScores().add(2000);
+        testStats.getPlayerHighScores().add(6500);
+        testStats.getPlayerHighScores().add(4000);
+        testStats.getMultiplayerWins().add(1);
+        testStats.getMultiplayerWins().add(0);
+        testStats.getMultiplayerWins().add(3);
         ArrayList<String> correctUsernames = new ArrayList<>();
         correctUsernames.add("Fawlty");
         correctUsernames.add("Darth Maul");
@@ -39,10 +39,10 @@ public class PlayerStatsTest {
         correctMultiplayerWins.add(0);
         correctMultiplayerWins.add(3);
         correctMultiplayerWins.add(1);
-        testPlayerStats.sortStatsByPoints();
-        assertEquals(correctUsernames,testPlayerStats.getUsernames());
-        assertEquals(correctPoints,testPlayerStats.getHighScores());
-        assertEquals(correctMultiplayerWins,testPlayerStats.getMultiplayerWins());
+        testStats.sortStats("PLAYER_POINTS");
+        assertEquals(correctUsernames, testStats.getUsernames());
+        assertEquals(correctPoints, testStats.getPlayerHighScores());
+        assertEquals(correctMultiplayerWins, testStats.getMultiplayerWins());
     }
 
     /**
@@ -51,16 +51,16 @@ public class PlayerStatsTest {
 
     @Test
     public void sortStatsByMultiplayerWins() {
-        PlayerStats testPlayerStats = new PlayerStats();
-        testPlayerStats.getUsernames().add("winters");
-        testPlayerStats.getUsernames().add("Fawlty");
-        testPlayerStats.getUsernames().add("Darth Maul");
-        testPlayerStats.getHighScores().add(2000);
-        testPlayerStats.getHighScores().add(6500);
-        testPlayerStats.getHighScores().add(4000);
-        testPlayerStats.getMultiplayerWins().add(1);
-        testPlayerStats.getMultiplayerWins().add(0);
-        testPlayerStats.getMultiplayerWins().add(3);
+        Stats testStats = new Stats();
+        testStats.getUsernames().add("winters");
+        testStats.getUsernames().add("Fawlty");
+        testStats.getUsernames().add("Darth Maul");
+        testStats.getPlayerHighScores().add(2000);
+        testStats.getPlayerHighScores().add(6500);
+        testStats.getPlayerHighScores().add(4000);
+        testStats.getMultiplayerWins().add(1);
+        testStats.getMultiplayerWins().add(0);
+        testStats.getMultiplayerWins().add(3);
         ArrayList<String> correctUsernames = new ArrayList<>();
         correctUsernames.add("Darth Maul");
         correctUsernames.add("winters");
@@ -73,9 +73,9 @@ public class PlayerStatsTest {
         correctMultiplayerWins.add(3);
         correctMultiplayerWins.add(1);
         correctMultiplayerWins.add(0);
-        testPlayerStats.sortStatsByMultiplayerWins();
-        assertEquals(correctUsernames,testPlayerStats.getUsernames());
-        assertEquals(correctPoints,testPlayerStats.getHighScores());
-        assertEquals(correctMultiplayerWins,testPlayerStats.getMultiplayerWins());
+        testStats.sortStats("MULTIPLAYER");
+        assertEquals(correctUsernames, testStats.getUsernames());
+        assertEquals(correctPoints, testStats.getPlayerHighScores());
+        assertEquals(correctMultiplayerWins, testStats.getMultiplayerWins());
     }
 }

@@ -24,42 +24,49 @@ public class Team {
      * Sets the name of a team.
      * @param name String containing the name of a team.
      */
+
     public void setName(String name){this.name = name;}
 
     /**
      * Gets the name of a team.
      * @return String containing the name of a team.
      */
+
     public String getName(){return name;}
 
     /**
      * Sets the points of a team.
      * @param points Integer containing the points of a team.
      */
+
     public void setPoints(int points){this.points = points;}
 
     /**
      * Gets the points of a team.
      * @return Integer containing the points of a team.
      */
+
     public int getPoints(){return points;}
 
     /**
      * Sets the wins of the team.
      * @param wins Integer containing the wins of a team.
      */
+
     public void setWins(int wins){this.wins = wins;}
 
     /**
      * Gets the wins of the team.
      * @return Integer containing the wins of a team.
      */
+
     public int getWins(){return wins;}
 
     /**
      * Gets the players that belong to a team.
      * @return ArrayList of Player Objects containing the players that belong to a team.
      */
+
     public ArrayList<Player> getPlayers(){return players;}
 
     /**
@@ -68,10 +75,5 @@ public class Team {
      * @return True if a team has been filled and false if it has not been filled.
      */
 
-    public boolean checkIfTeamIsFilled(int numberOfPlayers){
-        int count = 0;
-        for (Player p : players)
-            count++;
-        return count == numberOfPlayers;
-    }
+    public boolean checkIfTeamIsFilled(int numberOfPlayers){return players.size() == numberOfPlayers;}
 }

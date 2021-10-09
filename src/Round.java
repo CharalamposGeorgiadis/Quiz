@@ -25,7 +25,6 @@ public class Round {
     private int totalCorrect; // Integer containing the total amount of players who have answered correctly in
     // "FASTEST FINGER".
 
-
     /**
      * Constructor.
      */
@@ -75,9 +74,9 @@ public class Round {
      */
     // If a new round type that can be played in single and multiplayer is to be added, add its name in Capital letters.
     public void addEssentialRoundTypes(){
-     //   roundTypes.add("RIGHT ANSWER");
-       // roundTypes.add("BETTING");
-      //  roundTypes.add("COUNTDOWN");
+        roundTypes.add("RIGHT ANSWER");
+        roundTypes.add("BETTING");
+        roundTypes.add("COUNTDOWN");
         Collections.shuffle(roundTypes);
     }
 
@@ -87,7 +86,7 @@ public class Round {
      */
     // If a new Multiplayer-only round is to be added, add its name in Capital letters.
     public void addMultiplayerRounds(int numberOfPlayers){
-     //  roundTypes.add("FASTEST FINGER");
+       roundTypes.add("FASTEST FINGER");
        if (numberOfPlayers == 3)
            fastestFingerDescription = ("First player to answer correctly gains 1000 points. The second one gains 750, "
                    + "while the third one gains 500.");

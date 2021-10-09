@@ -9,16 +9,15 @@ import java.util.*;
  */
 
 public class Game {
-    private ArrayList<Player> players; // ArrayList of Players that holds the information of every player.
-    private ArrayList<Question> availableQuestions; // ArrayList of Questions that holds every available question.
+    private ArrayList<Player> players; // ArrayList of Player Objects that holds the information of every player.
+    private ArrayList<Question> availableQuestions; // ArrayList of Question Objects that holds every available question.
     private HashSet<String> categories; // HashSet of Strings that holds the name of each category once.
-    private Round round; // Round Object tha grants access to Round methods.
-    private PlayerStats playerStats; // PlayerStats Object that grants access to Player Stats.
-    private ArrayList<Team> teams; // ArrayList of Teams that hold the information of every team,
+    private Round round; // Round Object that grants access to Round methods.
+    private Stats stats; // PlayerStats Object that grants access to Player Stats.
+    private ArrayList<Team> teams; // ArrayList of Team Objects that holds the information of every team.
 
     /**
      * Constructor.
-     *
      * @param questions Holds the directory of the questions' folder.
      * @throws IOException if a file is not found.
      */
@@ -28,14 +27,13 @@ public class Game {
         categories = new HashSet<>();
         round = new Round();
         players = new ArrayList<>();
-        playerStats = new PlayerStats();
+        stats = new Stats();
         loadQuestions(questions);
         teams = new ArrayList<>();
     }
 
     /**
      * Loads questions from the directory folder.
-     *
      * @param questions Holds the directory of the questions' folder.
      * @throws FileNotFoundException if a file is not found.
      */
@@ -46,7 +44,7 @@ public class Game {
                 Scanner scan = new Scanner(question);
                 Question tempQuestion;
                 tempQuestion = new Question();
-                //Scans each line of the txt files in the Directory and stores them in an appropriate variable.
+                // Scans each line of the txt files in the Directory and stores them in an appropriate variable.
                 while (scan.hasNextLine()) {
                     tempQuestion.setCategory(scan.nextLine());
                     tempQuestion.setQuestion(scan.nextLine());
@@ -55,12 +53,12 @@ public class Game {
                     tempQuestion.setCorrectAnswer(scan.nextLine());
                     tempQuestion.setMedia(scan.nextLine());
                     categories.add(tempQuestion.getCategory());
-                    //Shuffles the list that holds the answers of each question, so that they appear at a different
+                    // Shuffles the list that holds the answers of each question, so that they appear at a different
                     // order in every game.
                     Collections.shuffle(tempQuestion.getAnswers());
                     availableQuestions.add(tempQuestion);
                 }
-                //Shuffles the list that holds all the questions, so that they appear at a different order in every
+                // Shuffles the list that holds all the questions, so that they appear at a different order in every
                 // game.
                 Collections.shuffle(availableQuestions);
             }
@@ -72,50 +70,41 @@ public class Game {
      * @return ArrayList of Questions that holds the available questions.
      */
 
-    public ArrayList<Question> getAvailableQuestions() {
-        return availableQuestions;
-    }
+    public ArrayList<Question> getAvailableQuestions() {return availableQuestions;}
 
     /**
      * Gets the available categories.
      * @return HashSet of Strings that holds the available categories.
      */
 
-    public HashSet<String> getCategories() {
-        return categories;
-    }
+    public HashSet<String> getCategories() {return categories;}
 
     /**
      * Gets the players of the current game.
      * @return ArrayList of Player Objects that holds the players of the current game.
      */
 
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
+    public ArrayList<Player> getPlayers() {return players;}
 
     /**
      * Gets the round Object of the current game.
      * @return Round Object of the current game.
      */
 
-    public Round getRound() {
-        return round;
-    }
+    public Round getRound() {return round;}
 
     /**
      * Gets the playerStats Object.
      * @return PlayerStats Object.
      */
 
-    public PlayerStats getPlayerStats() {
-        return playerStats;
-    }
+    public Stats getStats() {return stats;}
 
     /**
      * Gets the teams of the current game.
      * @return ArrayList of Team Objects that holds the teams of the current game.
      */
+
     public ArrayList<Team> getTeams(){return teams;}
 
     /**
@@ -153,6 +142,7 @@ public class Game {
      * Creates the teams of the current game.
      * @param numberOfTeams Integer containing the number of teams that will participate in the current game.
      */
+
     public void createTeams(int numberOfTeams){
         for (int i = 0; i < numberOfTeams; i ++) {
             teams.add(new Team());
@@ -241,9 +231,9 @@ public class Game {
     /**
      * If the key that was pressed belongs to the controls of a player, it checks if the answer corresponding to that
      * key is correct.
-     * @param answer                    Char containing the player's answer.
-     * @param question                  Questions Object containing the current question.
-     * @param currentRound              String containing the name of the current round.
+     * @param answer Char containing the player's answer.
+     * @param question Questions Object containing the current question.
+     * @param currentRound String containing the name of the current round.
      * @param currentRoundTypeParameter Integer containing  a parameter that may be required by a certain round type.
      * @return 1 if the key belongs to a player's controls, otherwise 0.
      */

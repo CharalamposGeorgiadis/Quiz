@@ -20,10 +20,10 @@ public class Question {
 
     public Question() {
         question = "";
-        category="";
-        answers=new ArrayList<>();
-        correctAnswer="";
-        media ="";
+        category = "";
+        answers = new ArrayList<>();
+        correctAnswer = "";
+        media = "";
     }
 
     /**
@@ -31,81 +31,63 @@ public class Question {
      * @return String containing a question.
      */
 
-    public String getQuestion(){
-        return question;
-    }
+    public String getQuestion(){return question;}
 
     /**
      * Sets the question.
      * @param question String containing a question.
      */
 
-    public void setQuestion(String question){
-        this.question=question;
-    }
+    public void setQuestion(String question){this.question = question;}
 
     /**
      * Gets the question's category.
      * @return String containing the question's category.
      */
 
-    public String getCategory(){
-        return category;
-    }
+    public String getCategory(){return category;}
 
     /**
      * Sets the question's category.
      * @param category String containing the question's category.
      */
 
-    public void setCategory(String category){
-        this.category=category;
-    }
+    public void setCategory(String category){this.category = category;}
 
     /**
      * Gets the question's possible answers.
      * @return ArrayList of Strings containing the question's possible answers.
      */
 
-    public ArrayList<String> getAnswers(){
-        return answers;
-    }
+    public ArrayList<String> getAnswers(){return answers;}
 
     /**
      * Sets one of the question's possible answers.
      * @param answer String containing one of the possible answers.
      */
 
-    public void setAnswer(String answer){
-        answers.add(answer);
-    }
+    public void setAnswer(String answer){answers.add(answer);}
 
     /**
      * Gets the question's correct answer.
      * @return String containing the question's correct answer.
      */
 
-    public String getCorrectAnswer(){
-        return correctAnswer;
-    }
+    public String getCorrectAnswer(){return correctAnswer;}
 
     /**
      * Sets the question's correct answer.
      * @param correctAnswer String containing the question's correct answer.
      */
 
-    public void setCorrectAnswer(String correctAnswer){
-        this.correctAnswer=correctAnswer;
-    }
+    public void setCorrectAnswer(String correctAnswer){this.correctAnswer = correctAnswer;}
 
     /**
      * Gets the question's accompanying media file.
      * @return String containing the question's accompanying media file.
      */
 
-    public String getMedia(){
-        return media;
-    }
+    public String getMedia(){return media;}
 
     /**
      * Sets the question's accompanying media file.
@@ -113,7 +95,5 @@ public class Question {
      *              accompanied by a media file.
      */
 
-    public void setMedia(String media) {
-        this.media = media;
-    }
+    public void setMedia(String media) {this.media = media;}
 }
