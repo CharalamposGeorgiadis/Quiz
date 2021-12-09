@@ -13,7 +13,7 @@ public class Round {
     final String rightAnswerDescription = ("Correct answers grant 1000 points, incorrect answers grant 0.");
     final String bettingDescription = ("Bet points for each question. Correct answers grant points equal to the ones "
             + "you bet. Incorrect answers subtract the same amount.");
-    final String countdownDescription = ("You have 6 seconds for each question. Correct answers grant points equal to "
+    final String countdownDescription = ("You have 7 seconds for each question. Correct answers grant points equal to "
             + "the remaining time (in milliseconds)x0.2");
     private String fastestFingerDescription = ("First player to answer correctly gains 1000 points. " +
             "The second one gains 500.");
