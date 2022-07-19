@@ -1,0 +1,8 @@
+Sports
+In which sport would competitors use a piece of equipment known as a foil?
+Fencing
+Tennis
+Baseball
+Rugby
+Fencing
+NULL

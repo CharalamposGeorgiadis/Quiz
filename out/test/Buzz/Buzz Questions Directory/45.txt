@@ -1,0 +1,8 @@
+Music
+Who sang the song from the Titanic movie, 'My Heart Will Go On'?
+Celine Dion
+Cher
+Barbra Streisand
+Neil Diamond
+Celine Dion
+NULL

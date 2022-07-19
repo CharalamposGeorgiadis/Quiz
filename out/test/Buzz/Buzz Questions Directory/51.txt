@@ -1,0 +1,8 @@
+Sports
+Which of the following sports is not featured in the Modern pentathlon?
+Running
+Shooting
+Horse Riding
+Rowing
+Rowing
+NULL

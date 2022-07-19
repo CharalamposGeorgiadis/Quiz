@@ -1,0 +1,8 @@
+Sports
+How many times did Michael Schumacher win the F1 World Championship in his career?
+7
+2
+12
+6
+7
+NULL
