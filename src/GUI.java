@@ -1315,9 +1315,13 @@ public class GUI {
                             playersAnswered[0] = 0;
                             currentQuestion[0]++;
                             if (currentQuestion[0] != 6) {
-                                for (int i = 0; i < 4; i ++){
-                                    voteArea[i].setText("0");
-                                    voteArea[i].setVisible(false);
+                                if (currentRound.equals("VOTING"))
+                                {
+                                    for (int i = 0; i < 4; i++)
+                                    {
+                                        voteArea[i].setText("0");
+                                        voteArea[i].setVisible(false);
+                                    }
                                 }
                                 resultScreen(questionsLabel, randomQuestion[0].getCorrectAnswer(),
                                         game.getAvailableQuestions().size() == 0,false);
@@ -1327,7 +1331,9 @@ public class GUI {
                                 //If a questions is accompanied by an image, it is displayed.
                                 imageQuestion.setIcon(new ImageIcon("Buzz Questions Directory\\" +
                                         randomQuestion[0].getMedia()));
-                            } else {
+                            }
+                            else
+                            {
                                 game.getRound().getRoundTypes().remove(currentRound);
                                 if (game.getAvailableQuestions().size() != 0 && game.getRound().getRoundTypes().size()!=0)
                                 {
@@ -1919,6 +1925,7 @@ public class GUI {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     game.getPlayers().clear();
                     game.getTeams().clear();
+                    game.getRound().addEssentialRoundTypes();
                     changeScene(currentLabel, mainLabel);
                 }
             }
